@@ -1,11 +1,10 @@
 # Domain Docs
 
-采用单一领域布局：根目录 GLOSSARY.md 与 docs/adr/。
+采用单一领域布局：根目录 GLOSSARY.md 与按需创建的 docs/adr/。
 
-- 按 AGENTS.md 先读 STATUS 和本次工作对应的职责文档。
-- 探索领域问题前，读取已有 GLOSSARY.md 和相关 ADR。
-- 文件尚不存在时继续工作；grill with docs 解决具体术语或重要决策后再创建。
-- 输出沿用术语表中的定义；发现歧义时用实际例子澄清。
-- 保留 RESEARCH_AND_DECISIONS.md 的既有决策与历史；新 ADR 与其互相引用，避免重复维护。
-- 提案与既有决定冲突时，指出冲突、理由及拟替代记录。
-- 沿用现有指挥／执行 Agent 分工。
+- 讨论领域含义前读 GLOSSARY 和相关 ADR；输出沿用已确认词义，遇到歧义用实际案例澄清。
+- 术语一旦解决即可更新 GLOSSARY；每词1—2句，只写领域定义，排除实现细节和进度。
+- 决策同时满足难逆转、无上下文会意外、存在真实取舍时，才按 domain-modeling 的 ADR 格式记录。其余设计理由维护在对应职责文档或 Issue。
+- 新决定替代已有决定时写明理由和替代关系；已冻结记录保留。文件在首次有内容时创建，保持单一权威来源。
+
+阶段与 Markdown 职责见 [workflow](workflow.md)，历史记录见[归档索引](../history/README.md)。

@@ -1,25 +1,28 @@
 # TagProject 工作约定
 
-每次开工先读 `docs/STATUS.md`；目标、边界或输出约定见 `docs/PROJECT.md`。数据口径查 `docs/DATA_AUDIT.md`，选型查 `docs/RESEARCH_AND_DECISIONS.md`，设计或运行实验先读 `docs/EXPERIMENTS.md`。
+每次开工先读 [STATUS](docs/STATUS.md)，确认当前阶段、任务 Issue 和下一步。唯一活跃主线是教师简介→研究方向→现有标签＋证据。
 
-- 当前唯一活跃主线是教师简历／简介→研究方向→现有标签＋证据。先分流异常，再识别方向和证据、映射现有词库、做小样真人复核，最后决定是否扩大自动化。共同概念兼容性保留为未来接口约束；稿件、师稿匹配、跨对象联合评测、完整词库重构和平台建设保留待续，不作教师任务前置依赖。
-- 旧标签只作历史线索或核验后的训练数据。独立测试答案由盲审与仲裁产生；模型、聚类或短语输出进入候选审核，正式概念经治理发布。
-- 保留原文、来源、证据位置、词库版本和判断状态。外文不限英语；语言和文字脚本分开记录，未知保留未知。
-- 用户已授权教师方向小样及DeepSeek API分类接入，无需重复请求批准。原始XLSX和16条示例不改写，结果写入独立版本目录。API只发脱敏简介和必要词库，不发姓名／邮箱列或历史标签，密钥只从环境读取；默认dry-run，live显式且有界。此前“不调用付费API／资料不外发”是上一阶段边界。全量赋标、长训练、平台部署和正式词库迁移仍不在当前范围。
-- 教师标签数随证据，不设任意硬上限。工作经历、课程、机构、导航与代表作偶现词分别判断角色；资料不足允许待核查／不赋标。小样结果标明Agent辅助开发示例，首轮隔离旧标签，不能当独立真人金标或模型性能。
-- 使用现有指挥 Agent／执行 Agent 对话协作：执行 Agent 集中写文件，指挥 Agent 核查验收。不自行新增对话或子代理。
-- 文件中区分用户要求、已核实事实、设计建议、待验证问题。数据结论写明文件／sheet／字段／行号和分母；外部事实写官方链接与查阅日期。未运行实验标“未运行”。
-- 每完成实质阶段更新对应文档和 STATUS；重要决策保留理由与被替代记录。AGENTS 只保留稳定规则，细节和运行日志归职责文档。
+按工作分支读取：
+
+- 需求与边界：[PROJECT](docs/PROJECT.md)；教师判断：[审核规则](docs/TEACHER_REVIEW_PROTOCOL.md)；术语：[GLOSSARY](GLOSSARY.md)。
+- 数据口径：[DATA_AUDIT](docs/DATA_AUDIT.md)；选型依据：[RESEARCH_AND_DECISIONS](docs/RESEARCH_AND_DECISIONS.md)。
+- 实验前后：[EXPERIMENTS](docs/EXPERIMENTS.md)；运行工具：[操作指南](docs/TEACHER_PATH_AND_TOOLS.md)。
+- 开始任务、切换阶段或维护 Markdown：[Matt 工作流与文档职责](docs/agents/workflow.md)。历史材料按[归档索引](docs/history/README.md)取用。
+
+原始 XLSX、旧16例和已冻结实验材料只读；派生结果与修订分版本保存。旧标签不作独立答案，模型审核不称真人意见、独立金标或准确率。API 只发送脱敏简介和必要词库，密钥只读环境；默认 dry-run，live 显式且有界。用户已授权教师小样及 DeepSeek 接入，完整范围见 PROJECT。
+
+采用 Issue 驱动的串行工作流。当前对话可以完成已明确的小任务；需实现交接时沿用现有执行 Agent、由指挥 Agent 验收，并以任务 Issue 交接。不自行新增对话或子代理。
 
 ## Agent skills
 
 ### Issue tracker
-需求、规格和任务记录在 normaltank/TagProject 的 GitHub Issues。
-读写任务前查 docs/agents/issue-tracker.md。
+
+GitHub Issues：normaltank/TagProject。读写任务前查 [issue-tracker](docs/agents/issue-tracker.md)。
 
 ### Triage labels
-使用五个默认任务状态标签；含义见 docs/agents/triage-labels.md。
+
+采用五个默认状态标签，含义见 [triage-labels](docs/agents/triage-labels.md)。
 
 ### Domain docs
-采用单份 GLOSSARY.md 与 docs/adr/。
-阅读和维护规则见 docs/agents/domain.md。
+
+单份 GLOSSARY.md 与按需创建的 docs/adr/；维护前查 [domain](docs/agents/domain.md)。

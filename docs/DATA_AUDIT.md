@@ -11,7 +11,7 @@
 
 主审计`audit_inputs.py` v1.1.0使用Python 3.12.14、openpyxl 3.1.5，只读、data_only=False，不计算或保存工作簿。原本地输出`outputs/audit_20261023_v1_1_0_run1/`含manifest、脚本快照、summary和定位CSV；独立标准库XML核验在`outputs/audit_20261023_checks_v1/verification_v2.json`为23/23。原verification.json为22/23的失败诊断，保留未覆盖。新克隆不带这些本地证据文件。
 
-初次差异来自日期／公式读取表示，统一解码口径后通过，不是放宽容差。deleted=0简介解码字符数115058149，词法XML口径115057748，差401；由28项日期和3项公式的表示差异解释。原件哈希不变。审计及XML脚本复跑方法见[README](../README.md)。
+初次差异来自日期／公式读取表示，统一解码口径后通过，不是放宽容差。deleted=0简介解码字符数115058149，词法XML口径115057748，差401；由28项日期和3项公式的表示差异解释。原件哈希不变。审计及 XML 脚本复跑方法见本页末节。
 
 ## 教师口径与缺失
 
@@ -48,3 +48,19 @@
 定向材料只用于开发问题诊断：研究正文、导航、课程、行政岗位、文章页、旧项目、论文偶现主题、乱码和非文本需分别判断角色；引用存在不等于稳定专长，未提及不等于没有该方向。语种和文字脚本分开，外文不限英语，尚未做全表语种普查。
 
 16条Agent开发示例、本地引文及逐行定位保留在`outputs/teacher_dev_20261023_v0_2/`，不纳入Git，不充当独立真人金标或模型效果。公开文档不复刻这些简介内容；详细方法及本次DeepSeek能力见[路径／工具说明](TEACHER_PATH_AND_TOOLS.md)，最新授权与状态见[STATUS](STATUS.md)。
+
+## 已验证的历史审计复跑方法（PowerShell）
+
+以下命令在项目根目录执行，使用本机 bundled Python；每次更换全新输出目录。脚本拒绝覆盖已有非空审计目录或已有校验结果，不保存工作簿。
+
+```powershell
+$tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$tagRunName = '20261023_run2'
+$tagAuditOut = "outputs/audit_$tagRunName"
+$tagChecksOut = "outputs/checks_$tagRunName"
+& $tagPython 'scripts/audit_inputs.py' --teachers 'Sheets/teacher_20261022.xlsx' --vocabulary 'Sheets/review_tagscollection_20261022.xlsx' --out $tagAuditOut
+& $tagPython 'scripts/verify_audit.py' --run $tagAuditOut --out "$tagChecksOut/verification.json"
+& $tagPython 'scripts/inspect_samples.py' --run $tagAuditOut --out "$tagChecksOut/directed_inspection.json"
+```
+
+每次复跑前将 `$tagRunName` 改为新的日期／版本标识。主审计依赖 openpyxl（实际版本见 manifest）；独立校验只用 Python 标准库直接读取 XLSX 内的 XML。校验器针对此版本的一个工作表和日期格式 14，换输入结构后先检查适用性。复跑前后核验原件 SHA-256，验收基准见 DATA_AUDIT。
