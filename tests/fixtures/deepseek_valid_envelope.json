@@ -1,0 +1,7 @@
+{
+  "model": "fixture-model-not-a-real-api-run",
+  "choices": [{
+    "finish_reason": "stop",
+    "message": {"role": "assistant", "content": "{\"decision\":\"suggest\",\"reason\":\"合成简介明确写明方向\",\"directions\":[{\"id\":\"d1\",\"summary\":\"膜分离技术\",\"support\":\"supported\",\"evidence\":[{\"quote\":\"研究方向：膜分离技术与污水资源化。\",\"occurrence\":1,\"role\":\"explicit_direction\"}]}],\"labels\":[{\"vocab_ref\":\"row:101:L3:3\",\"path\":[\"化学工程\",\"化学工程与工业化学\",\"分离工程\"],\"direction_ids\":[\"d1\"],\"mapping_status\":\"supported\",\"reason\":\"合成回放演示，不是模型性能验证\"}],\"gaps\":[]}"}
+  }]
+}

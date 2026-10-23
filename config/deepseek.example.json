@@ -1,0 +1,11 @@
+{
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "model": "deepseek-flash",
+  "max_tokens": 8192,
+  "timeout_seconds": 60,
+  "max_retries": 1,
+  "max_request_bytes": 256000,
+  "max_intro_chars": 100000,
+  "max_response_bytes": 2000000,
+  "pricing": null
+}

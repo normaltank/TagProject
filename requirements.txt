@@ -1,0 +1,2 @@
+# Tested local workbook reader; network and validation code use the standard library.
+openpyxl==3.1.5

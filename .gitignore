@@ -1,0 +1,40 @@
+# Local source data, derived records, research downloads and execution logs.
+/Sheets/
+/outputs/
+/logs/
+
+# Credentials / local environment (also when placed under subdirectories).
+.env
+.env.*
+secrets/
+.secrets/
+credentials/
+*.dpapi
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local runtimes, caches and generated packaging.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+node_modules/
+
+# Per-machine editor and operating-system files.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
