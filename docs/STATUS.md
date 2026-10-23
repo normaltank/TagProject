@@ -2,13 +2,15 @@
 
 更新：2026-10-23（Asia/Singapore）。**唯一活跃主线：教师简介→研究方向→现有标签＋原文证据。DeepSeek工具已实现，真实连通已验证。** 用户本次API授权覆盖此前小样阶段“不调用付费API／资料不外发”；全量赋标、训练、平台部署和正式词库迁移仍未开展。
 
-## Matt Setup与Git上传准备
+## Matt Setup与Git上传完成
 
 按用户确认的四份草案，保留原AGENTS条款并追加唯一Agent skills块，已写[Issue tracker](agents/issue-tracker.md)、[状态标签](agents/triage-labels.md)、[领域文档规则](agents/domain.md)。跟踪器为normaltank/TagProject的GitHub Issues，单领域布局为GLOSSARY.md＋docs/adr/；后两者未创建空文件，grill with docs尚待指挥端继续。
 
 GitHub五个任务状态标签已核实：新增needs-triage、needs-info、ready-for-agent、ready-for-human，保留wontfix与其他现有标签。使用GitHub官方API及本机Git Credential Manager，未打印／保存访问令牌。
 
-本地已初始化main，origin指向已核实的公开仓库`https://github.com/normaltank/TagProject.git`。当前只整理并暂存审核文件，**尚未本地提交或推送，不表示已上传**。Sheets、outputs、logs、环境／密钥与缓存排除；原文件均留本地。公开文档移除真实记录内部ID／简介摘录和个人机器路径，原文档副本留在本地忽略目录。范围、依赖与新克隆限制见[README](../README.md)。
+本地main已正常推送至公开[仓库normaltank/TagProject](https://github.com/normaltank/TagProject)。首个已验证提交为[ee10394b6a93cb6843e81ea65f7acbed2a08c4dd](https://github.com/normaltank/TagProject/commit/ee10394b6a93cb6843e81ea65f7acbed2a08c4dd)，包含32个审核文件、246054字节；首次推送后本地HEAD与远端main完全一致。本次文档提交补记完成状态，最终HEAD／远端核对留在本地`outputs/git_upload_prepare_20261023_v1/`，不把运行明细上传。
+
+Sheets、outputs、logs、环境／密钥与缓存均排除；原XLSX和16例前后哈希不变、仍在本地。公开文档去除真实记录内部ID／简介摘录和个人机器路径，原文档副本留本地忽略目录。暂存内容中实际DeepSeek密钥精确比对命中0；范围、依赖与新克隆限制见[README](../README.md)。
 
 本次新增的29项纯合成／模拟HTTP检查通过，不用真实数据或密钥；完整32项及CLI默认词库读取仍依赖两份／词库本地XLSX，不能宣称新克隆已包含数据或全部测试可直接运行。未运行新的DeepSeek API实验，未改分类语义。
 

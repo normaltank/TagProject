@@ -7,3 +7,5 @@
 2026-10-23后续：DeepSeek CLI已实现；32项离线／模拟HTTP测试通过，真实合成与教师O10各一次HTTP200。路径／工具及语义边界见docs/TEACHER_PATH_AND_TOOLS.md；模型supported不是人工确认。
 
 2026-10-23 Git准备：远程为公开仓库，源码／整理文档／无密钥配置／合成fixture入库，原数据／结果／日志留本地并忽略。工作簿与API输出不会随新克隆附带；29项纯合成检查不依赖XLSX，完整32项含本地集成检查。Matt Setup四份配置按确认稿写入，GitHub五个默认状态标签核实。
+
+2026-10-23上传完成：normaltank/TagProject首个main提交ee10394b6a93cb6843e81ea65f7acbed2a08c4dd已正常推送并比对远端一致；32文件／246054字节通过暂存核查。最终提交核对及受保护本地文件哈希留在忽略的outputs/git_upload_prepare_20261023_v1/，后续由指挥端启动grill with docs。
