@@ -6,9 +6,9 @@
 
 Matt Setup、[档案整理 #1](https://github.com/normaltank/TagProject/issues/1)、小样规格与任务拆分已落地。用户已确认现有 CLI→输出校验→审核报告的验收入口，以及三张任务的粒度和依赖。
 
-档案整理提交4881367已在main；2026-10-25核实仓库没有PR，用户确认无需另行合并。后续subagent配置已按用户要求写入[AGENTS](../AGENTS.md)，协作方式见[工作流](agents/workflow.md)。
+当前任务：[规范 Matt 任务委派与验收流程 #10](https://github.com/normaltank/TagProject/issues/10)，执行中。执行子代理修改四份约定文档并做适用检查；下一步由主 Agent 核验后安排独立 Standards／Spec 审查，再归档回填和关闭。流程与职责以[工作流](agents/workflow.md)为准，当前尚未验收。
 
-本批已完成：[教师新20条材料的先判后比诊断 #2](https://github.com/normaltank/TagProject/issues/2)及任务 [#3](https://github.com/normaltank/TagProject/issues/3)、[#4](https://github.com/normaltank/TagProject/issues/4)、[#5](https://github.com/normaltank/TagProject/issues/5)，以及 [#9：历史BERT标签对照](https://github.com/normaltank/TagProject/issues/9)。交付物检查与独立 Standards／Spec 两路审查均通过。此前提前关闭任务的流程偏差已补做验收并留证；审查及交付入口见 [EXPERIMENTS](EXPERIMENTS.md)，最终提交和任务状态在 GitHub 维护。
+教师小样 [#2](https://github.com/normaltank/TagProject/issues/2)及任务 [#3](https://github.com/normaltank/TagProject/issues/3)、[#4](https://github.com/normaltank/TagProject/issues/4)、[#5](https://github.com/normaltank/TagProject/issues/5)，以及 [#9：历史BERT标签对照](https://github.com/normaltank/TagProject/issues/9)已完成交付检查和独立双轴审查。此前提前关票已补验收留证；入口见 [EXPERIMENTS](EXPERIMENTS.md)，最终提交和任务状态在 GitHub 维护。
 
 ## 实验进度与下一步
 
