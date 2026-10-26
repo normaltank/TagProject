@@ -99,6 +99,8 @@
 
 本地交付：[可读对照报告](../outputs/teacher_pilot_20261026_v1/commander/COMPARISON_REPORT.md)、[新旧对照表](../outputs/teacher_pilot_20261026_v1/commander/教师标签新旧对照.xlsx)、[逐项机器记录](../outputs/teacher_pilot_20261026_v1/commander/comparison_approved.json)及[描述性统计](../outputs/teacher_pilot_20261026_v1/commander/comparison_statistics.json)。原表、旧16例、已冻结材料均未改，比较阶段新增API请求0。
 
+交付经两个独立子代理（gpt-6.1-sol／high）完成 Standards 与 Spec 审查，均无可行动发现；实际分工、此前提前关闭任务的纠正和审查范围见本地[流程验收记录](../outputs/teacher_pilot_20261026_v1/commander/WORKFLOW_REVIEW.md)。本批采用逐票 implement 加明确委派。
+
 历史BERT的输入字段、模型配置及训练划分未知，结果只描述当前简介的支持程度；不是同输入模型排名、独立金标或全量准确率。本批不支持直接用DS全量替换BERT：17次请求中5次没有可用输出，剩余候选仍需范围审核。下一步优先处理输出失败可诊断性、输出契约和证据范围，再用另批材料验证；训练本地模型的必要性及费效比仍待这些基线与真实费用数据补齐。
 
 ## 新运行的记录要求
