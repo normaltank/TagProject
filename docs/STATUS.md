@@ -1,12 +1,12 @@
 # 当前状态
 
-更新：2026-10-26（Asia/Singapore）。唯一活跃主线：教师简介→研究方向→现有标签＋证据。
+更新：2026-10-27（Asia/Singapore）。唯一活跃主线：教师简介→研究方向→现有标签＋证据。
 
 ## 当前阶段
 
 Matt Setup、[档案整理 #1](https://github.com/normaltank/TagProject/issues/1)、小样规格与任务拆分已落地。用户已确认现有 CLI→输出校验→审核报告的验收入口，以及三张任务的粒度和依赖。
 
-当前任务：[规范 Matt 任务委派与验收流程 #10](https://github.com/normaltank/TagProject/issues/10)，执行中。执行子代理修改四份约定文档并做适用检查；下一步由主 Agent 核验后安排独立 Standards／Spec 审查，再归档回填和关闭。流程与职责以[工作流](agents/workflow.md)为准，当前尚未验收。
+当前任务：[规范 Matt 任务委派与验收流程 #10](https://github.com/normaltank/TagProject/issues/10)。工作流文档与首轮独立双轴审查已完成，逐项验收、版本复核及最终交付状态统一见 #10；后续派工与关票以[工作流](agents/workflow.md)为准。
 
 教师小样 [#2](https://github.com/normaltank/TagProject/issues/2)及任务 [#3](https://github.com/normaltank/TagProject/issues/3)、[#4](https://github.com/normaltank/TagProject/issues/4)、[#5](https://github.com/normaltank/TagProject/issues/5)，以及 [#9：历史BERT标签对照](https://github.com/normaltank/TagProject/issues/9)已完成交付检查和独立双轴审查。此前提前关票已补验收留证；入口见 [EXPERIMENTS](EXPERIMENTS.md)，最终提交和任务状态在 GitHub 维护。
 
