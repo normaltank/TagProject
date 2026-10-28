@@ -14,7 +14,8 @@
 | T-PREP-02 | 20条源材料与初判已冻结，发送副本已审核 | 原冻结版本保留，最终发送版本见 T-PILOT-02 |
 | T-PILOT-02 | 新20条流程诊断已完成 | 17次请求、3条本地分流；下节记录失败、复审及用量 |
 | T-BERT-01 | 同批20条历史标签对照已完成 | 共同层级与细化价值分开；下节说明开发审核结果及不可比范围 |
-| T-FIX-01 | 输出诊断与证据约束已形成离线待审修复 | [#11](https://github.com/normaltank/TagProject/issues/11)；下节记录复现、50项本地检查及实际模型效果未验证的边界 |
+| T-FIX-01 | 输出诊断与证据约束离线修复已验收 | [#11](https://github.com/normaltank/TagProject/issues/11)；下节记录复现、50项本地检查及该轮未运行模型的边界 |
+| T-PILOT-03 | 另批10条新版提示运行及教师模型复审已形成交付 | [#12](https://github.com/normaltank/TagProject/issues/12)维护验收与审查状态；10次请求、8条通过校验、2条隔离，详情见下节 |
 | T-MODEL、E-01至E-07 | 未运行，保留待续 | [原实验设计](history/EXPERIMENTS_PHASE1_20261023.md)；恢复条件见 PROJECT |
 
 ## T-DEV-01：旧16例
@@ -114,7 +115,34 @@
 
 证据入口：[最小复现及假设](../outputs/teacher_output_fix_20261028_v1/executor/PHASE1_3_REPORT.md)、[单变量探针](../outputs/teacher_output_fix_20261028_v1/executor/phase4_probes/hypothesis_results.json)、[完整检查](../outputs/teacher_output_fix_20261028_v1/finisher/full_systemroot/summary.json)、[交付与验收](../outputs/teacher_output_fix_20261028_v1/commander/DELIVERY.md)。原执行证据中的H2/H3编号与报告排序相反，交付记录按具名原因对应。两次执行上下文初始化停滞及主Agent接管文档收尾见[恢复记录](../outputs/teacher_output_fix_20261028_v1/commander/RECOVERY.md)，最终独立审查和提交状态见#11。
 
-本轮没有新模型输出；本地约束通过不证明角色声明、自然语言语义、包含关系或新提示实际效果正确。下一步用另批冻结材料与明确请求上限验证，不能用本轮回归计作准确率或增加独立测试分母。新增论文仅登记为待审稿件来源，未混入教师回放输入。
+本轮没有新模型输出；本地约束通过不证明角色声明、自然语言语义、包含关系或新提示实际效果正确。另批验证见下节T-PILOT-03，不能用本轮回归计作准确率或增加独立测试分母。新增论文仅登记为待审稿件来源，未混入教师回放输入。
+
+## T-PILOT-03：新版提示的10条新简介诊断
+
+2026-10-28按[#12](https://github.com/normaltank/TagProject/issues/12)使用teacher_ds_v2、teacher_output_v2、工具0.2.0和deepseek-flash。教师表A:O只读，不读S列；排除旧16例、旧20条及已知原文、规范化原文和主页重复。扫描100,525个物理数据行，100,000条正ID记录中98,863条未删除，92,833条可路由非空文本；20—6,500字符窗口候选76,711条，排重后可选74,443条。固定词法槽位依序选最早未用行，最终10条均有独立来源和哈希；这是诊断选择，不是随机或总体代表样本。规则、各槽位分母和排除证据见[选择冻结](../outputs/teacher_v2_validation_20261028_v1/executor/selection.frozen.json)。
+
+指挥端先于任何本批预测保存[初判](../outputs/teacher_v2_validation_20261028_v1/commander/first_judgement.frozen.json)与[工作释义](../outputs/teacher_v2_validation_20261028_v1/commander/working_scopes.frozen.json)：29项方向、27条映射、25个词库来源引用及29项已定位引文。原文21—5,616字符，发送文本合计15,132字符、等长遮盖419字符；全部初判引文保留原偏移。材料、16次离线预览与最终10份dry_run_v2核查见[准备交付](../outputs/teacher_v2_validation_20261028_v1/preparer/PHASE_A_DELIVERY.md)；最初预览中的重复遮盖检查失败保留，未修改产品或研究原文。主Agent完整检查副本并冻结[发送批准](../outputs/teacher_v2_validation_20261028_v1/commander/send_approval.frozen.json)，API仅收到脱敏简介和完整1535个词库引用。
+
+实际覆盖含短文、长文、跨学科、兴趣及研究活动线索；所谓授课／作品槽位原文另有明确研究陈述，不属于纯课程或孤立单篇作品样例。外文候选为同一简介的中英平行复述，没有独立英语或非英语外文、非文本异常覆盖。1条源单元格末尾已疑似不完整；副本未截断不能证明源简介完整。不补换样拟合结果。
+
+| 层次与分母 | 结果 |
+| --- | --- |
+| 10条文本、10次真实请求 | 全部HTTP 200，每条一次、重试0、未知0；本地分流0、未运行0，预算余量0 |
+| 输出可用性（10条） | 8条通过本地校验，原decision均suggest；2条整条隔离，abstain为0 |
+| 2条隔离 | 均insufficient_declared_support；安全位置分别为directions[3].support、directions[2].support，REVIEW与results可追溯；原非法正文未保存，具体语义未知 |
+| 可读预测24项方向 | 教师模型保留16、收窄6、另2项归背景；40项引文原偏移均匹配原文，16项证据角色在复审中细化 |
+| 可读预测29项标签候选 | 原9项supported保留；原20项scope_review中3项按较宽包含关系保留、16项继续待审、1项改用更直接已有类；另补3项已有映射 |
+| 复审建议记录 | 共15条保留映射、16条待审候选；11项gap逐项说明，正式赋标0。均按案例计数，不是不同概念数或准确率 |
+| 实际用量（10次） | 输入125,061／输出6,789 token；输入缓存命中6,912／未命中118,149，合计131,850 token |
+| HTTP耗时（10次） | 累计38.9819秒，中位4.21545秒，范围1.9480—5.6755秒；不含准备、初始化中断、全部CLI启动和语义复审 |
+
+用量及逐条状态见[运行统计](../outputs/teacher_v2_validation_20261028_v1/run_v1/run_statistics.frozen.json)、[首次预测索引](../outputs/teacher_v2_validation_20261028_v1/run_v1/predictions.frozen.json)及[主Agent调用核验](../outputs/teacher_v2_validation_20261028_v1/commander/run_acceptance_checks.frozen.json)。费用为null，定价未配置且未核对账单；不以token数量冒充实际费用。未知请求及已用额度未补回，旧批次未重试。
+
+逐项意见见[教师模型复审](../outputs/teacher_v2_validation_20261028_v1/commander/DS_REVIEW.md)、[机器记录](../outputs/teacher_v2_validation_20261028_v1/commander/semantic_review.frozen.json)及[定位核查](../outputs/teacher_v2_validation_20261028_v1/commander/semantic_review_checks.frozen.json)。主要问题仍包括：课程或成果数量进入方向列表，教学／项目／作品角色混用，宽领域扩成未写明的方法，省略题名被补出研究任务，以及已有上位类遗漏或误报词库缺口。明确包含关系可承接细方向，不要求研究复合标签的所有分支。16个待审候选继续待审，不把待审本身称错标。两例复审修订了原先保守的初判，接受更充分的区域项目依据及短主题清单语境；初判和首次预测均未改写。新增10条工作范围提案附在复审记录，未获本地发布者核实，正式词库不变。
+
+执行分工及接管见#12和本地[恢复记录](../outputs/teacher_v2_validation_20261028_v1/commander/RECOVERY_03.md)。独立执行子代理完成选材、脱敏、预览、首条调用及续跑脚本；工具切换与初始化停滞后主Agent核实停止并接管剩余九条、统计和文档。指挥端按用户指定负责语义初判／复审；不冒称全程子代理实施。受保护检查原10580项中32项变化均来自旧目录node_modules的Junction，实际指向共享运行库，触发者未知；原失败报告保留，未恢复或覆盖库文件。[分类核查](../outputs/teacher_v2_validation_20261028_v1/run_v1/protection_classification.frozen.json)记录项目材料2052项无变化、本批140份预冻结材料及首条输出无变化；本次职责文档更新前另复核#11归档1204项一致，获准更新文档的历史版本由base提交保留。离线收尾只分类该差异及汇总用量，新增网络0，不能声称原10580项全部不变。
+
+本轮只支持流程诊断：与T-PILOT-02相比样本、提示和契约不同，8/10与12/17是各批校验结果，不能据此推断准确率提高或修复的因果效果。当前审核为教师模型开发意见，非真人意见或独立金标；教师模型可见工作释义，DS只见词库名称／路径。历史BERT输入未知，本批未读取其标签，不作模型胜负结论。后续优先针对仍有隔离、不必要背景方向和已有标签映射问题设计修正与未暴露材料验证；本批不调提示重跑，不启动训练、全量赋标或待审稿件处理。
 
 ## 新运行的记录要求
 

@@ -6,15 +6,15 @@
 
 Matt Setup、[档案整理 #1](https://github.com/normaltank/TagProject/issues/1)、小样规格与任务拆分已落地。用户已确认现有 CLI→输出校验→审核报告的验收入口，以及三张任务的粒度和依赖。
 
-工作流规范化[#10](https://github.com/normaltank/TagProject/issues/10)已验收。当前任务：[教师输出失败诊断与证据范围修复 #11](https://github.com/normaltank/TagProject/issues/11)，已形成离线修复与待审交付；逐项验收、独立审查及最终交付状态统一见 #11。执行恢复与接管已留证，后续门槛按[工作流](agents/workflow.md)。
+工作流规范化[#10](https://github.com/normaltank/TagProject/issues/10)及[教师输出失败诊断与证据范围修复 #11](https://github.com/normaltank/TagProject/issues/11)已验收。当前任务：[新版教师提示小样验证 #12](https://github.com/normaltank/TagProject/issues/12)，已完成有界运行与指挥教师模型逐项复审；验收、独立审查和最终交付状态统一见 #12。工具切换导致的执行恢复、主 Agent 接管及实际分工已留证，后续门槛按[工作流](agents/workflow.md)。
 
 教师小样 [#2](https://github.com/normaltank/TagProject/issues/2)及任务 [#3](https://github.com/normaltank/TagProject/issues/3)、[#4](https://github.com/normaltank/TagProject/issues/4)、[#5](https://github.com/normaltank/TagProject/issues/5)，以及 [#9：历史BERT标签对照](https://github.com/normaltank/TagProject/issues/9)已完成交付检查和独立双轴审查。此前提前关票已补验收留证；入口见 [EXPERIMENTS](EXPERIMENTS.md)，最终提交和任务状态在 GitHub 维护。
 
 ## 实验进度与下一步
 
-旧16例开发审核已验收；新20条已完成有界运行、教师模型复审与预测冻结。成功、隔离、拒判及实际用量统一见 [EXPERIMENTS](EXPERIMENTS.md)。
+旧16例、新20条及另批10条新版提示材料分别保留。新版首次预测、初判和复审已分开冻结；输出可用性、语义修订、覆盖缺口及实际用量统一见 [EXPERIMENTS](EXPERIMENTS.md)。
 
-历史对照与本轮离线修复证据见[EXPERIMENTS](EXPERIMENTS.md)。历史BERT输入未知，不作同输入模型排名；新版提示的实际效果待另批有界验证，尚未启动训练或全量赋标。新增待审稿件已按“共用领域标签匹配审稿人”的用途登记，来源及初检边界见[DATA_AUDIT](DATA_AUDIT.md)。2026-10-26[近期技术调查 #7](https://github.com/normaltank/TagProject/issues/7)已完成，选型依据见[研究记录](RESEARCH_AND_DECISIONS.md)。独立验证与扩大规模门槛仍未定。
+新版小样仍发现输出隔离、背景混入方向、未说明的方法扩展，以及已有上位标签遗漏／过度保守映射。后续优先围绕这些问题设计修正和验证；尚未开展下一轮修正、独立效果验证、训练或全量赋标。历史BERT输入未知，当前不同样本的诊断不作模型排名。新增待审稿件服务“共用领域标签匹配审稿人”，来源及初检边界见[DATA_AUDIT](DATA_AUDIT.md)，稿件分类和师稿匹配支线保持暂停。2026-10-26[近期技术调查 #7](https://github.com/normaltank/TagProject/issues/7)已完成，选型依据见[研究记录](RESEARCH_AND_DECISIONS.md)。独立验证与扩大规模门槛仍未定。
 
 ## 阅读入口
 
