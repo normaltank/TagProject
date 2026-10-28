@@ -33,7 +33,9 @@
 
 ## 工具能力与解释限制
 
-现有 CLI 校验结构、逐字引文位置和词库成员／路径。它没有单独表达“时效未知”或“上位映射”的字段；这些在审核记录中补充，不能宣称分类程序已自动执行。
+现有CLI校验结构、逐字引文位置和词库成员／路径。teacher_output_v2另检查每个自报supported方向自身至少含explicit_direction或research_activity角色的证据，覆盖无标签和仅scope_review标签的分支；仅兴趣用research_interest，弱线索可保留待审。role仍由模型声明，程序不从文本证明该角色正确，也不能判断引用是否足以支持summary全部主题／方法。
+
+已确认包含关系的较宽映射在reason保留细方向与关系；仅相关、部分覆盖或范围不明用scope_review。工具没有单独表达“时效未知”或“上位映射”的字段，这些仍在审核记录补充；局部形式检查及新版提示不构成语义或概念包含关系审核。版本及旧契约回放边界见[操作指南](TEACHER_PATH_AND_TOOLS.md)。
 
 旧 JSON 的 pending_human_semantic_review 等字段保持原样，新审核记录单独关联。模型自报 supported 与形式校验通过均不等于语义、当前时效或方向覆盖已经正确。
 
