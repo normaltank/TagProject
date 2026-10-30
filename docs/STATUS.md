@@ -6,17 +6,17 @@
 
 Matt Setup、[档案整理 #1](https://github.com/normaltank/TagProject/issues/1)、小样规格与任务拆分已落地。用户已确认现有 CLI→输出校验→审核报告的验收入口，以及三张任务的粒度和依赖。
 
-工作流规范化[#10](https://github.com/normaltank/TagProject/issues/10)、[教师输出失败诊断与证据范围修复 #11](https://github.com/normaltank/TagProject/issues/11)及[新版教师提示小样验证 #12](https://github.com/normaltank/TagProject/issues/12)已验收关闭。#12的有界运行、指挥教师模型逐项复审、工具中断接管和独立双轴审查均已留证。当前任务为[接手核验与方法讨论归档 #13](https://github.com/normaltank/TagProject/issues/13)；本次接手核验与讨论归档见 #13，验收、审查及最终状态以 Issue 为准，后续门槛按[工作流](agents/workflow.md)。
+工作流规范化[#10](https://github.com/normaltank/TagProject/issues/10)、[教师输出失败诊断与证据范围修复 #11](https://github.com/normaltank/TagProject/issues/11)、[新版教师提示小样验证 #12](https://github.com/normaltank/TagProject/issues/12)及[接手核验与方法讨论归档 #13](https://github.com/normaltank/TagProject/issues/13)已验收关闭。当前任务为[证据角色最小对照 #14](https://github.com/normaltank/TagProject/issues/14)：10条纯合成有界运行、主Agent先判与逐项复审已分别冻结，正在形成待审交付；独立双轴审查、归档和关闭尚待完成，门槛按[工作流](agents/workflow.md)。
 
 教师小样 [#2](https://github.com/normaltank/TagProject/issues/2)及任务 [#3](https://github.com/normaltank/TagProject/issues/3)、[#4](https://github.com/normaltank/TagProject/issues/4)、[#5](https://github.com/normaltank/TagProject/issues/5)，以及 [#9：历史BERT标签对照](https://github.com/normaltank/TagProject/issues/9)已完成交付检查和独立双轴审查。此前提前关票已补验收留证；入口见 [EXPERIMENTS](EXPERIMENTS.md)，最终提交和任务状态在 GitHub 维护。
 
 ## 实验进度与下一步
 
-旧16例、新20条及另批10条新版提示材料分别保留。新版首次预测、初判和复审已分开冻结；输出可用性、语义修订、覆盖缺口及实际用量统一见 [EXPERIMENTS](EXPERIMENTS.md)。
+旧16例、新20条及另批10条新版提示材料分别保留。本轮另用10条纯合成／5对检查研究与授课、合作者、兴趣、代表作和导航的角色区别，真实教师分母0；初判、发送批准、首次预测和语义复审分别冻结。实际用量、候选与研究判断的不同任务、发现及限制统一见[EXPERIMENTS的T-ROLE-01](EXPERIMENTS.md#t-role-01纯合成证据角色最小对照)。
 
-新版小样仍发现输出隔离、背景混入方向、未说明的方法扩展，以及已有上位标签遗漏／过度保守映射。下一步将[方法比较建议](RESEARCH_AND_DECISIONS.md#旧对话方法讨论2026-10-30归档)整理成可审实验规格，按工作流确认材料、评价及资源缺口，再安排后续任务；三路线独立竞争和四步探索顺序目前均为旧 Agent 建议，尚未成为用户确认的新规格或最终架构。本票新增分类请求上限为0，不恢复或重置旧批次预算；#12已用10次、未知0、余量0。
+本轮明确短模板中的目标支持状态符合先判期待，但教学弱背景仍进入方向列表，同名L3结果也未检验上位映射；不能据此解决旧真实小样中的隔离、方法外推和范围问题。下一步优先设计未暴露的真实混合语境材料，检查角色归属及方向列表清理，再按工作流明确评价和资源边界。[方法比较建议](RESEARCH_AND_DECISIONS.md#旧对话方法讨论2026-10-30归档)中的三路线保留独立竞争，四步探索顺序仍是旧Agent建议，尚非用户确认的最终架构。本轮#14实用10次HTTP、未知0、余量0；#13新增调用上限0仅为其归档任务的历史边界，#12旧预算也不恢复。
 
-尚未开展下一轮修正、新模型对照、独立效果验证、训练或全量赋标。历史BERT输入未知，当前不同样本的诊断不作模型排名。新增待审稿件服务“共用领域标签匹配审稿人”，来源及初检边界见[DATA_AUDIT](DATA_AUDIT.md)，稿件分类和师稿匹配支线保持暂停。2026-10-26[近期技术调查 #7](https://github.com/normaltank/TagProject/issues/7)已完成，选型依据见[研究记录](RESEARCH_AND_DECISIONS.md)。独立验证与扩大规模门槛仍未定。
+尚未开展新模型对照、独立效果验证、训练或全量赋标；本轮未改产品、提示或正式词库。历史BERT输入未知，当前不同样本的诊断不作模型排名。新增待审稿件服务“共用领域标签匹配审稿人”，来源及初检边界见[DATA_AUDIT](DATA_AUDIT.md)，稿件分类和师稿匹配支线保持暂停。2026-10-26[近期技术调查 #7](https://github.com/normaltank/TagProject/issues/7)已完成，选型依据见[研究记录](RESEARCH_AND_DECISIONS.md)。独立验证与扩大规模门槛仍未定。
 
 ## 阅读入口
 

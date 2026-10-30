@@ -16,6 +16,7 @@
 | T-BERT-01 | 同批20条历史标签对照已完成 | 共同层级与细化价值分开；下节说明开发审核结果及不可比范围 |
 | T-FIX-01 | 输出诊断与证据约束离线修复已验收 | [#11](https://github.com/normaltank/TagProject/issues/11)；下节记录复现、50项本地检查及该轮未运行模型的边界 |
 | T-PILOT-03 | 另批10条新版提示运行及教师模型复审已形成交付 | [#12](https://github.com/normaltank/TagProject/issues/12)维护验收与审查状态；10次请求、8条通过校验、2条隔离，详情见下节 |
+| T-ROLE-01 | 10条纯合成角色对照运行及教师模型复审已形成交付 | [#14](https://github.com/normaltank/TagProject/issues/14)维护验收与审查状态；5对、10次请求、真实教师0，词法候选与研究标签判断分开，详情见下节 |
 | T-MODEL、E-01至E-07 | 未运行，保留待续 | [原实验设计](history/EXPERIMENTS_PHASE1_20261023.md)；恢复条件见 PROJECT |
 
 ## T-DEV-01：旧16例
@@ -143,6 +144,28 @@
 执行分工及接管见#12和本地[恢复记录](../outputs/teacher_v2_validation_20261028_v1/commander/RECOVERY_03.md)。独立执行子代理完成选材、脱敏、预览、首条调用及续跑脚本；工具切换与初始化停滞后主Agent核实停止并接管剩余九条、统计和文档。指挥端按用户指定负责语义初判／复审；不冒称全程子代理实施。受保护检查原10580项中32项变化均来自旧目录node_modules的Junction，实际指向共享运行库，触发者未知；原失败报告保留，未恢复或覆盖库文件。[分类核查](../outputs/teacher_v2_validation_20261028_v1/run_v1/protection_classification.frozen.json)记录项目材料2052项无变化、本批140份预冻结材料及首条输出无变化；本次职责文档更新前另复核#11归档1204项一致，获准更新文档的历史版本由base提交保留。离线收尾只分类该差异及汇总用量，新增网络0，不能声称原10580项全部不变。
 
 本轮只支持流程诊断：与T-PILOT-02相比样本、提示和契约不同，8/10与12/17是各批校验结果，不能据此推断准确率提高或修复的因果效果。当前审核为教师模型开发意见，非真人意见或独立金标；教师模型可见工作释义，DS只见词库名称／路径。历史BERT输入未知，本批未读取其标签，不作模型胜负结论。后续优先针对仍有隔离、不必要背景方向和已有标签映射问题设计修正与未暴露材料验证；本批不调提示重跑，不启动训练、全量赋标或待审稿件处理。
+
+## T-ROLE-01：纯合成证据角色最小对照
+
+2026-10-30按[#14](https://github.com/normaltank/TagProject/issues/14)诊断“领域词不变、角色／归属改变时，当前输出能否区分本人研究与弱线索”。用户本轮继续实验／试运行的授权、单列预算和阶段放行在该任务留证，不恢复旧批次额度。分母为10条纯合成、5对、真实教师0；材料由指定短中文模板组成，未新增真实教师资料、读取原教师行或S列，也不计入此前教师小样分母。
+
+授课、合作者归属、兴趣、孤立代表论文题名、学院导航各1对，使用现有“分离工程”和“历史文献学”控制词；每对各词出现次数相同，但措辞、位置、句长和标点并非完全受控。实际词库核验、原文／UTF-8发送文件、逐词次数、变动点及限制分别见[材料冻结](../outputs/teacher_role_contrast_20261030_v1/executor/materials.frozen.json)、[配对设计](../outputs/teacher_role_contrast_20261030_v1/executor/paired_design.frozen.json)与[目标身份](../outputs/teacher_role_contrast_20261030_v1/executor/target_identity.frozen.json)。两标签只是控制词，不是全库排他答案。
+
+独立执行者先冻结词库、代码／提示／契约／配置、精确词法候选和10份直接Python离线预览；主Agent在本批预测前独立保存[初判](../outputs/teacher_role_contrast_20261030_v1/commander/first_judgement.frozen.json)与[工作释义](../outputs/teacher_role_contrast_20261030_v1/commander/working_scopes.frozen.json)，核对完整发送副本后冻结[发送批准](../outputs/teacher_role_contrast_20261030_v1/commander/send_approval.frozen.json)。发送用户消息仅intro和完整1535个合法词库引用，无期待、配对条件或本地case ID。teacher_ds_v2／teacher_output_v2／工具0.2.0及deepseek-flash不变；每次max_tokens=2048、timeout=60秒、max_retries=0，其余产品默认配置不变。准备证据及哈希见[Phase A交付](../outputs/teacher_role_contrast_20261030_v1/executor/PHASE_A_DELIVERY.md)和[预览索引](../outputs/teacher_role_contrast_20261030_v1/executor/dry_run_index.frozen.json)。
+
+唯一串行dispatch按R01→R10运行，dispatch／case／launch均先留独占持久化记录，再进入既有凭证入口；不自动续调或重发。10次请求全部HTTP 200、每条一次、重试0、未知0、未运行0、预算余量0。10条均通过结构／引文／词库校验，原decision为8条suggest、1条needs_review、1条abstain，隔离0。原始payload、逐条actual attempts和usage保留在[首次预测索引](../outputs/teacher_role_contrast_20261030_v1/run_v1/predictions.frozen.json)及[Phase B完整结果入口](../outputs/teacher_role_contrast_20261030_v1/run_v1/PHASE_B_DELIVERY.md)，校验通过不等于语义正确。
+
+主Agent完整复审11项方向、11条逐字引文、9条标签候选和0项gap：保留8项支持研究方向，1项兴趣弱线索继续待审，2项教学归为背景；保留8条支持标签建议和1条待审候选，正式赋标0。教学两项原本已为weak／teaching且没有研究标签，问题是仍列在directions，不记作2个错标。R05／R07的explicit_direction与初判偏好的research_activity均可表达直接研究自述，接受这2项强角色子类差异，初判保持不变。逐项意见及原文回切核验见[教师模型复审](../outputs/teacher_role_contrast_20261030_v1/commander/DS_REVIEW.md)、[机器记录](../outputs/teacher_role_contrast_20261030_v1/commander/semantic_review.frozen.json)和[复审核查](../outputs/teacher_role_contrast_20261030_v1/commander/semantic_review_checks.frozen.json)。
+
+五对的目标支持状态在本组合中符合先判期待：研究／授课、本人／合作者及研究／导航交换时，支持标签跟随本人研究；兴趣保留weak与scope_review，孤立论文题名abstain。8条支持建议均为现有同名L3，L2回退0，因此没有检验歧义范围或已有上位类映射能力；教学背景仍进方向列表的发现，说明方向清理与标签映射要分别核查。这些是教师模型开发判断，不是独立真人答案。
+
+[精确词法基线](../outputs/teacher_role_contrast_20261030_v1/executor/lexical_candidates.frozen.json)逐条遍历全部1535个合法引用，按末级名称精确子串匹配，保留同名多位置、全部命中与Unicode区间，不做Top-K或自动supported。共16次候选命中，其中8次对应初判的研究陈述、8次来自弱线索或背景；后8次不是分类器假阳性统计。它完成的是候选任务，不与DS最终研究判断作同任务胜负，也未测试encoder或embedding，不能据此排除这些路线。
+
+实测输入118,871／输出1,779 token，合计120,650；输入缓存命中7,680／未命中111,191。HTTP attempts累计18.2817秒；分类elapsed累计18.4725秒，含局部准备与校验开销，两者均不含全部启动、材料准备和审核投入。费用为null，未配置单价、未核对账单；逐例用量和发送一致性见[运行统计](../outputs/teacher_role_contrast_20261030_v1/run_v1/run_statistics.frozen.json)、[操作核验](../outputs/teacher_role_contrast_20261030_v1/run_v1/phase_b_operation_checks.frozen.json)及上述复审核查，不能以token或分类计时冒充全流程成本。
+
+现有PS默认内置Python实际3.12.14，系统默认python为3.12.10；准备helper在首条离线预览后因旧版本断言中断，初版代码／预览和[中断记录](../outputs/teacher_role_contrast_20261030_v1/executor/phase_a_preparation_interruption.frozen.json)保留，续准备仍用同一3.12.14完成另九份，未发生API重试。未安装、下载模型或训练。原始XLSX、旧16例及旧冻结研究载荷只读，保护核验排除本批目录、运行库缓存和获准更新的EXPERIMENTS／STATUS；本批初判／发送／首次预测／复审保持冻结，两份职责文档旧版由base提交保留。检查范围见[准备保护记录](../outputs/teacher_role_contrast_20261030_v1/executor/protection_checks.frozen.json)和上述操作核验，不能把历史清单连同获准更新文档宣称为全部字节不变。
+
+本轮仅支持明确短中文模板中的角色诊断，没有真实混合语境、长简介、多语、长尾概念或独立质量验证覆盖，不能外推真实教师准确率、统计显著性、全量表现或最终架构。deepseek-flash仅为本次请求／返回标识，托管后端权重revision未核实；本轮不是与旧批同输入／同权重的改进实验。下一步优先设计未暴露真实混合语境材料，继续检查角色归属和方向列表背景清理；三路线仍保留独立竞争，不根据本轮合成表现选型。产品／提示／契约／词库未改，本轮不补调拟合结果；新任务仍须明确输入版本、评价和资源边界。
 
 ## 新运行的记录要求
 
