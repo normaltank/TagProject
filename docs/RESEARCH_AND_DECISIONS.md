@@ -38,6 +38,23 @@
 
 共同L2直接分数与同路径L2+L3的max投影预先分开，投影保留child来源；头使用公共片段均值再归一化，检索仍maxchunk。因聚合、训练目标及模板也不同，路线差异不能全部归因于主干架构或训练本身。实测、弱标签目标与当前文本支持的错配、轻量训练收益及当前选择见[EXPERIMENTS的T-SCALE-01](EXPERIMENTS.md#t-scale-01扩大真实材料与冻结表示弱监督头)。
 
+## 2026-11-01：生成、重排与同NLI任务适配的方法
+
+按[#17](https://github.com/normaltank/TagProject/issues/17)新增两个官方固定checkpoint，查阅2026-11-01；只把公开任务能力当选型依据，不当教师效果。
+
+- [Qwen3-1.7B模型卡](https://huggingface.co/Qwen/Qwen3-1.7B/blob/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/README.md)：本地生成路线使用non-thinking聊天模板，FP16／batch1、greedy、最多384新token，完整简介及139 L2目录，输入≤8192不截断。输出最多一个合法标签／拒判和逐字quote；一次解析，无重发或语义修补。合法label即使quote失败也保留候选提名，输出门另要求schema、exactquote及非拒判。生成无校准标量分数，格式、引用存在、全文支持和证据充分分别审核。
+- [Qwen3-Reranker-0.6B模型卡](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B/blob/e61197ed45024b0ed8a2d74b80b4d909f1255473/README.md)：采用官方分行Instruct／Query／Document及yes/no后缀，用最后位置yes/no logit归一化作分数。本人研究支持instruction是本项目固定任务条件；不能把一般相关性训练视作已识别任职、课程或他人研究。它与三版NLI都对公共窗口逐对评分、按max聚合，但只在四基线top1加合法生成提名的≤5共同池内排名，不是完整139类检索。
+
+[PEFT LoRA官方接口](https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora)说明低秩适配与target_modules。本机固定PEFT0.17.1／accelerate1.11.0与原torch2.11.0+cu128／transformers4.57.6兼容，实际mDeBERTa-v2的query_proj/value_proj与PEFT映射一致。head-only仅更新原pooler/classifier；LoRA额外更新24个q/v模块的rank8／alpha16／dropout0参数，两者共享同任务头和旧90/30监督、模板、全窗口及选择规则，其他主干冻结。它与#16的139输出冻结表示线性头是不同任务配置。
+
+NLI以`entailment_logit−logsumexp(other2)`作margin，case取全窗口最大margin后作二元BCEWithLogits，等价于最大entailment概率的二元BCE而数值更稳定。无据目标是固定文本不支持，不是现实领域的负事实。该多实例弱定位不保证winner是真证据；窗口最大分、全文标签支持和引用充分分开测量。max12／patience3仅据旧val最小BCE选epoch，最早tie；head lr5e-4、LoRA lr1e-4、共享头lr5e-4、AdamW weight_decay.01、effective batch8、seed20261101。实际可训参数、变化tensor、曲线和加载核验留在运行记录。
+
+数据、代表、首次预测与校准门槛先冻结；新held不选提示／epoch／阈值。只在cal20选最大保留且至少5条、支持占保留≥90%的点，否则无自动建议。生成使用固定输出门，未满足同样支持目标也不形成自动建议。全文标签与原生窗口／quote分别匿名后审；头的检索窗口明确是辅助语境，不冒充头归因。分层组bootstrap及空条件分母按冻结协议记录。完整参数与官方权重元数据见本地[协议v2](../outputs/evidence_judge_20261101_v1/executor/protocol_v2.frozen.json)、[模型](../outputs/evidence_judge_20261101_v1/executor/models_v2.frozen.json)及[证据口径](../outputs/evidence_judge_20261101_v1/executor/evidence_quality_policy.frozen.json)。实测及用途取舍集中在[证据判别实验](EXPERIMENTS.md#t-evidence-01证据判别与同nli任务适配)。
+
+在任何cal质量意见前另固定[生成组件离线消融](../outputs/evidence_judge_20261101_v1/executor/component_ablation_protocol.frozen.json)：共同池仅删除四基线均未提名、只由生成提名的label，四判别器直接过滤已存max分数、稳定重选top1，不新增forward／训练／生成。四个诊断配置用同一匿名池意见、同cal规则分别锁点，再用共享配对索引比较含／不含生成的收益。这不是又跑四个模型；原九路线／原池／原预测不变。生成实测耗时及权重成本单列为未来可省组件，减少的判别器序列量可精确计数，未重跑的子池耗时不称实测，也不从本次已用预算倒扣。
+
+本轮取舍是继续保留低成本候选与全139覆盖，当前可直接复核的交付为去gen重排队列；现成NLI保留为独立证据判别对照，未验证重排后串NLI或四基线缺一不可。暂不保留当前生成支路或扩大该NLI LoRA。标签top1与联合证据的点值各有侧重，不能指定架构冠军；所有冻结点在held均未维持90%支持目标，成果统一待复核。具体分母、区间和限制以上述实测入口为准。
+
 ## 教师候选与总成本
 
 ### 部署位置与训练程度是两个维度
@@ -56,13 +73,13 @@
 
 ### S：冻结表示与主干任务微调的多标签分类
 
-保留BERT、RoBERTa、XLM-R等预训练编码器作为教师监督多标签分类候选：S0冻结表示，只训练轻量分类头；S1以教师任务答案微调分类头及选定主干参数，再比较增益是否覆盖标注、训练和维护成本。这里的“S”为方案标识。官方Transformers文档分别给出[BERT](https://huggingface.co/docs/transformers/en/model_doc/bert)、[RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/roberta)、[XLM-RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/xlm-roberta)的多标签序列分类接口／示例（查阅2026-10-23）；这是可实现性依据。#16已实际以BGE及Qwen冻结表示训练S0式弱监督头；S1未选定checkpoint或运行，不以接口存在宣称项目适配。
+保留BERT、RoBERTa、XLM-R等预训练编码器作为教师监督多标签分类候选：S0冻结表示，只训练轻量分类头；S1以教师任务答案微调分类头及选定主干参数，再比较增益是否覆盖标注、训练和维护成本。这里的“S”为方案标识。官方Transformers文档分别给出[BERT](https://huggingface.co/docs/transformers/en/model_doc/bert)、[RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/roberta)、[XLM-RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/xlm-roberta)的多标签序列分类接口／示例（查阅2026-10-23）；这是可实现性依据。#16已实际以BGE及Qwen冻结表示训练S0式弱监督头；当时S1未运行。#17另在原NLI上开展有界任务头／q/v LoRA对照，具体监督与方法按本页2026-11-01记录，不等同于完整教师多标签主干微调方案。
 
 仅加载基础BERT权重不会自动得到适配本词库的受训分类头；冻结主干仍需训练任务分类头，而任务微调可以更新编码器参数，不能把两种配置混称“全部冻结”。官方[文本分类训练示例](https://github.com/huggingface/transformers/tree/main/examples/pytorch/text-classification)可作后续实现参考，本轮未运行。
 
 S路线从有监督答案学习“简介／片段→既定标签集合”的判别；B路线用标签定义检索候选并重排“片段—概念”的相关性。两者可能使用相近编码器，但训练目标、标签变更方式和证据产出不同，不能把“使用BERT向量”当作已经验证监督分类。固定输出头遇新增／拆分标签可能需要新增训练样本、调整输出与重训；检索更新定义索引也仍需校准与验证，不能假定哪种总成本更低。
 
-旧标签不能直接成为可信细粒度金标；#16已先以有来源弱监督实际训练，弱验证拟合与主Agent AI后审分列，独立真人研究质量仍需独立答案。S0/S1应单独检查长文聚合、实际语言、长尾／不均衡、词库变更和拒判。分类分数没有充分证据定位；不能以注意力或相似度替代角色／范围审核。当前保留轻量头的实用收益，尚无扩大S1／LoRA的证据；下一步先修订监督中的本人研究角色、概念包含及缺漏。本轮后审未回流训练；未来如重用则属已暴露开发材料，另设组隔离评价。
+旧标签不能直接成为可信细粒度金标；#16已先以有来源弱监督实际训练，弱验证拟合与主Agent AI后审分列，独立真人研究质量仍需独立答案。S0/S1应单独检查长文聚合、实际语言、长尾／不均衡、词库变更和拒判。分类分数没有充分证据定位；不能以注意力或相似度替代角色／范围审核。#16保留轻量头收益并建议先修订本人研究角色、包含及缺漏，未在该票扩大主干适配；#17才按新授权重用其AI支持意见作分组任务适配和新材料比较。旧后审保持原样，重用后是已暴露开发监督，不能再当独立测试答案。
 
 ### 完整候选与工具分工登记
 

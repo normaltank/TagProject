@@ -258,6 +258,34 @@ BGE／Qwen各实际编码13120输入及1535引用、109618序列；编码墙钟2
 
 本地[完整成果报告](../outputs/scale_benchmark_20261031_v1/executor/RESULTS.md)集中可复用入口与解释；最终提交、逐AC验收、双轴审查和关闭状态以#16为准。
 
+## T-EVIDENCE-01：证据判别与同NLI任务适配
+
+2026-11-01按[#17](https://github.com/normaltank/TagProject/issues/17)完成新100的九路线、四个离线组件诊断、匿名cal／held审核及配对统计。**当前可复核成果是去gen重排队列；生成支路不保留，这套NLI LoRA暂不扩大，未形成全库自动标签门。** 数据与旧AI监督见[DATA_AUDIT](DATA_AUDIT.md#2026-11-01证据判别的新材料与旧ai监督)，方法见[研究记录](RESEARCH_AND_DECISIONS.md#2026-11-01生成重排与同nli任务适配的方法)。新S始终未读，教师内容仅本地，付费推理API0；意见不称真人金标／全库准确率。
+
+主Agent已在新标签评分前冻结全部100例方向／证据／映射。旧90/30组的338／118个S/N pair仅用于任务适配：head-only更新592899参数，按旧val最小BCE选epoch2（.5899984133）、epoch5停止；LoRA加q/v低秩参数后更新887811，选epoch9（.3722595003）、epoch12停止。旧val是AI开发监督，不是研究质量。实际冻结主干每个tensor前后hash不变，两选中checkpoint在全新原NLI上复载的旧val探针logits maxdiff均0；入口为[head运行](../outputs/evidence_judge_20261101_v1/runs/train_head/run.json)、[LoRA运行](../outputs/evidence_judge_20261101_v1/runs/train_lora/run.json)及对应[模型目录](../outputs/evidence_judge_20261101_v1/models/)。
+
+四基线复用词表、向量和v2头，无重训／重fit；BGE／Qwen新100特征编码GPU14.672／28.328秒，CPU基线评分2.594秒。生成100次、修补／重发0，完整139目录＋简介max5185tokens、输出上限384；生成GPU4206.250秒。共同池248个case-L2／1382窗口对，NLI原／head／LoRA各GPU16.844／16.109／16.657秒，重排40.578秒；这些是池内判断，不是139类完整检索。5528窗口分数、max／winner、引用位置和加载来源回读通过后，全部原九路线／原池／代表先冻结：[首预测清单](../outputs/evidence_judge_20261101_v1/executor/first_predictions.frozen.json)及[数值核对](../outputs/evidence_judge_20261101_v1/executor/prediction_checks.frozen.json)。四个生成组件离线消融随后仅过滤既存分数，无新增模型forward；不称额外四个模型。
+
+GPU累计5433.562秒＝1.509323小时＜3小时，含四次容量单步、特征、训练／复载和推理；是加载及执行墙钟口径，不是纯kernel时间。生成Torch峰值allocated7.753GiB／reserved14.107GiB是软件分配器计数，不代表物理8GiB显卡容量或硬件最低需求；运行时WDDM专用显存接近上限，性能按实测保留，未改参数重跑或关闭用户应用。新增官方权重／必要文件5286933549字节；含停止整份请求上界、断线／探针及metadata余量的下载保守上界6.078GiB＜8GiB，非网络流量实测。整文件停顿和分段TLS中断经原段续传修复，官方SHA全过，原torch／transformers未升级。原三XLSX及实际旧源的显式32项保护核对一致，不遍历旧runtime或重hash旧大权重；见[推理后保护](../outputs/evidence_judge_20261101_v1/executor/protected_postinference.after.json)。
+
+先审[cal20匿名包](../outputs/evidence_judge_20261101_v1/executor/calibration_review.anonymous.json)56标签／130上下文，再仅据同cal20将原九路线与四离线配置全部[锁点](../outputs/evidence_judge_20261101_v1/executor/working_points.frozen.json)，UTC2026-10-31T20:09:19.484599+00:00。然后盲来源审held80的192标签／473上下文，全部完成才解封效果。全100并集248项为138S/63当前无据/47U，603上下文为220充分/300不足/83U；这是不同分母的AI意见。初判、原预测和后审不覆盖，未以held改参数／输入／阈值。
+
+held80原九路线top1的S/N/U：TF-IDF52/17/11、BGE头55/8/17、Qwen树55/12/13、Qwen头57/9/14、原NLI61/10/9、NLI头57/11/12、LoRA59/10/11、重排62/9/9。生成只有18条满足固定有效门，其中6S/9N/3U，另42有效schema拒判、20格式或quote失败；有效输出中仅2条同时有充分原生quote。其26合法label提名为7S/14N/5U，不能把格式失败隐去，也不能把有quote当支持。J038合并quote语义S但不逐字存在，固定门仍失败。
+
+held已知L2正例234对／72例，非穷尽。完整139的@1/5/10命中为TF-IDF49/118/154、BGE头54/139/184、Qwen树54/148/188、Qwen头56/161/195。Qwen头@10点值最高83.33%，较Qwen树差2.99点CI[-1.86,8.33]，不能据此称唯一赢家或裁定细标签。原共同池已知正例上限仅106/234＝45.30%，四基线子池103/234＝44.02%；池内top1不当完整139召回，未列初判不作负例。
+
+生成22个held独有提名仅4S/13N/5U，已知正例池上限增3对。离线删除这些提名后，原NLI／头／LoRA／重排标签S为61/59/61/64，联合“全文标签S＋充分原生窗口”为52/41/48/50；winner改变3/6/6/4条，详情保留逐case。去gen−原池支持百分点差CI依次[0,0]、[0,6.25]、[-2.5,7.5]、[0,6.25]，未显示保留70.10分钟生成支路的收益。全100每判别器减少156个候选窗口序列（held118），但子池耗时未实跑；本次实际GPU账不倒扣。
+
+去gen重排64/80标签S，较BGE头55/80高11.25点CI[3.75,18.75]，较Qwen头57/80高8.75点CI[1.25,16.25]；但去gen原NLI61/80、联合52/80，重排联合仅50/80，双方差区间跨0。原NLI是独立对照，未测试重排后串NLI，也未证明四基线缺一不可。原池LoRA比同任务头只多2/80，差2.5点CI[-3.75,8.75]；去gen后LoRA／head／original为61/59/61，增益区间仍跨0。旧val改善未证明该适配必要；结论限本监督／模型／参数／种子，不推广所有后训练。
+
+主Agent[后审瓶颈描述](../outputs/evidence_judge_20261101_v1/commander/candidate_pool_ceiling.json)把去gen重排未获S的16条分为8输入未确认、4明确方向未入池、4池内已有后审S却未选中。它区分输入可判定性、候选覆盖与池内选择，不把全部问题归因于微调；是按后审候选构造的描述，不是模型准确率，未改原统计／预测／门槛。
+
+所有可行cal点在held都未维持90%支持目标：BGE头数学保留40且29S＝72.50%，Qwen树49且33S＝67.35%，原池重排36且28S＝77.78%，去gen重排35且29S＝82.86%（分层组CI[70.59%,93.75%]）。其他配置无可行点，空条件分母null。五层各16教师记录组、共享2000次配对bootstrap／seed20261101仅描述本平衡AI样本。各层、完整配对区间、拒判与原生／辅助证据分列在[统计](../outputs/evidence_judge_20261101_v1/executor/statistics.frozen.json)；两个头的检索语境明确不作头归因。总体标签S不等于联合证据，更不是真人精度。
+
+[去gen重排复核队列](../outputs/evidence_judge_20261101_v1/executor/reranker_no_generator_review_queue.frozen.jsonl)100条含input hash、label/path、原生quote／Unicode区间、label/context AI意见和数学保留标记，全部requires_review=true，不作自动标签；由固定同分数离线筛池而非新模型运行。[整合结果](../outputs/evidence_judge_20261101_v1/executor/new100_results.frozen.jsonl)、[问题清单](../outputs/evidence_judge_20261101_v1/executor/PROBLEMS.md)、[简明报告](../outputs/evidence_judge_20261101_v1/executor/RESULTS.md)、[主九图PNG](../outputs/evidence_judge_20261101_v1/executor/comparison.png)／[SVG](../outputs/evidence_judge_20261101_v1/executor/comparison.svg)、[离线组件PNG](../outputs/evidence_judge_20261101_v1/executor/component_ablation.png)／[SVG](../outputs/evidence_judge_20261101_v1/executor/component_ablation.svg)均已交付。输入问题含关键词堆积／机构导航／临床实践等，不据此诊断来源真假；同源AI监督、小cal、长尾、近重复／同人异页、遮盖损失、窗口max及非穷尽答案继续限制外推。
+
+[默认dry-run入口](../outputs/evidence_judge_20261101_v1/executor/RUN_LOCAL.ps1)已验证，无新增GPU复跑；两次fresh-checkpoint提供可加载证据。仅判断一个固定本地case-L2，显式live才推理，不读S、不训练或正式赋标。主Agent已另核[原数值／cal](../outputs/evidence_judge_20261101_v1/commander/raw_calibration_checks.json)及[全部配置／配对draw](../outputs/evidence_judge_20261101_v1/commander/outcome_checks.json)，不替代独立Standards／Spec审查。逐AC、base/head和待审入口见本地[交付](../outputs/evidence_judge_20261101_v1/executor/DELIVERY.md)；最终验收、同步归档和关闭以#17为准。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。
