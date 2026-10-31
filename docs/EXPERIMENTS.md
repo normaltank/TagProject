@@ -17,7 +17,8 @@
 | T-FIX-01 | 输出诊断与证据约束离线修复已验收 | [#11](https://github.com/normaltank/TagProject/issues/11)；下节记录复现、50项本地检查及该轮未运行模型的边界 |
 | T-PILOT-03 | 另批10条新版提示运行及教师模型复审已形成交付 | [#12](https://github.com/normaltank/TagProject/issues/12)维护验收与审查状态；10次请求、8条通过校验、2条隔离，详情见下节 |
 | T-ROLE-01 | 10条纯合成角色对照运行及教师模型复审已形成交付 | [#14](https://github.com/normaltank/TagProject/issues/14)维护验收与审查状态；5对、10次请求、真实教师0，词法候选与研究标签判断分开，详情见下节 |
-| T-MODEL、E-01至E-07 | 未运行，保留待续 | [原实验设计](history/EXPERIMENTS_PHASE1_20261023.md)；恢复条件见 PROJECT |
+| T-LOCAL-01 | 三个本地模型完成共同20条开发材料推理及主Agent核验 | [#15](https://github.com/normaltank/TagProject/issues/15)维护验收与审查状态；encoder NLI、encoder dense embedding、decoder embedding，详情见下节 |
+| 旧T-MODEL、E-01至E-07 | 原设计未运行，保留待续 | [原实验设计](history/EXPERIMENTS_PHASE1_20261023.md)；不与本轮T-LOCAL-01混用，恢复条件见 PROJECT |
 
 ## T-DEV-01：旧16例
 
@@ -166,6 +167,32 @@
 现有PS默认内置Python实际3.12.14，系统默认python为3.12.10；准备helper在首条离线预览后因旧版本断言中断，初版代码／预览和[中断记录](../outputs/teacher_role_contrast_20261030_v1/executor/phase_a_preparation_interruption.frozen.json)保留，续准备仍用同一3.12.14完成另九份，未发生API重试。未安装、下载模型或训练。原始XLSX、旧16例及旧冻结研究载荷只读，保护核验排除本批目录、运行库缓存和获准更新的EXPERIMENTS／STATUS；本批初判／发送／首次预测／复审保持冻结，两份职责文档旧版由base提交保留。检查范围见[准备保护记录](../outputs/teacher_role_contrast_20261030_v1/executor/protection_checks.frozen.json)和上述操作核验，不能把历史清单连同获准更新文档宣称为全部字节不变。
 
 本轮仅支持明确短中文模板中的角色诊断，没有真实混合语境、长简介、多语、长尾概念或独立质量验证覆盖，不能外推真实教师准确率、统计显著性、全量表现或最终架构。deepseek-flash仅为本次请求／返回标识，托管后端权重revision未核实；本轮不是与旧批同输入／同权重的改进实验。下一步优先设计未暴露真实混合语境材料，继续检查角色归属和方向列表背景清理；三路线仍保留独立竞争，不根据本轮合成表现选型。产品／提示／契约／词库未改，本轮不补调拟合结果；新任务仍须明确输入版本、评价和资源边界。
+
+## T-LOCAL-01：三个本地模型的共同开发材料试跑
+
+2026-10-31按[#15](https://github.com/normaltank/TagProject/issues/15)实际运行mDeBERTa-NLI、BGE-M3 dense和Qwen3-Embedding-0.6B，非历史BERT复现或教师监督头训练。模型任务、固定官方revision及方法依据见[研究记录](RESEARCH_AND_DECISIONS.md#2026-10-31本地试跑的方法依据)。本轮3/3模型完成全部输入，无推理失败、OOM或重跑调参；正式赋标0、训练0、新付费推理API调用0。
+
+共同20条为#14的10条纯合成及#12已批准、实际发送过的10条脱敏真实开发文本；真实文本共15132 Unicode码点，含原隔离的V02/V09，不重新读取原教师行或S列。逐条请求／批准／首次预测索引和hash核对后冻结[数据及引用](../outputs/model_pilot_20261031_v1/executor/dataset.frozen.json)，不是新增20条独立材料。200码点窗口、40重叠产生107公共片段，保留原发送文本[start,end)并全覆盖；含假设／指令的实际最大输入长度NLI160、BGE134、Qwen190 tokens，均不超过512，无静默截断。协议及首次推理前冻结hash见[配置](../outputs/model_pilot_20261031_v1/executor/config.frozen.json)、[长度检查](../outputs/model_pilot_20261031_v1/executor/token_lengths.frozen.json)和[输入绑定](../outputs/model_pilot_20261031_v1/executor/inference_inputs.frozen.json)。
+
+两种embedding对全部1535合法引用精确评分，无Top-K预筛或DeepSeek接续；NLI独立评分全部139 L2，另加两个合成L3目标。三者共同139 L2直接排名，各标签取公共片段max并保留winner偏移。真实参考来自#12既有教师模型复审：15条保留映射投影、按case+L2去重为11对／8案例；其中细粒度参考另为11个case+L3对／5案例。16条待审不当负例，V02/V09无保留参考，仅不计覆盖分母，仍完整推理。合成参考为既有初判及复审保留的8个本人研究目标，兴趣待审与代表作拒判分开。所有参考均是已暴露开发材料上的AI意见，不是独立金标。
+
+共同139 L2的known-positive reference coverage@1／5／10如下，数字是命中数，分别除以各组固定分母；不是准确率或precision，未判断候选不计假阳性：
+
+- mDeBERTa-NLI：真实2／3／4（分母11对、8案例）；合成0／1／3（分母8对、8案例）。
+- BGE-M3：真实4／6／7（分母11对、8案例）；合成0／5／5（分母8对、8案例）。
+- Qwen3-Embedding：真实5／8／10（分母11对、8案例）；合成0／3／8（分母8对、8案例）。
+
+完整1535排名中的已保留L3参考覆盖@1／5／10：BGE真实3／4／5、Qwen真实2／6／8，分母均11条L3／5案例；BGE合成5／8／8、Qwen合成8／8／8，分母均8条L3／8案例。NLI只测两个诊断L3，不参加全细粒度覆盖比较。合成L2 top1均为0，不代表同名细标签未被找回；共同L2与完整排名的L3分母、任务不能混用。逐案例分数、排名与分母见[机器汇总](../outputs/model_pilot_20261031_v1/executor/summary.json)。
+
+主Agent重读10条合成并核对原始数组：R02“主讲分离工程课程。研究方向：历史文献学。”中，NLI授课目标X entailment=0.9963、研究目标Y=0.0029，临时0.5规则会错授X并漏Y；这是该模板与现成NLI头的反例，不是监督encoder路线的一般结论。BGE/Qwen均把R06兴趣X及R08孤立论文题名X排完整1535的第1名；本轮embedding无正式赋标阈值，不能把这些高排名计作已经赋出的无据标签。Qwen在部分研究／背景交换中能把本人研究目标置顶，但未解决全部角色判别。真实V05/V07/V08的winner抽查显示优势并非逐条一致，教育／访问经历段也可能胜出；召回已保留标签不自动验证winner角色或完整证据。逐目标数值及主Agent意见见[角色目标](../outputs/model_pilot_20261031_v1/executor/role_targets.csv)与[结果核验](../outputs/model_pilot_20261031_v1/commander/RESULT_REVIEW.md)。
+
+实际环境Python3.12.10、PyTorch2.11.0+cu128、Transformers4.57.6，RTX4060 Laptop GPU（8188MiB），FP32、batch8、逐模型加载释放。评分墙钟NLI131.656秒、BGE14.156秒、Qwen25.265秒，合计171.077秒；该计时含分词、评分与聚合，不是纯GPU内核时间，也不含下载安装、材料准备及审核。加载加评分合计178.296秒，低于90分钟推理预算。forward序列数分别15087／1642／1642，任务工作量不同。PyTorch峰值allocated分别1.199／2.173／2.310GiB，reserved为1.309／2.230／2.365GiB，非整台GPU总占用。环境、执行脚本SHA及原始分数见[环境记录](../outputs/model_pilot_20261031_v1/executor/environment.frozen.json)、[NLI运行](../outputs/model_pilot_20261031_v1/runs/nli/run.json)、[BGE运行](../outputs/model_pilot_20261031_v1/runs/bge/run.json)与[Qwen运行](../outputs/model_pilot_20261031_v1/runs/qwen/run.json)；各运行同目录保留首次成功scores.npz／scores.csv和脚本副本。
+
+公开依赖及权重仅在新runtime安装／下载，BGE官方bin的安全权重加载例外在#15留证，其余取safetensors，权重SHA均匹配官方固定revision。首次PyTorch下载超时，第二次停顿后保留前缀续传并按官方SHA核对；Qwen首次传输少尾段，补齐后SHA通过；一个重复BGE下载被停止，其未完成前缀计入投入。最终必要模型文件3.799GiB；没有网络流量计量器，按首次失败完整wheel上界、已知文件、重复前缀及小依赖／metadata余量估算累计下载上界9.263GiB，低于10GiB，不能称精确实测流量。日志、估算口径和失败详情见[投入与检查](../outputs/model_pilot_20261031_v1/executor/resources_and_checks.json)及[执行记录](../outputs/model_pilot_20261031_v1/executor/RESULTS.md)。没有安装全局库或修改驱动，未重发DeepSeek；总准备、审核人时和能耗未计量，不能用评分墙钟冒充全流程成本。
+
+主Agent独立重算输入与参考、max／winner、三类概率和、归一化向量点积及全部覆盖算术，通过[输入核验](../outputs/model_pilot_20261031_v1/commander/input_checks.json)和[结果核验](../outputs/model_pilot_20261031_v1/commander/results_checks.json)。执行者对三份原始XLSX及实际读取的旧冻结源文件做前后hash，31项一致，runtime未纳入保护扫描；入口为[保护前](../outputs/model_pilot_20261031_v1/executor/protected.before.json)及[保护后](../outputs/model_pilot_20261031_v1/executor/protected.after.json)。产品、提示、正式词库及旧预测不变，脚本、原始分数与逐条文本仅留本地新版本目录。
+
+本批开发参考中Qwen候选覆盖值得继续验证，BGE保留为较低评分耗时的比较；现成NLI模板暂不适合直接赋标。训练任务、模板／池化不同，旧DeepSeek后端revision／任务条件及历史BERT输入未知，不作架构因果胜负。max chunk有长文偏差及跨段归属限制，未审全部候选的证据角色。下一步先用未暴露真实混合语境材料核候选覆盖、可接受赋标及复核投入，盘点可信监督样本，再决定encoder分类头训练可行性；不预设embedding后必须接DeepSeek，不据本轮扩大赋标或认定监督分类无效。任务验收、独立双轴审查、归档及最终状态以#15为准。
 
 ## 新运行的记录要求
 

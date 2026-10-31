@@ -1,6 +1,6 @@
 # 教师路线、工具依据与选型记录
 
-本页维护候选方案、官方依据及选择理由。外部资料的查阅时点为2026-10-23；历史发行信息保留为当日记录，使用前按需要复核。实际结果统一见[EXPERIMENTS](EXPERIMENTS.md)，当前任务见[STATUS](STATUS.md)。
+本页维护候选方案、官方依据及选择理由。外部资料默认查阅时点为2026-10-23，后续补充另注日期；历史发行信息保留为当日记录，使用前按需要复核。实际结果统一见[EXPERIMENTS](EXPERIMENTS.md)，当前任务见[STATUS](STATUS.md)。
 
 ## 2026-10-26补充调查
 
@@ -16,7 +16,21 @@
 
 旧 Agent 提出的四步串行探索顺序仅为待审建议：先冻结判别材料和规则；再测词法检索、encoder embedding与decoder embedding等低投入路线的候选覆盖和最终赋标；继而盘点可信样本、评估监督分类可行性；最后让decoder比较完整简介与统一证据片段条件，判断额外增益来自证据识别还是标签映射。旧16例、旧20条和新10条继续只作开发诊断，不能转为独立测试答案。
 
-**尚未决定**具体模型／配置、同条件输入和标签范围版本、未暴露材料与独立答案、分层评价、质量／总成本门槛、预算及扩大规模条件。下一步先形成可审实验规格，再按[工作流](agents/workflow.md)确认实际缺口和任务边界；本次归档不授权训练、下载、分类调用或新对照，不把上述顺序追认为用户已确认的规格。
+**截至该次归档尚未决定**具体模型／配置、同条件输入和标签范围版本、未暴露材料与独立答案、分层评价、质量／总成本门槛、预算及扩大规模条件。该归档本身不授权训练、下载、分类调用或新对照，不把上述顺序追认为用户已确认的规格；随后单独授权的本地试跑方法见下节，独立验证和扩大规模条件仍未定。
+
+## 2026-10-31本地试跑的方法依据
+
+按[#15](https://github.com/normaltank/TagProject/issues/15)固定三个公开checkpoint，查阅日期2026-10-31。以下只说明模型任务和本轮实现依据；实际分母、覆盖、耗时及结论集中在[EXPERIMENTS的T-LOCAL-01](EXPERIMENTS.md#t-local-01三个本地模型的共同开发材料试跑)，不把官方能力或许可当本项目效果。
+
+- [MoritzLaurer/mDeBERTa-v3-base-mnli-xnli固定模型卡](https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-mnli-xnli/blob/8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c/README.md)，revision `8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c`：多语encoder上的现成MNLI/XNLI分类头，使用`AutoModelForSequenceClassification`，按config读取entailment／neutral／contradiction三类并逐文本对softmax。它不是本项目监督分类头，也不复现历史BERT。卡中提示不支持FP16，因此本轮三者统一FP32。
+- [BAAI/bge-m3固定模型卡](https://huggingface.co/BAAI/bge-m3/blob/5617a9f61b028005a4858fdac845db406aefb181/README.md)，revision `5617a9f61b028005a4858fdac845db406aefb181`：只测dense encoder embedding；卡说明query无需额外instruction，[池化配置](https://huggingface.co/BAAI/bge-m3/blob/5617a9f61b028005a4858fdac845db406aefb181/1_Pooling/config.json)与[模块配置](https://huggingface.co/BAAI/bge-m3/blob/5617a9f61b028005a4858fdac845db406aefb181/modules.json)分别指定CLS和归一化。本轮以标准`AutoModel`取CLS并L2归一化，不装FlagEmbedding或加载稀疏／ColBERT头。该官方revision只有`pytorch_model.bin`，格式例外在#15留证，以新版PyTorch的`weights_only=True`加载；另外两者取官方safetensors。
+- [Qwen/Qwen3-Embedding-0.6B固定模型卡](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/blob/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/README.md)，revision `97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3`：decoder embedding，按官方Transformers示例使用左padding、last-token pooling及L2归一化；query带英文任务instruction，标签文档不加instruction。卡要求Transformers至少4.51，本轮关闭不需要的生成cache。
+
+运行依赖按[PyTorch官方本地安装说明](https://pytorch.org/get-started/locally/)选择CUDA wheel，安装在项目新runtime，不改全局环境或驱动。三个模型均用标准Transformers类、`trust_remote_code=False`、`eval`和`inference_mode`，匿名下载后仅本地推理；精确文件、权重SHA和依赖版本见本地[模型冻结](../outputs/model_pilot_20261031_v1/executor/models.frozen.json)、[下载核验](../outputs/model_pilot_20261031_v1/executor/models.download.json)及[环境](../outputs/model_pilot_20261031_v1/executor/environment.frozen.json)。
+
+本轮统一标签文档为“末级名称（层级路径：完整路径）”，NLI假设为“这位教师本人研究的领域是{label_name}（上位领域：{parent_path}）。”；Qwen的英文query指令在[冻结配置](../outputs/model_pilot_20261031_v1/executor/config.frozen.json)保存。embedding精确评分全部合法引用，L2直接排名，不把L3最大值投影替代L2分数；NLI对各假设独立保留三类概率，不跨全部标签softmax，entailment>=0.5仅为预注册、未校准的临时诊断规则。三者按公共片段max聚合；高相似度不等于研究支持，winner片段仍需角色与归属核查，长简介的max偏差和跨段限制保留。
+
+这些checkpoint的训练任务、池化和模板不同，只支持本批开发诊断，不作架构因果排名。旧DeepSeek的托管权重revision未核实，历史BERT输入也未知；不能由现成NLI头的结果排除教师监督encoder分类路线，也不预设embedding后必须接DeepSeek。独立答案、未暴露材料和质量／总成本门槛仍需另定。
 
 ## 教师候选与总成本
 
@@ -93,7 +107,7 @@ API的Annif许可为NOASSERTION，进一步阅读其LICENSE.txt才确认主代�
 
 官方[v6.2.0](https://github.com/huggingface/sentence-transformers/releases/tag/v6.2.0)，2026-10-21发布，主代码Apache-2.0。[模型列表](https://sbert.net/docs/sentence_transformer/pretrained_models.html)按checkpoint列语言范围，例如distiluse-v1为15种，v2及部分paraphrase模型为50+；LaBSE偏翻译对齐，不能把其覆盖数量当学术主题适配证明。官方[Retrieve & Re-rank](https://www.sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html)使用独立编码召回候选，再对文本对联合打分。
 
-适合用规范名、别名、定义、排除例构造概念检索文档，新增概念可重建索引；仍需实际语种、长文本分段、跨领域同名和长尾验证。库不自带本项目概念库，不自动给出真实证据或校准置信度。具体checkpoint／重排器、revision、许可和截断上限在实验开始前冻结，目前未下载或选定唯一模型。另用Context7定位到同一官方检索重排文档，未把第三方摘要当效果证据。
+适合用规范名、别名、定义、排除例构造概念检索文档，新增概念可重建索引；仍需实际语种、长文本分段、跨领域同名和长尾验证。库不自带本项目概念库，不自动给出真实证据或校准置信度。具体checkpoint／重排器、revision、许可和截断上限在实验开始前冻结；2026-10-23调查时未下载或选定唯一模型，后续固定候选见本页2026-10-31方法记录，该试跑未使用Sentence Transformers库。另用Context7定位到同一官方检索重排文档，未把第三方摘要当效果证据。
 
 ### SKOS与VocBench：概念治理参考／可选编辑平台
 
