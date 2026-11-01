@@ -83,6 +83,22 @@ seed20261101配合issue18选样域固定200质量组及800随机吞吐组，三�
 
 准备只读原表A:O，S不访问/解码；输入采用既有等长遮盖，身份残留与遮盖内容损失的限制仍适用，全部仅本地。完整原文、遮盖、来源和Unicode区间见[阶段A](../outputs/pipeline_benchmark_20261101_v1/executor/STAGE_A.md)指向的私有映射。原三XLSX及实际复用旧源的显式35项准备前后hash一致，没有遍历旧runtime或重hash旧大权重；后续运行保护与实际结果见[EXPERIMENTS](EXPERIMENTS.md)。
 
+## 2026-11-01：多语输入与既有评价覆盖盘点
+
+[#20](https://github.com/normaltank/TagProject/issues/20)只读盘点当前可访问导出：上述教师100000记录、稿件快照1000记录及#15–19冻结输入。当前DBX/Postgres没有配置连接，未查询实时库，也不代表项目外全部论文存量。原件、旧审计版本和脚本SHA绑定及前后保护在本地[盘点manifest](../outputs/language_inventory_20261101_v1/executor/manifest.json)，方法、完整代表与限制见[盘点结果](../outputs/language_inventory_20261101_v1/executor/RESULTS.md)。没有模型推理、训练、API、外发资料、新下载或新依赖，稿件分类和匹配仍暂停。
+
+教师复用绑定旧审计CSV的脚本计数、长度/hash、cue和必要溯源，不用历史标签或标签数量统计/选例；代表从原表A/id、O/intro、L/deleted取完整原值。原简介类型为str94006、None5948、int18、datetime28，缺失5948。按旧审计明确regex ranges和原值字符串化口径，100000记录分为Han+Latin62353、Han无Latin29889、Latin无Han1622、其他/无字母188、空5948，互斥且加和为100000。Han出现92242行、Latin63975行，其他范围出现行数为Greek2153、Kana321、Cyrillic143、Hangul60、Arabic52、Hebrew18、Thai5、Devanagari1、未覆盖其他字母551；出现行数可以重叠，不相加当分母。逐脚本字符数、deleted原值分母在[教师统计](../outputs/language_inventory_20261101_v1/executor/teacher_stats.json)。
+
+稿件最终只取id/paper_id/title/abstract/keywords（A/B/C/D/L）；title缺0、abstract缺22、keywords缺41。按Han无Latin/Han+Latin/Latin无Han顺序，标题为236/37/727，摘要208/81/689，关键词244/40/675；各字段另加自身缺失后均为1000。合并严格为title+换行+abstract+换行+keywords，三类为194/104/702、全空0。逐字段/合并的脚本出现与字符数在[稿件统计](../outputs/language_inventory_20261101_v1/executor/paper_stats.json)。未读取稿件标签业务值、访问附件或PDF；这些是快照字段，不能称已核论文全文语言。
+
+上述是文字脚本profile，不是语种比例：Latin无Han不等于英语，Han+Latin不等于真正中英正文混写，其他脚本可能只来自符号、名字或书目。旧审计CSV解析会结构解析完整行，业务仅使用白名单；本轮XML取值先过滤目标行/列，再解析选中共享字符串，仍不夸称底层字节/节点完全未解码。首次稿件表头列假设失败曾解出status元数据，未用于统计或选例；最终先核表头再取L:keywords，具体失败与修正保留在本地结果。
+
+固定规则选出的10条教师和5条稿件完整本地代表，经root逐字段阅读的AI语义核查，确认存在完整英文教师生平/研究叙述及三字段均英语的稿件记录。另有中文教师主体附英文、俄文或日英书目，不能据此称教师正文双语；短Latin候选只有网址。稿件还有英语标题配中文摘要/关键词的字段间双语，以及中文主体夹AI/IP缩写。代表来源/码点区间/hash/规则和逐例意见均留本地；这是存在性核查，不是全表语种比例、真人语种普查或稿件PDF全文核验。本批代表未确认其他语种独立教师正文，也不能据此排除全表存在。
+
+旧#15–19实际评价输入按同一脚本口径重算：以Han无Latin/Han+Latin/Latin无Han排序，#15共20条为13/7/0（10真实开发、10合成），#16共120条为34/83/3，#17共100条为31/66/3，#18共200条为61/138/1，#19共100条为33/64/3。冻结遮盖正文的逐split/stratum统计、来源hash，以及另列的弱训练/弱验证/吞吐分母见[旧评价覆盖](../outputs/language_inventory_20261101_v1/executor/old_evaluation_coverage.json)，不把模型输入数当质量核验数。
+
+#16–19的五个互斥层先取Latin-heavy（长度≥100、Unicode名称含LATIN的字母≥80且占全部isalpha字母≥0.65），再按角色词法和短/中/长分层；这是不同于审计regex的proxy规则。四票Latin-heavy分别24/20/40/20条，其中Han+Latin为24/19/40/20，只有#17另1条Latin无Han。root另完整阅读旧评价10个Latin无Han候选，AI核查为8条纯URL、1条英语技术主题短列表、1条短英语职称/主题描述及脱敏联系方式；不能把它们计成10篇英文简介，也不据此声称旧评价绝无英语或全部Latin-heavy都不是英语。现有冻结协议未建立预先核实语言且单独计分的独立纯英评价子集；AI研究支持审核也不等于语种独立验证。逐例意见与完整来源绑定在本地[root冻结核查](../outputs/language_inventory_20261101_v1/commander/representative_review.frozen.json)。旧材料、初判、预测、阈值和推荐未改，语言覆盖对选型的含义见[研究记录](RESEARCH_AND_DECISIONS.md#20多语输入对后续比较的约束)。
+
 ## 语义观察与本轮范围
 
 ### #19新100组（2026-11-01）

@@ -4,6 +4,8 @@
 
 ## 当前阶段
 
+[#20多语输入与既有评测覆盖盘点](https://github.com/normaltank/TagProject/issues/20)已完成本地教师/稿件快照脚本统计及完整代表的root AI核查，确认英语内容与字段间双语实际存在；文字脚本、正文/书目角色和全表语种比例分开解释。当前无配置数据库连接，结论限已有导出。数据事实及旧评价语言覆盖限制见[DATA_AUDIT](DATA_AUDIT.md#2026-11-01多语输入与既有评价覆盖盘点)，修正仅中文选型前提及跨语中文词库待测约束见[研究记录](RESEARCH_AND_DECISIONS.md#20多语输入对后续比较的约束)。本票不新增模型实验，审查、最终验收、归档同步和关闭阶段统一以#20为准；后续比较须覆盖实际语言与证据角色，仍优先积累可信监督。
+
 [#19中文BERT、mmBERT与专用encoder重排补测](https://github.com/normaltank/TagProject/issues/19)的实验及主Agent核验已完成：五路完整预测、全部100组先判/匿名后审及配对统计可复核。cal推荐mmBERT保留不变；held未显示其超过旧BGE头的明确联合支持收益，全部候选仍待审、正式赋标0。独立审查、最终验收、归档同步和关闭阶段与证据统一以#19为准；下一项研究优先积累可信角色/纠错监督。结论与限制见[实验记录](EXPERIMENTS.md)，本地证据在`outputs/bert_encoder_tools_20261101_v1/executor/`。
 
 Matt Setup、[档案整理 #1](https://github.com/normaltank/TagProject/issues/1)、小样规格与任务拆分已落地。用户已确认现有 CLI→输出校验→审核报告的验收入口，以及三张任务的粒度和依赖。

@@ -57,6 +57,14 @@ NLI以`entailment_logit−logsumexp(other2)`作margin，case取全窗口最大ma
 
 ## 教师候选与总成本
 
+### #20：多语输入对后续比较的约束
+
+2026-11-01按[#20](https://github.com/normaltank/TagProject/issues/20)修正选型前提：PROJECT一直包含中文、外文及混写，不能把当前教师/稿件输入当成仅中文。完整代表的root AI核查确认英语教师叙述、英语稿件字段及字段间双语实际存在；来源、文字脚本分母和书目/缩写/网址边界集中在[DATA_AUDIT](DATA_AUDIT.md#2026-11-01多语输入与既有评价覆盖盘点)，不把存在性核查推成全表语种比例。Latin-heavy尤其可能是中文正文附英文书目。旧冻结评价尚无预先语种核实且单独计分的独立纯英子集，既有总体AI支持结果不能回答英文、真正混写或其他语言的相对效果。
+
+沿用[2026-10-26技术扫描](research/OPEN_TECH_SCAN_20261026.md)记录的英语定位，UltraBERT不能仅因“本项目是中文任务”排除；它仍是未实跑的候选，是否适合英语输入、中文标签目录和本人研究证据任务须另测。这里修正适用性前提，不把历史扫描改写成新实测，也不据语言存在性指定新模型。BGE/Qwen、mmBERT、现成多语NLI等已测配置的公开多语覆盖，同样不等于本项目验证了所有语种或已找到多语最优。
+
+后续若启动新比较，应对经实际语言/证据角色核查的中文、英文、正文混写及出现的其他语言分层，保留中文附英文书目与短URL噪声等诊断项；再单列“外文输入→现有中文词库”的跨语概念映射，区分标签召回/排序、本人研究归属、原文证据和拒判。当前词库没有完整多语别名，英语编码能力不能直接替代这项验证。旧#15–19阈值、推荐和冻结结果保持原样，本票不开展新模型、标签、稿件分类或师稿匹配实验。
+
 ### #19：传统/现代BERT冻结分类与专用encoder重排
 
 2026-11-01核对三份固定官方模型卡：[google-bert/bert-base-chinese](https://huggingface.co/google-bert/bert-base-chinese/blob/8f23c25b06e129b6c986331a13d8d025a92cf0ea/README.md)为中文masked-language-model预训练、Apache-2.0；[jhu-clsp/mmBERT-base](https://huggingface.co/jhu-clsp/mmBERT-base/blob/c5955035435e2bf121cde7f3c8863ef52ff35d82/README.md)为多语ModernBERT主干、MIT；[BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3/blob/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/README.md)为成对相关性重排、Apache-2.0。官方语言覆盖和重排能力不能当作本项目研究归属识别效果。
