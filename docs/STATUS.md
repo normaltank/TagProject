@@ -8,7 +8,7 @@ Matt Setup、[档案整理 #1](https://github.com/normaltank/TagProject/issues/1
 
 工作流规范化[#10](https://github.com/normaltank/TagProject/issues/10)、[教师输出失败诊断与证据范围修复 #11](https://github.com/normaltank/TagProject/issues/11)、[新版教师提示小样验证 #12](https://github.com/normaltank/TagProject/issues/12)及[接手核验与方法讨论归档 #13](https://github.com/normaltank/TagProject/issues/13)已验收关闭。[证据角色最小对照 #14](https://github.com/normaltank/TagProject/issues/14)与[#15本地三模型试跑](https://github.com/normaltank/TagProject/issues/15)已归档关闭，最终状态以对应Issue为准。
 
-[#16扩大本地比较与弱监督分类头试验](https://github.com/normaltank/TagProject/issues/16)及[#17证据判别与任务适配](https://github.com/normaltank/TagProject/issues/17)均已验收关闭，产物作为新票依赖。[#18完整本地流程比较](https://github.com/normaltank/TagProject/issues/18)已完成最终12配置、200先判/匿名后审、cal锁点及1000待审队列，正在收束待审交付。主Agent独立数值/统计/队列/图核验通过，后续仍须同base/head全新Standards/Spec审查、最终验收与归档同步关闭。成果入口见[完整流程实验](EXPERIMENTS.md#t-pipeline-01完整本地流程比较与1000组待审试运行)。
+[#16扩大本地比较与弱监督分类头试验](https://github.com/normaltank/TagProject/issues/16)及[#17证据判别与任务适配](https://github.com/normaltank/TagProject/issues/17)均已验收关闭，产物作为新票依赖。[#18完整本地流程比较](https://github.com/normaltank/TagProject/issues/18)已完成最终12配置、200先判/匿名后审、cal锁点及1000待审候选成果，主Agent独立数值/统计/队列/图核验通过。独立审查、最终验收、归档同步及关闭的阶段与证据统一以#18为准。成果入口见[完整流程实验](EXPERIMENTS.md#t-pipeline-01完整本地流程比较与1000组待审试运行)，可按用途复用候选队列和广覆盖短名单。
 
 教师小样 [#2](https://github.com/normaltank/TagProject/issues/2)及任务 [#3](https://github.com/normaltank/TagProject/issues/3)、[#4](https://github.com/normaltank/TagProject/issues/4)、[#5](https://github.com/normaltank/TagProject/issues/5)，以及 [#9：历史BERT标签对照](https://github.com/normaltank/TagProject/issues/9)已完成交付检查和独立双轴审查。此前提前关票已补验收留证；入口见 [EXPERIMENTS](EXPERIMENTS.md)，最终提交和任务状态在 GitHub 维护。
 
