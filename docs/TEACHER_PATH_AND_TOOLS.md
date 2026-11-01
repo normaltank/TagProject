@@ -71,3 +71,19 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 本票实际780运行使用同一入口的`--live --out 'outputs/pipeline_benchmark_20261101_v1/runs/throughput'`，复跑须另取未存在目录。默认预览与该780实跑均已核验；只读冻结输入，不读S、不调用API、不下载或训练。`predictions.json`保存池内排名和窗口，`scores.npz`保存原始logits/分数及轴，`run.json`保存版本、时间、显存和资源累计。全局头辅助窗口与原生判别窗口的来源在汇总队列分别记录。
 
 当前锁定流程是四直接基线各top1去重并集→reranker。该入口复用已计算候选源，其运行计时属于池内判别步骤；完整流程的独立20组组件实测、共享139分数和派生关系统一见实验记录，查缓存耗时不作完整流程成本。池仅1–2类时如实返回，汇总最多前3候选，所有候选均`requires_review=true`、`formal_tag_written=false`；数学阈值标记与AI语义意见另存。原9、两头窗口对照和最终12配置的源文件及协议按各自清单只读保留。
+
+## #19五配置本地复跑
+
+入口[RUN_LOCAL_v2.ps1](../outputs/bert_encoder_tools_20261101_v1/executor/RUN_LOCAL_v2.ps1)调用预启动冻结的`run_local_v2.py`，仅适用本票冻结100组。默认只预览input hash、窗口数及候选范围，不加载模型、评分、读取S或调用教师API。显式live需要全新输出目录，并校验既有首预测绑定；三头重新编码和全139评分，两重排重新计算同BGE头top5后本地成对判别。v2仅处理本轮实际遇到的Qwen批量补齐转换错误：相同token IDs/left-pad位置/mask直接建等长tensor，CPU全4190对与原接口逐元素相同；不改模型、截断、精度或池，原源/失败保留。示例中的`LOCAL_CASE_ID`须替换为本地冻结输入中的标识，输出目录也须保持为未使用的新目录。
+
+```powershell
+# 默认预览，--route可省略（默认为旧BGE头层级辅助）
+& .\outputs\bert_encoder_tools_20261101_v1\executor\RUN_LOCAL_v2.ps1 --case-id 'LOCAL_CASE_ID'
+
+# 完成首预测冻结后，显式复跑一条固定路线；必须使用未存在的新目录
+& .\outputs\bert_encoder_tools_20261101_v1\executor\RUN_LOCAL_v2.ps1 --live --case-id 'LOCAL_CASE_ID' --route bge5_bge_reranker --out 'outputs/bert_encoder_tools_20261101_v1/runs/reuse_example_20261101_v2'
+```
+
+五个`--route`值是`bert_linear_head`、`mmbert_linear_head`、`bge_linear_head_v2_hierarchy_aux`、`bge5_qwen_reranker`、`bge5_bge_reranker`。运行栈/权重只读复用，官方新版本见本地`models_v2.frozen.json`，FP32/512表示与BGE重排、原Qwen FP16/8192及无截断检查不变；新BERT固定非特殊有效token均值，零普通token窗口按评分前附录置0并保留。窗口为公共200码点/40重叠；全139头的层级辅助语境不作头原生归因，native-only为null。
+
+输出`predictions.json`保留排名/分数、最多3候选、原文与输入引文及Unicode[start,end)；`run.json`或`failure.json`计入本票累计GPU。所有结果仍待审、正式赋标0，复跑本身不新增语义意见。初判/匿名后审/锁点/结果及成本边界统一见[实验记录](EXPERIMENTS.md)；A:O业务取值与库内部解析的限定见[数据审计](DATA_AUDIT.md#19新100组2026-11-01)，不把`max_col=15`说成尾列字节或值物理不可见。

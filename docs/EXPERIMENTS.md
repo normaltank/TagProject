@@ -314,6 +314,34 @@ Qwen5/union的top1联合仅比incumbent多3/160＝1.875点，区间[-3.75,7.50]/
 
 小cal、单AI、平衡proxy、长尾、工作释义边界、近重复/同人异页、遮盖损失及窗口max归属限制外推；root20资料限制/5观察保留，不推断来源损坏或现实无研究。此轮不训练，不能推断所有后训练无效；优先用现成工具、候选覆盖和定位收益，后训练扩大另依合适监督及未暴露验证。实际[报告](../outputs/pipeline_benchmark_20261101_v1/executor/RESULTS.md)、[图PNG](../outputs/pipeline_benchmark_20261101_v1/executor/comparison_v2.png)/[SVG](../outputs/pipeline_benchmark_20261101_v1/executor/comparison_v2.svg)、[总账](../outputs/pipeline_benchmark_20261101_v1/executor/runtime_costs.frozen.json)、[检查](../outputs/pipeline_benchmark_20261101_v1/executor/delivery_checks.frozen.json)可复核。root数值/队列/图核验通过不替代最终同base/head的Standards/Spec全新上下文审查；逐AC、同步归档和关闭以#18为准。
 
+## T-BERTTOOLS-01：中文BERT、mmBERT与同池encoder重排
+
+2026-11-01按[#19](https://github.com/normaltank/TagProject/issues/19)完成全新100组的五路比较：中文BERT冻结头、mmBERT冻结头、旧BGE v2头层级辅助，以及同BGE头top5分别接旧Qwen和新BGE专用重排。**本轮没有建立新工具替换旧BGE头的收益；cal20已锁mmBERT推荐，不据held更换。** 输入/排除及A:O业务取值边界见[DATA_AUDIT](DATA_AUDIT.md#19新100组2026-11-01)，官方方法依据见[研究记录](RESEARCH_AND_DECISIONS.md#19传统现代bert冻结分类与专用encoder重排)。全部先判、匿名后审及统计已完成；意见仍是单AI开发支持，不是真人、独立金标或全库准确率。
+
+三新固定checkpoint的19个必要官方文件及LFS已独立重hash通过，必要公开文件3953985589字节；原torch2.11.0+cu128/Transformers4.57.6未升级，新依赖0。两BERT主干冻结，FP32/512、不截断、最后隐藏层非特殊有效token均值→L2、公共窗口均值→L2；mmBERT采用SDPA、reference_compile=false。头精确复用旧10000/2000输入/valid-mask/139弱目标，AdamW .001/.01、batch256、seed20261031、max500/patience50，只据旧val最早最低BCE；新S未进入任何实验信息流。A:O库内部可能整行解析的限制及标准库100/838旁路一致另有附录，不保留绝对never decoded断言。
+
+中文BERT/mmBERT旧99399窗编码GPU分别744.515/1064.703秒，新100＋1535来源标签编码9.891/15.000秒；旧BGE新100编码15.094秒、标签向量沿#16复用。CPU头45.344/48.312秒，均完成500轮并选500，旧弱val BCE .037421294/.037848689，micro F1 .284383/.276586、macro F1 .135634/.110095。这只是旧标签目标的弱拟合，未证明研究语义质量、历史BERT效果或主干微调收益。
+
+三头均在全139排名，返回窗只是同L2及来源L3层级max的辅助语境，native-only=null。两重排严格同一个BGE头top5、相同标签假设和838公共窗，各实际4190序列；Qwen FP16/8192，GPU106.563秒/max317token；BGE FP32/512，GPU79.906秒/max177token。成功100组必要推理组件和依次10.110/15.203/15.329/121.735/95.078秒，包含本轮新BERT首用标签向量，旧模型既有投入分列；它们不是解释器启动在内的单次端到端延迟。完整全139头与窄池条件不同，模板也不同，不作架构因果排名。
+
+真实失败另保留：BERT首新编码因3纯空白窗没有普通token而0/0，消耗10.015秒；root在评分前固定零窗向量0、case保留0窗、max保留0分，另v2源成功，旧24/新3空窗未删除。Qwen原首轮在1178序列后tok.pad张量转换失败32.047秒，CPU不能复现原异常；全4190对/565批直接left-pad与原接口IDs/mask逐元素0差异，另冻结源/新目录完整成功。两次失败、全部探针及两次必要CLI验证均入总GPU，原源码、失败和冻结材料不覆盖。
+
+首预测[清单](../outputs/bert_encoder_tools_20261101_v1/executor/first_predictions.frozen.json)共500配置记录/1500个前三待审候选，49项实际版本/输入/运行绑定。root独立数值检查确认41700头logits误差0、460500辅助max误差0、两重排raw/margin/max/排名/同池、全部偏移和tie一致；数值验收未重跑主干或查看新语义质量。匿名cal20审116个去重前三标签和70段top1语境，路线/分数/排名/提名数隐藏，未审非top1语境为null。所有候选仍requires_review=true、正式赋标0。
+
+cal20按联合→全文S→实测组件成本→固定顺序锁推荐mmBERT：其联合12/20，其他四路各11/20；全文S依次中文BERT15/mmBERT15/旧BGE头16/Qwen重排14/BGE重排15。三个头的工作点依次保留14/13S、14/13S、15/14S，两重排均无可行点。root独立阈值/lex重算通过后才签held_release并交80组四批435标签/262语境；held全部意见冻结及stats放行前不统计质量，不据held换推荐或阈值。[工作点](../outputs/bert_encoder_tools_20261101_v1/executor/working_points.frozen.json)与初判/首预测/后审分别留版。
+
+held80五路全文标签S/N/U依次49/26/5、55/22/3、60/18/2、55/22/3、53/24/3，即S率61.25%/68.75%/75.00%/68.75%/66.25%。旧BGE头减中文BERT的全文S差13.75个百分点，95%配对区间[6.25,21.25]；这只适用于本轮冻结表示/弱头设置，不推广历史BERT或全部主干微调。top1标签S且返回语境充分分别39/80、45/80、47/80、47/80、43/80，区间依次[37.50%,60.00%]、[45.00%,67.50%]、[47.50%,68.75%]、[47.50%,68.75%]、[42.50%,63.75%]。前三头是辅助语境，native-only=null；两重排为原生窗口。
+
+中文BERT/mmBERT减旧BGE头的联合差为−10.00/−2.50个百分点，区间[−20.00,0.00]/[−11.25,6.25]；同池新BGE重排减Qwen为−5.00个百分点，区间[−16.25,6.25]，均包含0。不能据点值宣布唯一架构胜者，也不能把较便宜的新BGE重排直接当成额外语义收益。中文BERT更低显存/较快但全文支持受损；mmBERT可保留为本票已锁的低成本对照，尚无额外编码/训练投入的明确替代收益。没有本票主干微调/LoRA结果，不把弱val下降当作继续扩大同源后训练的充分证据。
+
+前三已审标签S/N/U依次127/97/16、133/93/14、138/84/18、130/89/21、129/91/20（各240提名）；至少含1个当前无据项的组53/49/42/45/50（分母80）。非穷尽known198对/62组，@1命中42/49/55/48/47，@3为105/109/114/109/107；全139头候选上限198/198，同BGE top5池为136/198＝68.69%，初判未列不作负例。模型主动拒判均0；头数学保留45/50/43，其中全文支持34/45＝75.56%、40/50＝80.00%、38/43＝88.37%，均未维持cal的90%目标。两重排cal点null，条件支持与区间null，不当模型主动拒判。
+
+全部五层各16组，seed20261102、同2000次按组配对bootstrap；完整570项路线/分层比例与区间、190项配对差及空分母规则见[统计](../outputs/bert_encoder_tools_20261101_v1/executor/statistics.frozen.json)。root从原意见、路线语境映射、known和cal点独立矩阵复算全部通过，没有新主干forward。held首批1个无上下文标签意见在汇总前按原词库来源分区由U修为N，原意见保留，统计/队列显式读该批v2；cal点未变。所有100组含21资料不足（cal3/held18）及7项观察，均保留分母，不推定来源损坏。
+
+[全100×5队列](../outputs/bert_encoder_tools_20261101_v1/executor/all100_five_routes_review_queue.frozen.jsonl)500配置记录/1500候选，含原文/输入引用与Unicode偏移、来源路径、版本、数学保留和AI意见；未审非top1语境为null，全部仍requires_review=true、formal_tag_written=false。原始首预测没有被后审覆盖。[结果检查](../outputs/bert_encoder_tools_20261101_v1/executor/result_checks.frozen.json)通过全部1500身份/引用、共享抽样再生、val重载/选epoch、阈值/lex及44项保护hash，无旧目录/大权重遍历。[可读报告](../outputs/bert_encoder_tools_20261101_v1/executor/RESULTS_v2.md)及[图PNG](../outputs/bert_encoder_tools_20261101_v1/executor/comparison_v2.png)/[SVG](../outputs/bert_encoder_tools_20261101_v1/executor/comparison_v2.svg)分别保留初版和修订；最终待审head、独立Standards/Spec、归档同步与关闭仍以#19为准。
+
+本地[总账](../outputs/bert_encoder_tools_20261101_v1/executor/runtime_costs.frozen.json)为GPU2096.483秒＝.582356小时、CPU头93.656秒；下载含metadata保守上界3955034165字节，总账时新根4813167411字节，均在授权预算。API教师请求/外发0；[源审计v2](../outputs/bert_encoder_tools_20261101_v1/executor/source_audit_v2.frozen.json)31预启动收据/46源绑定原字节/hash相同，图修订另有启动前源码收据。原文、逐条意见、原分数与实际运行源留本机ignored目录；默认dry-run及有界live入口见[操作指南](TEACHER_PATH_AND_TOOLS.md#19五配置本地复跑)。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。

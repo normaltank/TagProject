@@ -57,6 +57,18 @@ NLI以`entailment_logit−logsumexp(other2)`作margin，case取全窗口最大ma
 
 ## 教师候选与总成本
 
+### #19：传统/现代BERT冻结分类与专用encoder重排
+
+2026-11-01核对三份固定官方模型卡：[google-bert/bert-base-chinese](https://huggingface.co/google-bert/bert-base-chinese/blob/8f23c25b06e129b6c986331a13d8d025a92cf0ea/README.md)为中文masked-language-model预训练、Apache-2.0；[jhu-clsp/mmBERT-base](https://huggingface.co/jhu-clsp/mmBERT-base/blob/c5955035435e2bf121cde7f3c8863ef52ff35d82/README.md)为多语ModernBERT主干、MIT；[BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3/blob/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/README.md)为成对相关性重排、Apache-2.0。官方语言覆盖和重排能力不能当作本项目研究归属识别效果。
+
+[#19](https://github.com/normaltank/TagProject/issues/19)用标准Transformers `AutoModel`取两BERT最后隐藏层的非特殊有效token均值→L2，再以共同片段均值→L2作为139分类头输入；头训练沿#16v2旧弱目标/超参，主干不更新。专用BGE重排采用官方`AutoModelForSequenceClassification`的plain query/document pair和单logit sigmoid；旧Qwen仍用官方yes/no模板，两者固定同BGE头top5、同标签假设和公共窗。模板/任务训练/候选条件均不同，不能把结果差异全部归因于encoder或decoder架构；全139头和窄池判别分开解释。
+
+复用原torch2.11.0+cu128/Transformers4.57.6，标准类、`trust_remote_code=False`、eval/inference_mode；ModernBERT用SDPA并固定`reference_compile=False`，不升级运行栈，接口依据[官方ModernBERT文档](https://huggingface.co/docs/transformers/v4.57.1/en/model_doc/modernbert)及本机4.57.6实现。mmBERT固定revision实际仅单一`pytorch_model.bin`，采用`weights_only=True`；不下载不存在的safetensors或另换权重。本项目明确的零非特殊token窗口边界、首运行失败和版本修订见本地协议附录/实验记录，不改原输入。
+
+原[技术扫描](research/OPEN_TECH_SCAN_20261026.md)的7个模型家族中，Qwen embedding/reranker已有实测，mmBERT在本票补测；GLiNER2.5、GLiClass、UltraBERT、Nemotron3.5和Granite97M仍未实跑。传统中文BERT是本次补充的监督分类缺口；mMiniLM/MacBERT仅核候选元数据、不下载或增加组合。Annif、Label Studio、SKOS等是工具/治理项，不计作已测或未测checkpoint。实际完成范围及选择结论统一见[实验记录](EXPERIMENTS.md)。
+
+本轮校准选择是mmBERT冻结头，held不回调该决定；held没有显示它在联合支持上超过旧BGE头的明确收益。中文BERT节省显存/编码成本，但本设置的全文支持低于旧BGE头；新BGE重排比同池Qwen实测更快，联合支持差区间仍包含0。保留便宜候选参考和版本化AI意见，不据弱val拟合或公开预训练能力扩大主干训练，也不将这些有界结果推广为BERT/encoder家族结论。分母、配对区间、不同候选条件与具体代价均以[实验实测](EXPERIMENTS.md#t-berttools-01中文bertmmbert与同池encoder重排)为准。
+
 ### 部署位置与训练程度是两个维度
 
 部署位置可比较本地加载预训练权重推理与托管API；训练程度另比较直接使用、冻结表示后训练轻量分类头、编码器／小模型的任务微调，以及有条件的蒸馏。**本地运行不等于必须训练，微调也不等于从零预训练。** 托管服务也需区分直接调用与服务支持的定制方式，不能用“API”代替训练程度或质量条件。当前没有从零预训练的业务／数据／资源依据；部署位置、模型、训练方式均未最终选定。

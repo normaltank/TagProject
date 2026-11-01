@@ -4,6 +4,8 @@
 
 ## 当前阶段
 
+[#19中文BERT、mmBERT与专用encoder重排补测](https://github.com/normaltank/TagProject/issues/19)的实验及主Agent核验已完成：五路完整预测、全部100组先判/匿名后审及配对统计可复核。cal推荐mmBERT保留不变；held未显示其超过旧BGE头的明确联合支持收益，全部候选仍待审、正式赋标0。独立审查、最终验收、归档同步和关闭阶段与证据统一以#19为准；下一项研究优先积累可信角色/纠错监督。结论与限制见[实验记录](EXPERIMENTS.md)，本地证据在`outputs/bert_encoder_tools_20261101_v1/executor/`。
+
 Matt Setup、[档案整理 #1](https://github.com/normaltank/TagProject/issues/1)、小样规格与任务拆分已落地。用户已确认现有 CLI→输出校验→审核报告的验收入口，以及三张任务的粒度和依赖。
 
 工作流规范化[#10](https://github.com/normaltank/TagProject/issues/10)、[教师输出失败诊断与证据范围修复 #11](https://github.com/normaltank/TagProject/issues/11)、[新版教师提示小样验证 #12](https://github.com/normaltank/TagProject/issues/12)及[接手核验与方法讨论归档 #13](https://github.com/normaltank/TagProject/issues/13)已验收关闭。[证据角色最小对照 #14](https://github.com/normaltank/TagProject/issues/14)与[#15本地三模型试跑](https://github.com/normaltank/TagProject/issues/15)已归档关闭，最终状态以对应Issue为准。
