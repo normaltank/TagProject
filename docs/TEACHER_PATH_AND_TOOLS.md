@@ -55,3 +55,19 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 重复引用仍报duplicate_label，路径不符仍隔离，不自动修正或合并非法结果。REVIEW显示同一安全违规字段，诊断不回显任意模型值、原文或认证头；JSON无法解析等整包错误未必有细字段定位。v2检查supported方向的角色声明一致性，新增research_interest供弱兴趣线索使用，范围不明保留scope_review。它不能识别模型把课程误声明为研究活动、方法外推或概念范围误判，语义审核仍按[审核规则](TEACHER_REVIEW_PROTOCOL.md)。
 
 本地校验只能证明结构、词库身份和引用位置，不证明模型声明的角色、持续专长、概念范围或方向是否穷尽。旧输出的待人审字段原样保留，新反馈由教师模型单独留版本，不当独立金标；本轮不写回原表、不创建概念或正式赋标。usage未知为null，默认费用null。可提供`pricing`中的货币及缓存命中／未命中／输出每百万token单价作“用户提供单价的估算”，不能冒充账单。价格参考[官方价格页](https://api-docs.deepseek.com/quick_start/pricing/)，既有验证未报告实际人民币费用。
+
+## #18本地冻结批次复用
+
+本地入口为[RUN_FINAL.ps1](../outputs/pipeline_benchmark_20261101_v1/executor/RUN_FINAL.ps1)，实际调用已冻结的`score_selected_final.py`。它读取本票冻结输入、四基线候选源、cal锁点及最终比较链，使用原本地运行栈与权重；适用P0021–P0800，可指定其中一条或处理剩余780条。前20条复用独立成本批，1000组汇总与质量/吞吐区分见[EXPERIMENTS](EXPERIMENTS.md#t-pipeline-01完整本地流程比较与1000组待审试运行)。新克隆先按[README](../README.md)准备本地依赖与忽略材料。
+
+```powershell
+# 默认只预览：不加载模型、不产生新评分
+& .\outputs\pipeline_benchmark_20261101_v1\executor\RUN_FINAL.ps1 --case-id P0021
+
+# 显式复跑一个冻结吞吐组，使用全新目录；累计GPU仍受本票4小时限制
+& .\outputs\pipeline_benchmark_20261101_v1\executor\RUN_FINAL.ps1 --live --case-id P0021 --out 'outputs/pipeline_benchmark_20261101_v1/runs/reuse_20261101_v2'
+```
+
+本票实际780运行使用同一入口的`--live --out 'outputs/pipeline_benchmark_20261101_v1/runs/throughput'`，复跑须另取未存在目录。默认预览与该780实跑均已核验；只读冻结输入，不读S、不调用API、不下载或训练。`predictions.json`保存池内排名和窗口，`scores.npz`保存原始logits/分数及轴，`run.json`保存版本、时间、显存和资源累计。全局头辅助窗口与原生判别窗口的来源在汇总队列分别记录。
+
+当前锁定流程是四直接基线各top1去重并集→reranker。该入口复用已计算候选源，其运行计时属于池内判别步骤；完整流程的独立20组组件实测、共享139分数和派生关系统一见实验记录，查缓存耗时不作完整流程成本。池仅1–2类时如实返回，汇总最多前3候选，所有候选均`requires_review=true`、`formal_tag_written=false`；数学阈值标记与AI语义意见另存。原9、两头窗口对照和最终12配置的源文件及协议按各自清单只读保留。

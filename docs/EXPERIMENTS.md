@@ -286,6 +286,34 @@ held已知L2正例234对／72例，非穷尽。完整139的@1/5/10命中为TF-ID
 
 [默认dry-run入口](../outputs/evidence_judge_20261101_v1/executor/RUN_LOCAL.ps1)已验证，无新增GPU复跑；两次fresh-checkpoint提供可加载证据。仅判断一个固定本地case-L2，显式live才推理，不读S、不训练或正式赋标。主Agent已另核[原数值／cal](../outputs/evidence_judge_20261101_v1/commander/raw_calibration_checks.json)及[全部配置／配对draw](../outputs/evidence_judge_20261101_v1/commander/outcome_checks.json)，不替代独立Standards／Spec审查。逐AC、base/head和待审入口见本地[交付](../outputs/evidence_judge_20261101_v1/executor/DELIVERY.md)；最终验收、同步归档和关闭以#17为准。
 
+## T-PIPELINE-01：完整本地流程比较与1000组待审试运行
+
+2026-11-01按[#18](https://github.com/normaltank/TagProject/issues/18)完成本地比较。**top1/简短队列保留cal选定的旧四top1并集→reranker，已实际交1000待审组；广覆盖多标签候选优先保留BGE top5或两头top3并集重排。** 后者已知方向覆盖有明确增益，新增候选语义及审核成本仍未知。完整139直接重排不作本配置默认，当前原NLI不优先保留，不据本票扩大后训练。全部AI意见非真人/独立金标/全库准确率，正式赋标0。
+
+来源、排除和完整输入见[DATA_AUDIT](DATA_AUDIT.md#2026-11-01完整流程比较的新1000组)。主Agent在任何新评分前冻结200初判（180支持、18拒判、2待核，513个非穷尽known-L2）；原9[协议](../outputs/pipeline_benchmark_20261101_v1/executor/protocol.frozen.json)首次评分前固定。评分期间、任何匿名质量开放前另冻[两辅助定位](../outputs/pipeline_benchmark_20261101_v1/executor/component_protocol.frozen.json)与[同材料旧流程对照](../outputs/pipeline_benchmark_20261101_v1/executor/incumbent_protocol.frozen.json)，原模型/分数/初判不改。最终12配置/11可扩展候选在cal意见前固定，全12不称首次预测前预注册；[最终比较链](../outputs/pipeline_benchmark_20261101_v1/executor/comparison_manifest.final.frozen.json)保留三个阶段。
+
+先匿名审cal40的134标签/192语境，锁点与推荐，再匿名审held160的509标签/747语境。全文S/N/U与返回语境充分性分开，头的窗口是辅助检索、native-only=null。held有414个known-L2 pair/146组；五proxy层各32连通组，同2000次配对重采样、seed20261101，完整逐层、条件和差异区间见[统计](../outputs/pipeline_benchmark_20261101_v1/executor/statistics.frozen.json)。初判未列不作负例，未穷尽后审的候选不作真/假标签断言。
+
+held160的“全文S/返回语境联合”依次为：TF-IDF96/76、BGE头119/90、Qwen树115/85、Qwen头125/81；BGE5重排125/103、Qwen5重排127/105、两头top3并集重排127/105、同池原NLI103/86、全139重排112/89；BGE/Qwen层级辅助头119/92和125/91；incumbent126/102。所有分母均160，辅助联合不当头自身归因。
+
+**扩池的收益主要体现在多标签覆盖。** incumbent的known@3为198/414，BGE5为250（+52，+12.56点，95%区间[8.60,16.51]）、Qwen5为249（+51，+12.32点[8.41,16.09]）、union重排为252（+54，+13.04点[9.09,17.04]）。已知池上限203提高到299/305/272；这些是非穷尽初判覆盖增益，不称恢复真遗漏的准确率。新增候选留待审核，未后审不表示池内无真标签。
+
+Qwen5/union的top1联合仅比incumbent多3/160＝1.875点，区间[-3.75,7.50]/[-3.125,7.50]，未显示稳定top1联合提升；不因此否定多标签价值，也不证明四基线都缺一不可。本轮推荐保留cal结果，没有用held改流程。固定同20组的实测组件和为BGE5 33.938秒、incumbent34.109秒、union36.187秒（约+6.1%），所以广覆盖BGE5的成本几乎同现行流程；成本按既有独立编码、CPU及实跑judge组件明确来源，不是缓存查找或独立端到端计时。
+
+同一个两头top3池，reranker比原NLI联合多19/160＝11.875点[3.75,20.00]，全文S多24/160；NLI较便宜，但在本新长文/配置上不作优先判别。全139联合比incumbent少13/160，差-8.125点[-13.75,-2.50]，代价高，不能预设全类必胜。known@10为TF-IDF271、BGE头344、Qwen树341、Qwen头358、全139重排337，同分母414；窄池@k受真实池大小限制，不当全类召回。
+
+只换辅助窗口的Qwen头联合81→91/160，+6.25点[1.875,11.25]；BGE90→92，+1.25点[-3.75,5.625]。标签score/rank、全文S、known覆盖和阈值精确相同，变化归于辅助定位而非分类或新增模型。两种层级辅助完整CPU20步骤另实测0.109/0.079秒，含对应独立编码的组件和5.734/10.173秒，提供便宜候选工具的保留依据。
+
+[锁定工作点](../outputs/pipeline_benchmark_20261101_v1/executor/working_points.frozen.json)的11路lex只用cal联合数、全文S、组件成本及固定顺序。incumbent的cal点保留21/19S，held数学保留96/160，其中87S/4N/5U＝90.625%[84.61%,95.96%]；**联合充分仅70/96＝72.92%[64.00%,81.44%]**。BGE5、Qwen5、union点分别留52/50S、54/51S、51/49S；其余8点null。点值不批准正式自动赋标，空条件分母null，未据held调阈值。
+
+质量200对完整139仅forward一次：239080序列/27800 pair，GPU5765.063秒，扩池/旧流程精确过滤复用；NLI只对union的6191序列/758 pair，GPU55.141秒。固定20 incumbent另实跑618序列/45 pair、GPU16.859秒；所选余780实跑12957序列/1690 pair、GPU319.953秒。含容量、1000无标签编码、独立20编码及所有成本，GPU共6719.344秒＝1.86648小时＜4小时。API/新下载/新依赖/训练/生成均0，模型结束记账303383093字节；最终新增文件后的占用另在交付检查核对，低于4GiB。PyTorch分配器峰值不当硬件最低要求。
+
+[最终1000队列](../outputs/pipeline_benchmark_20261101_v1/executor/selected1000_review_queue.frozen.jsonl)共2133候选（216组1条、435组2条、349组3条）；全`requires_review=true`/`formal_tag_written=false`，质量200附root意见，800不称语义审核。它与先前[无意见快照](../outputs/pipeline_benchmark_20261101_v1/executor/selected1000_candidates.frozen.jsonl)的标签/分数/窗口/引文/来源逐项变化0。[全部12配置200组前3](../outputs/pipeline_benchmark_20261101_v1/executor/quality200_all12_top3.frozen.jsonl)可直接复核广覆盖候选，未审意见null。实际800同一[默认dry-run入口](../outputs/pipeline_benchmark_20261101_v1/executor/RUN_FINAL.ps1)已验证，操作见[工具说明](TEACHER_PATH_AND_TOOLS.md#18本地冻结批次复用)。
+
+原三XLSX及实际旧源显式35项前后hash不变，没有旧目录/大权重遍历。BGE启动内容由不变旧源及创建工具精确替换在启动后恢复，非启动前副本或加载代码hash证明；[provenance v2](../outputs/pipeline_benchmark_20261101_v1/executor/bge_execution_provenance_v2.frozen.json)如实留限。独立20复现的221窗/20case：BGE逐元素相同，Qwen最大差3.231689e-7，未重跑1000。准备/图分别复用既有bundled openpyxl/Matplotlib，原模型运行栈未升级。
+
+小cal、单AI、平衡proxy、长尾、工作释义边界、近重复/同人异页、遮盖损失及窗口max归属限制外推；root20资料限制/5观察保留，不推断来源损坏或现实无研究。此轮不训练，不能推断所有后训练无效；优先用现成工具、候选覆盖和定位收益，后训练扩大另依合适监督及未暴露验证。实际[报告](../outputs/pipeline_benchmark_20261101_v1/executor/RESULTS.md)、[图PNG](../outputs/pipeline_benchmark_20261101_v1/executor/comparison_v2.png)/[SVG](../outputs/pipeline_benchmark_20261101_v1/executor/comparison_v2.svg)、[总账](../outputs/pipeline_benchmark_20261101_v1/executor/runtime_costs.frozen.json)、[检查](../outputs/pipeline_benchmark_20261101_v1/executor/delivery_checks.frozen.json)可复核。root数值/队列/图核验通过不替代最终同base/head的Standards/Spec全新上下文审查；逐AC、同步归档和关闭以#18为准。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。
