@@ -73,7 +73,7 @@ NLI以`entailment_logit−logsumexp(other2)`作margin，case取全窗口最大ma
 
 复用原torch2.11.0+cu128/Transformers4.57.6，标准类、`trust_remote_code=False`、eval/inference_mode；ModernBERT用SDPA并固定`reference_compile=False`，不升级运行栈，接口依据[官方ModernBERT文档](https://huggingface.co/docs/transformers/v4.57.1/en/model_doc/modernbert)及本机4.57.6实现。mmBERT固定revision实际仅单一`pytorch_model.bin`，采用`weights_only=True`；不下载不存在的safetensors或另换权重。本项目明确的零非特殊token窗口边界、首运行失败和版本修订见本地协议附录/实验记录，不改原输入。
 
-原[技术扫描](research/OPEN_TECH_SCAN_20261026.md)的7个模型家族中，Qwen embedding/reranker已有实测，mmBERT在本票补测；GLiNER2.5、GLiClass、UltraBERT、Nemotron3.5和Granite97M仍未实跑。传统中文BERT是本次补充的监督分类缺口；mMiniLM/MacBERT仅核候选元数据、不下载或增加组合。Annif、Label Studio、SKOS等是工具/治理项，不计作已测或未测checkpoint。实际完成范围及选择结论统一见[实验记录](EXPERIMENTS.md)。
+截至#19，原[技术扫描](research/OPEN_TECH_SCAN_20261026.md)的7个模型家族中，Qwen embedding/reranker已有实测，mmBERT在该票补测；GLiNER2.5、GLiClass当时未实跑，已在下述#21补测；UltraBERT、Nemotron3.5和Granite97M仍未实跑。传统中文BERT是#19补充的监督分类缺口；mMiniLM/MacBERT仅核候选元数据、不下载或增加组合。Annif、Label Studio、SKOS等是工具/治理项，不计作已测或未测checkpoint。实际完成范围及选择结论统一见[实验记录](EXPERIMENTS.md)。
 
 本轮校准选择是mmBERT冻结头，held不回调该决定；held没有显示它在联合支持上超过旧BGE头的明确收益。中文BERT节省显存/编码成本，但本设置的全文支持低于旧BGE头；新BGE重排比同池Qwen实测更快，联合支持差区间仍包含0。保留便宜候选参考和版本化AI意见，不据弱val拟合或公开预训练能力扩大主干训练，也不将这些有界结果推广为BERT/encoder家族结论。分母、配对区间、不同候选条件与具体代价均以[实验实测](EXPERIMENTS.md#t-berttools-01中文bertmmbert与同池encoder重排)为准。
 
@@ -197,3 +197,23 @@ CSO Classifier官方[v4.0.1](https://github.com/angelosalatino/cso-classifier/re
 - **D-08：按#16实测分别选用候选工具。** L2候选兼顾编码成本时选BGE轻量头，top10覆盖／细方向优先时选Qwen层级检索，词法继续作便宜基线；未证明两者串联或合并的额外收益。不将本轮试探工作点投产，也不据弱拟合扩大主干微调。数值、成对不确定性及条件见[扩大实验](EXPERIMENTS.md#t-scale-01扩大真实材料与冻结表示弱监督头)，不是不可更改的最终架构。
 
 原决定的完整理由、替代方案以及 T1–T3／迁移设计见[设计档案](history/RESEARCH_DESIGN_20261023.md)。这些阶段性安排未追认成正式 ADR；新决定仅在满足[领域规则](agents/domain.md)的三项条件时创建 ADR。
+
+## #21原生多语分类器的精确候选与接口（2026-11-02）
+
+本轮实际固定两个原候选，不先因CPU服务器条件降档。[GLiNER2.5-multi-Decide官方卡](https://huggingface.co/fastino/GLiNER2.5-multi-Decide/blob/e173bca1f0c4217d7a55b3b0c705d5ece8a0218d/README.md)声明Apache2.0、约287M、多语mDeBERTa-v3-base/boundary分类specialist；其公开决策基准是英语，且不直接验证教师研究归属。[GLiClass multilang-ultra官方卡](https://huggingface.co/knowledgator/gliclass-multilang-ultra/blob/33c3ffec64056b0d37173d2dd90b885ac29b72c3/README.md)声明Apache2.0、约1.72B、多语与跨语标签，配置为mT5-XL encoder及cross-attention scorer。公开benchmark只作候选依据，本项目效果须依本轮支持审核。
+
+本地API为gliner2 2.1.0的AutoExtractor.from_pretrained与原生Classifier评分，以及gliclass0.1.22的GLiClassModel和官方UniEncoder输入格式；新venv用transformers5.17，三基线继续旧4.57.6，不改变旧实现。新GLiClass载入报告的mT5嵌入别名缺项经官方tie_weights与完整共享张量逐值核对，实际有效嵌入等于checkpoint；失败尝试与修复另版保留。
+
+在任何新材料分类前，按原生标签池化接口决定两新模型共同逐字使用已冻结document（名称＋原层级路径），任务说明直接复用#18的Qwen研究归属instruction；原三基线的embedding／query／hypothesis格式保持不变。同一正文和词库不称五路字面输入完全相同。全139标签按冻结顺序分块，技术普查以4个合成及全部1551真实窗的无评分token计数确定共同块2、batch8；8／4块在GLiNER分别达615／517token，2块最大475，GLiClass为319，均不裁原200码点窗口。独立sigmoid后全窗max只产生候选语境，不自行证明归属；标签块的上下文耦合与模型内部预处理是比较限制。首预测前的参数／来源hash和合成资源包络见本地`outputs/priority_accuracy_20261102_v1/executor/protocol.frozen.json`、`model_authority.frozen.json`、`complete_token_coverage.frozen.json`；实际质量结论另见[实验记录](EXPERIMENTS.md)。
+
+在原五评分已开始、root尚未查看本轮模型与新标签对应关系且任何cal质量未开放时，另固定两个同模型对照：旧四top1窄池的Qwen完整简介判别，以及旧池并两新模型top1的扩池完整简介判别。前者复用旧窄池每标签max窗作辅助，后者逐值复用前者旧池整篇分数、只评分新增标签；新增标签的辅助窗按GLiNER优先、否则GLiClass的既有top1窗固定选择，不按质量挑窗。它们均native=null，不把辅助窗称整篇forward的原生归因。原五、六分别冻结、七配置最终另冻；只对最终匿名包后审一次，推荐规则仍为cal联合支持、全文S、非穷尽已知@3与固定顺序，耗时不参与。后两配置不是首次新评分前预注册，而是cal质量前有时间与来源记录的设计扩展；其目的分别是完整上下文和新增候选价值，不能把公开模型基准或旧样本结果当作本轮收益。
+
+## #21当前方案与后训练决定（2026-11-03）
+
+当前默认保留cal锁定的旧四直接top1并集→Qwen3-Reranker-0.6B逐窗排序与候选证据，输出实际可用top1–3进入审核。held只能检验此选择，不能用来重新选赢家或阈值；默认的cal高置信条件没有在held维持，故不扩大正式自动赋标。精确分母、配对描述区间和阈值迁移见[实际实验](EXPERIMENTS.md#t-priority-01准确性优先的多语原生分类与整篇对照)。
+
+人工审核需要多方向补漏时，保留BGE全139头top3＋层级辅助作宽候选入口：其冻结初判参照覆盖高于默认，不能仅因联合差区间跨0就判无用；仍须核本人归属与返回窗，不宣称全方向召回。mmBERT联合支持数值较高但相对默认区间跨0，先保留研究比较，不据held改选。两新家族在此次精确配置没有证明应替换默认；扩池虽补足候选机会，未证明稳定联合收益，暂不自动加入默认链。同池整篇仅作上下文研究对照。替换默认或自动合池须在未暴露新组证明本人标签与证据联合支持的收益；本票未穷尽checkpoint、提示、其他工具或新L3配置。
+
+目前不扩大后训练。#17小规模AI意见LoRA未证明稳定超过原NLI；#19中文BERT／mmBERT的冻结主干弱监督头也未证明应替代旧BGE，本票训练0。优先积累可信本人角色、范围纠错、遗漏与失败监督，按连通组隔离训练／验证和未暴露评价，再决定有界适配。万级旧S只是有来源弱监督，不作真值；不因长耗时获准就推定更大训练有效。
+
+个人电脑GPU适合有界离线批量候选生成、逐例落盘与恢复，CPU服务器可接收版本化结果用于查询／审核；这是部署方向，尚未上线服务器。无GPU也可保留原精度模型做容许长时延的离线CPU推理，原精度两例可运行不等于必须降级；实际RAM／指令集／精度运行时须在目标服务器另测。GLiClass bf16在本机CPU很慢是成本事实，不作为质量淘汰标准。默认链CPU端到端未测，已有单例缓存池加最终forward回放不能作新输入服务吞吐；8GB显存共享、连续进程失败及恢复边界见实验记录，不保证所有同容量卡稳定驻留。
