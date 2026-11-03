@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-[#21准确性优先的GLiNER2.5与GLiClass多语补测](https://github.com/normaltank/TagProject/issues/21)已按用户“先继续推进任务”恢复。七配置评分、全部先判后审、固定统计与root独立重算、待审队列及图已完成；执行侧交付已整理、适用检查通过，待root逐项验收和两个全新独立审查，再归档同步关票，Issue保持开启。cal默认仍旧四top1并集→Qwen逐窗，阈值未改，暂不扩大训练或正式自动赋标。最终结果与本地报告／成果入口见[实验记录](EXPERIMENTS.md#t-priority-01准确性优先的多语原生分类与整篇对照)，默认／替代／CPU与个人电脑决定见[选型记录](RESEARCH_AND_DECISIONS.md#21当前方案与后训练决定2026-11-03)。恢复分工见[任务评论](https://github.com/normaltank/TagProject/issues/21#issuecomment-6606425369)；历史交接保留在本机`.planning/2026-11-02-final-route-benchmark/HANDOFF.md`，旧暂停等待已撤销，不重跑冻结实验。
+[#21准确性优先的GLiNER2.5与GLiClass多语补测](https://github.com/normaltank/TagProject/issues/21)已按用户“先继续推进任务”恢复。七配置评分、全部先判后审、固定统计与root独立重算、待审队列及图已完成；执行侧交付已整理、适用检查通过。独立审查、最终验收、归档同步和关闭阶段与证据统一以#21记录为准；下一步依该票最终结论复用待审成果并优先积累可信监督。cal默认仍旧四top1并集→Qwen逐窗，阈值未改，暂不扩大训练或正式自动赋标。最终结果与本地报告／成果入口见[实验记录](EXPERIMENTS.md#t-priority-01准确性优先的多语原生分类与整篇对照)，默认／替代／CPU与个人电脑决定见[选型记录](RESEARCH_AND_DECISIONS.md#21当前方案与后训练决定2026-11-03)。恢复分工见[任务评论](https://github.com/normaltank/TagProject/issues/21#issuecomment-6606425369)；历史交接保留在本机`.planning/2026-11-02-final-route-benchmark/HANDOFF.md`，旧暂停等待已撤销，不重跑冻结实验。
 
 [#20多语输入与既有评测覆盖盘点](https://github.com/normaltank/TagProject/issues/20)已完成本地教师/稿件快照脚本统计及完整代表的root AI核查，确认英语内容与字段间双语实际存在；文字脚本、正文/书目角色和全表语种比例分开解释。当前无配置数据库连接，结论限已有导出。数据事实及旧评价语言覆盖限制见[DATA_AUDIT](DATA_AUDIT.md#2026-11-01多语输入与既有评价覆盖盘点)，修正仅中文选型前提及跨语中文词库待测约束见[研究记录](RESEARCH_AND_DECISIONS.md#20多语输入对后续比较的约束)。本票不新增模型实验，审查、最终验收、归档同步和关闭阶段统一以#20为准；后续比较须覆盖实际语言与证据角色，仍优先积累可信监督。
 
