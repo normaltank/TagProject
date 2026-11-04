@@ -56,6 +56,20 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 
 本地校验只能证明结构、词库身份和引用位置，不证明模型声明的角色、持续专长、概念范围或方向是否穷尽。旧输出的待人审字段原样保留，新反馈由教师模型单独留版本，不当独立金标；本轮不写回原表、不创建概念或正式赋标。usage未知为null，默认费用null。可提供`pricing`中的货币及缓存命中／未命中／输出每百万token单价作“用户提供单价的估算”，不能冒充账单。价格参考[官方价格页](https://api-docs.deepseek.com/quick_start/pricing/)，既有验证未报告实际人民币费用。
 
+## #26目标2级细标签本地开发对照
+
+[#26](https://github.com/normaltank/TagProject/issues/26)本机入口为`outputs/fine_grained_benchmark_20261104_v1/executor/run_local.py`。从仓库根用既有Python默认仅预览，不载模／写文件：
+
+```powershell
+& outputs/model_pilot_20261031_v1/runtime/venv/Scripts/python.exe outputs/fine_grained_benchmark_20261104_v1/executor/run_local.py --route qwen
+```
+
+实际须显式`--run-local --release outputs/fine_grained_benchmark_20261104_v1/commander/release.frozen.json`；route只可lexical/bge/qwen/union_reranker，`--synthetic`单列原13合成。原执行源SHA038eab18…、协议028cd7bc…，完整hash／模型身份／参数见本地`RUN_GUIDE.md`和冻结JSON。新克隆缺ignored输入／源码／既有权重，此入口不是通用赋标服务。
+
+宽池静态校正另用`executor/coarse_addendum.py`，默认同样dry-run；实际须独立`coarse_addendum_release.frozen.json`。它仅补前三各top3 coarse减原池，不改原212/fine/coarse；原分数在`runtime/scores/`，增量在`runtime/coarse_addendum/`，所有attempt含失败均计账。`--resume`仅核hash跳过完整case；未完成／未知状态先保留查明，禁止无限重跑或覆盖冻结。GPU4h／准备统计CPU1h／新根2GiB／盘余5GiB按协议守卫。
+
+全部先判→首预测／补宽冻结→cal后审锁Qwen→诊断已完成，统计/后审写同名文件的命令不重跑，新修订另存版本。最终`all53_four_routes_coarse_corrected_pending_queue.frozen.jsonl`含212记录／848候选全pending；全文S与窗口支持分开，未审null，四路无原生拒判／自动粒度选择，正式赋标0。结果、原/校正区别与限制见[实验记录](EXPERIMENTS.md#t-fine-01目标2级细标签开发对照)。
+
 ## 证据粒度离线profile（#25）
 
 独立入口为[scripts/evidence_granularity.py](../scripts/evidence_granularity.py)，合同为[teacher_evidence_granularity_v1](../config/evidence_granularity_v1.json)，不改变上节DeepSeek旧入口／v1/v2。该入口不建模型请求、不读凭证、不加载模型、不联网；默认验证预览且不创建任何输出文件。仅显式`--write-offline --out <新目录>`才保存；任何已存在目标（包括空目录）都拒绝覆盖。

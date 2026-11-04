@@ -396,6 +396,18 @@ held冻结初判参照@1覆盖为1／39／64／56／71／72／73，@3为5／84�
 
 无GPU／模型forward／训练／下载／依赖安装／付费API／数据库／新教师行／新S读取／教师外发／正式赋标／稿件生产匹配；执行者未浏览新增网页。旧v1/v2／默认CLI及#15–24冻结材料未改。后续真实2级及师稿相关性、误配／漏人和复核投入仍须新范围独立验证，规则及选择理由分别见[审核规则](TEACHER_REVIEW_PROTOCOL.md#证据决定粒度与映射状态)／[研究记录](RESEARCH_AND_DECISIONS.md#25证据粒度与未来适审用途2026-11-04)。
 
+## T-FINE-01：目标2级细标签开发对照
+
+[#26](https://github.com/normaltank/TagProject/issues/26)于2026-11-05完成真实40（概率主样cal16／diag16、脚本挑战6纯Latin＋2mixed）及原13合成的四路实跑。排除14491个可核历史组，含旧训练／验证／评价／吞吐；完整63810码点、417＋13个200／40窗、1570来源节点（35根／139中类／1396细类），旧1535 ref/path保留，S业务值不resolve。来源、缺失字段与近重／未知历史训练限制见[准备](../outputs/fine_grained_benchmark_20261104_v1/executor/preparation_checks.frozen.json)／[隔离](../outputs/fine_grained_benchmark_20261104_v1/executor/historical_isolation.frozen.json)。
+
+按预定cal细联合S→全文S→冻结已知映射@3→路线序锁Qwen embedding（联合10/16，重排9/16），耗时不参与。主diag16重排全文S10／联合7，对照Qwen8／6；挑战8为7／4对4／2，保留重排价值，不依诊断改锁点。唯一预定重排−BGE联合差+18.75个百分点，2000次seed20261104配对95%描述区间[-6.25,+43.75]跨0，不能证明稳定收益。四分层完整S/N/U、top3、映射@1/3/10／池上限、语言／角色及U敏感性见[报告](../outputs/fine_grained_benchmark_20261104_v1/executor/RESULTS.md)与[统计](../outputs/fine_grained_benchmark_20261104_v1/executor/final_statistics.frozen.json)。
+
+cal开放前静态发现原重排宽池不可达19无子中类及艺术／设计两根，经独立补充release只增105宽节点／841窗对；原212及fine/coarse不改，53 overlay另存。重排宽S原→校正为cal15→14、diag13→13、挑战7→7、合成8→9，不因降分回调池。[校正宽表](../outputs/fine_grained_benchmark_20261104_v1/executor/final_coarse_corrected_statistics.frozen.json)另报。原60次已知(case,ref)映射非60独立方向或完整答案；初判34／6非事实有／无全部2级，后审漏映射纠错35／5另存，源深度非跨枝语义细度全序。
+
+root全598标签／663窗后审及独立重算通过；177个全文S pair另有256个curated引用，全文S与返回窗联合S分开。研究题名缺本人归属、教学／学位窗及历史研究的时间／对象限定仍是主要审核问题。前三路全1396排序不等验证全部1396标签质量，40真实／60映射未覆盖长尾全学科，四路均无原生拒判／自动粒度选择或正式阈值。[校正队列](../outputs/fine_grained_benchmark_20261104_v1/executor/all53_four_routes_coarse_corrected_pending_queue.frozen.jsonl)212记录＝160真实＋52合成、848候选全pending，fine同原队列，正式赋标0；真人填写0，现40已开发暴露，不能改名未暴露test。
+
+[资源账](../outputs/fine_grained_benchmark_20261104_v1/executor/resource_ledger.frozen.json)：GPU完整2545.983秒（补宽105.641），已计量执行／准备分析CPU墙钟152.647秒；root交互阅读、其他验收／文档命令不等于此receipt账的完整计量，不是会话总耗时。账时新根130.8MiB、盘余76.9GiB。两次准备失败已留证计时，无GPU失败／重跑；下载／安装／训练／付费项目API／数据库／教师资料外发／正式赋标／稿件生产匹配0。原件及旧冻结hash不变。[逐AC交付](../outputs/fine_grained_benchmark_20261104_v1/executor/DELIVERY.md)／[运行入口](TEACHER_PATH_AND_TOOLS.md#26目标2级细标签本地开发对照)齐全；最终head双轴、归档同步与关闭由root按Issue完成。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。

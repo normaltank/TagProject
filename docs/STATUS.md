@@ -1,8 +1,10 @@
 # 当前状态
 
-更新：2026-11-04（Asia/Singapore）。唯一活跃主线：教师简介→研究方向→现有标签＋证据。
+更新：2026-11-05（Asia/Singapore）。唯一活跃主线：教师简介→研究方向→现有标签＋证据。
 
 ## 当前阶段
+
+[#26目标2级细标签开发对照](https://github.com/normaltank/TagProject/issues/26)已完成40真实＋13合成四路实跑、root先判／后审及独立数值核验。cal锁Qwen为后续细候选优先；诊断／语言中重排数值更好，主差区间跨0，不称稳定最优。原预测与宽池校正分别保留，候选全pending、正式赋标0，旧A粗层默认不改。[结果与证据](EXPERIMENTS.md#t-fine-01目标2级细标签开发对照)已交执行侧待审；同head双轴、归档与关闭以Issue为准。
 
 [#25证据决定标注粒度](https://github.com/normaltank/TagProject/issues/25)已形成独立离线profile及root冻结13例合同验证：用户已澄清模糊为简介与标签的标注关系；允许有据2级及明确0／1级宽保留，宽类不下推、未决不升级。操作与限制见[新入口](TEACHER_PATH_AND_TOOLS.md#证据粒度离线profile25)，实际运行见[实验记录](EXPERIMENTS.md#t-granularity-01证据决定粒度离线合同试运行)。主Agent核验、同版本独立双轴审查、归档及最终状态以#25记录为准；本票不跑新模型、不读新教师行、不证明真实准确率或恢复稿件生产匹配。
 
