@@ -4,7 +4,9 @@
 
 ## 当前阶段
 
-[#24 Benchmark有效性审计](https://github.com/normaltank/TagProject/issues/24)已形成审计与新评价设计，核心修正是用户目标2级secondary而#16–23主赛只比较139个用户1级中类；A仅在该历史窄口径领先，尚未选出目标2级最优方案。层级定义及旧引用对应见[PROJECT](PROJECT.md#当前用户要求)，问题证据与新评价设计见[研究入口](RESEARCH_AND_DECISIONS.md#24benchmark有效性与目标层级修正2026-11-04)。核验、独立双轴审查、归档及关闭阶段以#24记录为准；下一步优先落实目标2级的独立答案／新评价，模糊匹配的操作用途待用户澄清。未开展新模型／真人标注，不借旧held调参或扩大赋标。
+[#25证据决定标注粒度](https://github.com/normaltank/TagProject/issues/25)已形成独立离线profile及root冻结13例合同验证：用户已澄清模糊为简介与标签的标注关系；允许有据2级及明确0／1级宽保留，宽类不下推、未决不升级。操作与限制见[新入口](TEACHER_PATH_AND_TOOLS.md#证据粒度离线profile25)，实际运行见[实验记录](EXPERIMENTS.md#t-granularity-01证据决定粒度离线合同试运行)。主Agent核验、同版本独立双轴审查、归档及最终状态以#25记录为准；本票不跑新模型、不读新教师行、不证明真实准确率或恢复稿件生产匹配。
+
+[#24 Benchmark有效性审计](https://github.com/normaltank/TagProject/issues/24)已形成审计与新评价设计，核心修正是用户目标2级secondary而#16–23主赛只比较139个用户1级中类；A仅在该历史窄口径领先，尚未选出目标2级最优方案。层级定义及旧引用对应见[PROJECT](PROJECT.md#当前用户要求)，问题证据与新评价设计见[研究入口](RESEARCH_AND_DECISIONS.md#24benchmark有效性与目标层级修正2026-11-04)。核验、独立双轴审查、归档及关闭阶段以#24记录为准；模糊标注关系已由#25澄清，后续仍需目标2级的独立答案／新评价。未开展新模型／真人标注，不借旧held调参或扩大赋标。
 
 [#23旧BERT实跑擂台](https://github.com/normaltank/TagProject/issues/23)已形成论文1000真实forward复现、同#21教师120三配置对照及固定统计：当前保留A旧四top1并集→Qwen逐窗为待审默认；论文高margin的85%—88%可复现，但不是教师真人准确率。独立审查、验收、归档和关闭阶段统一以该票记录为准；结果及运行入口见[实验记录](EXPERIMENTS.md#t-bert-duel-01旧论文bert实跑复现与教师迁移擂台)。下一步优先补可信本人角色／范围纠错监督与教师人工模型来源链，独立新答案验证另定；不依本轮held调参、扩大训练或正式赋标。
 

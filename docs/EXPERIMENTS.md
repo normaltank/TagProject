@@ -386,6 +386,16 @@ held冻结初判参照@1覆盖为1／39／64／56／71／72／73，@3为5／84�
 
 固定前20旧A末级Qwen实跑900对，按case／label／chunk对齐的raw logits／scores、排名和获胜窗全同。该183.172秒为缓存池末级回放，未包含候选提名，不称新输入端到端成本。BERT论文1000＋教师双配置耗135.172秒、合成探针1.625秒，GPU预算计时合计319.969秒；CPU固定统计.266秒。任务量／精度不同，不按两总时长判教师单例速度。无新下载／依赖／训练／付费API／数据库／教师外发／正式赋标；图使用已有bundled matplotlib，不安装。完整[结果与限制](../outputs/bert_duel_20261104_v1/executor/RESULTS.md)、[默认dry-run与实际入口](../outputs/bert_duel_20261104_v1/executor/RUN_GUIDE.md)、[360条待审队列](../outputs/bert_duel_20261104_v1/executor/all120_three_routes_review_queue.frozen.jsonl)、[逐AC交付](../outputs/bert_duel_20261104_v1/executor/DELIVERY.md)及root独立数值核证均留在本地版本目录。当前选择理由见[研究记录](RESEARCH_AND_DECISIONS.md#23旧论文bert实跑后的当前选择2026-11-04)；独立审查、验收、归档及关闭以#23为准。
 
+## T-GRANULARITY-01：证据决定粒度离线合同试运行
+
+[#25](https://github.com/normaltank/TagProject/issues/25)在2026-11-04实际通过独立入口运行root已冻13个专项合成判断：有据2级、明确1级／0级、宽supported与细scope_review并存、教学／他人／弱兴趣、原细方向缺口、无secondary、多方向混合、跨父同名、跨层同名及资料不足。13／13符合冻结期望；输入及直接判断逐项不变，输出保留quote／Unicode偏移、路径、来源、unknown时效及requires_review；祖先单列派生、没有宽类下推、未决升级或正式赋标。该结果是给定判断的合同／逻辑验证，不是模型理解成绩、真人金标或新准确率改善。
+
+本地[专项摘要](../outputs/evidence_granularity_20261104_v1/executor/pilot_summary.json)、[逐例输入／期望／输出目录](../outputs/evidence_granularity_20261104_v1/executor/pilot/)、[默认预览前后清单](../outputs/evidence_granularity_20261104_v1/executor/preview_check.json)及[测试摘要](../outputs/evidence_granularity_20261104_v1/executor/test_summary.json)保留可回放证据。每例manifest绑定原输入／结果、合同、模块／旧验证器、词库文件及目录hash。root冻结源中的`vocabulary_source_sha256`实际指旧`priority_accuracy`的`labels.frozen.json`文件（d310971e…），不是XLSX：首次启动据此误比XLSX hash而在所有案例前停止，经root澄清后核旧文件及1535个ref/path完全一致，原源和期望均未改。原XLSX hash为8e130842…；新profile额外35根，与139中类／1396细类、19无secondary分支分别记录。
+
+适用新行为及旧回归55项通过，精确排除唯一读取真实教师行的`test_real_vocabulary_counts_and_teacher_typed_routes`；其他仅合成／临时输入、必要原词库和loopback模拟HTTP，外网连接及teacher_records守卫启用。首次新测试6项中1项因测试守卫也禁止argparse/gettext读locale变量而失败，修正为禁止凭证变量读取后6项通过，再纳入55项回归；初次失败及修复保留在测试摘要，旧测试源码不变。专项实跑10.911秒、最终55项测试2.915秒，连同初次检查仍远低于累计600秒上限；资源账与源保护／链接检查见[执行交付](../outputs/evidence_granularity_20261104_v1/executor/DELIVERY.md)。
+
+无GPU／模型forward／训练／下载／依赖安装／付费API／数据库／新教师行／新S读取／教师外发／正式赋标／稿件生产匹配；执行者未浏览新增网页。旧v1/v2／默认CLI及#15–24冻结材料未改。后续真实2级及师稿相关性、误配／漏人和复核投入仍须新范围独立验证，规则及选择理由分别见[审核规则](TEACHER_REVIEW_PROTOCOL.md#证据决定粒度与映射状态)／[研究记录](RESEARCH_AND_DECISIONS.md#25证据粒度与未来适审用途2026-11-04)。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。

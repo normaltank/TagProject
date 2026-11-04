@@ -56,6 +56,30 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 
 本地校验只能证明结构、词库身份和引用位置，不证明模型声明的角色、持续专长、概念范围或方向是否穷尽。旧输出的待人审字段原样保留，新反馈由教师模型单独留版本，不当独立金标；本轮不写回原表、不创建概念或正式赋标。usage未知为null，默认费用null。可提供`pricing`中的货币及缓存命中／未命中／输出每百万token单价作“用户提供单价的估算”，不能冒充账单。价格参考[官方价格页](https://api-docs.deepseek.com/quick_start/pricing/)，既有验证未报告实际人民币费用。
 
+## 证据粒度离线profile（#25）
+
+独立入口为[scripts/evidence_granularity.py](../scripts/evidence_granularity.py)，合同为[teacher_evidence_granularity_v1](../config/evidence_granularity_v1.json)，不改变上节DeepSeek旧入口／v1/v2。该入口不建模型请求、不读凭证、不加载模型、不联网；默认验证预览且不创建任何输出文件。仅显式`--write-offline --out <新目录>`才保存；任何已存在目标（包括空目录）都拒绝覆盖。
+
+输入JSON精确含`case_id`、`source_version`、原文`intro`及`judgement`四键；judgement沿用旧v2原始判断的五键形状（decision/reason/directions/labels/gaps），由调用者提供显式判断，或原样提取既有响应内容后另存输入。不是直接读取API envelope或旧results富化对象，也不重新运行分类器；不符合合同明确拒绝，不能无损承接时由输入者回查原响应，不静默删字段或改写判断。
+
+在项目根目录运行；下例使用本机#25已冻合成输入，新克隆须自行准备合法JSON与来源词库，本地outputs获取边界见[README](../README.md)：
+
+```powershell
+$tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+# 默认预览：即使指定--out也不写入
+& $tagPython scripts/evidence_granularity.py --input outputs/evidence_granularity_20261104_v1/executor/pilot/Q03/source.json --vocabulary Sheets/review_tagscollection_20261022.xlsx
+# 显式离线另存：目录名需尚不存在
+& $tagPython scripts/evidence_granularity.py --input outputs/evidence_granularity_20261104_v1/executor/pilot/Q03/source.json --vocabulary Sheets/review_tagscollection_20261022.xlsx --write-offline --out outputs/granularity_local_review_v1
+```
+
+新profile从原词库构造35个0级根／139个1级／1396个2级来源节点。旧L2/L3引用逐项不变；新增L1仅属本profile：同family按最小`source_row_id`取`row:<sid>:L1`，`path=[family]`，定位原G列及该行，非正式概念ID。同名跨父／跨层不合并。旧teacher_output_v2并未因此原生获得L1能力，不能把新profile目录直接交旧CLI。
+
+`result.json`保留原直接标签的路径、mapping_status、方向及引用／Unicode偏移，新增`user_level`、`assertion_kind=direct_evidence`、时效unknown及requires_review。supported标签所连方向须逐一supported；仅教学／兴趣等声明不能支持任何层级。粒度由显式判断给出，程序不以quote是否逐字包含标签全名决定细标。supported直接标签的祖先另在`derived_projections`中标`derived_projection`及`counts_as_independent_expertise=false`；不会向下扩子类、升级scope_review、填造gap／无secondary叶子。输入若为同一方向重复给supported父子，明确拒绝而不改写。
+
+输出同时保存逐字节输入`input.json`、完整来源目录`catalogue.json`、合同快照`contract.json`及`manifest.json`。manifest含输入版本／原文件hash、词库XLSX和新目录hash、合同／模块／旧验证器hash、结果hash及网络次数0；配合原词库可回溯源位置。输入中的直接判断及角色仍由提供者负责；局部验证通过仅证明声明形式、引用位置和路径，所有结果`semantic_validation=not_performed`／`review_status=requires_review`，不证明本人归属、语义充分、当前适审资格或真人认可，不写正式赋标或派稿。
+
+退出码0仅表示预览／离线形式处理完成，2表示拒绝或本地读取／写入失败。合成测试可运行`python -m unittest discover -s tests -p test_granularity.py -v`；#25适用旧回归明确排除读取真实教师行的用例，真实试运行、初次检查失败与修复记录见[实验记录](EXPERIMENTS.md#t-granularity-01证据决定粒度离线合同试运行)。
+
 ## #18本地冻结批次复用
 
 本地入口为[RUN_FINAL.ps1](../outputs/pipeline_benchmark_20261101_v1/executor/RUN_FINAL.ps1)，实际调用已冻结的`score_selected_final.py`。它读取本票冻结输入、四基线候选源、cal锁点及最终比较链，使用原本地运行栈与权重；适用P0021–P0800，可指定其中一条或处理剩余780条。前20条复用独立成本批，1000组汇总与质量/吞吐区分见[EXPERIMENTS](EXPERIMENTS.md#t-pipeline-01完整本地流程比较与1000组待审试运行)。新克隆先按[README](../README.md)准备本地依赖与忽略材料。

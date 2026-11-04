@@ -1,0 +1,17 @@
+{
+  "profile_version": "teacher_evidence_granularity_v1",
+  "input_keys": ["case_id", "source_version", "intro", "judgement"],
+  "judgement_shape": "teacher_output_v2 raw judgement; new profile adds local L1 references",
+  "user_levels": {"L1": 0, "L2": 1, "L3": 2},
+  "family_reference_rule": "row:<minimum source_row_id within identical family>:L1; path=[family]; G<excel_row>",
+  "reference_identity": "source occurrence and full path; never formal concept ID",
+  "granularity_policy": "prefer evidenced level 2; retain directly evidenced level 0/1; never expand downward",
+  "mapping_policy": "supported and scope_review are separate from granularity; never promote scope_review",
+  "support_policy": "every direction linked to a supported label must declare supported with explicit_direction or research_activity evidence",
+  "projection_policy": "supported direct labels project ancestors into derived_projections only; duplicate supported ancestor for the same direction is rejected",
+  "semantic_validation": "not_performed",
+  "review_status": "requires_review",
+  "temporal_status": "unknown",
+  "validation_base": "unmodified teacher_output_v2 validator; checks declared roles, not person attribution or semantic entailment",
+  "execution": "offline only; preview by default; explicit write creates a new directory and refuses any existing target"
+}
