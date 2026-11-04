@@ -146,3 +146,11 @@ root对完整120的实际语种／证据角色AI核查为：34英语正文、4�
 [#22](https://github.com/normaltank/TagProject/issues/22)只读清点本地前人成果10401文件／4627566668字节，含隐藏及内层ignored项、不跟随链接。取得的是论文BERT权重、DS监督及评测实物；训练CSV299997行=train269707／val15144／test14346／gold800，gold标签仍与DS记录一致，未证实独立人工审定。国家级1000中3个key进入过train；精确及规范化题名／模型输入跨划分无交集，不代表教师身份连通组或语义近重复隔离。原词库139名称与当前L2相同，旧“一级学科”称呼不能误作当前35个L1；三份当前原始XLSX在前任树无同hash文件，且缺run／输入／教师ID绑定，不能证明该论文checkpoint生成当前教师S。
 
 教师4000人工标注导出、教师retrain权重与划分／评测未随当前树交付；交接文档写标注进行中、完成后计划retrain，不当已完成成果。词表精确成员、JSONL重复／null、分母与缺失详见本地[来源审计](../outputs/predecessor_bert_audit_20261104_v1/executor/AUDIT_REPORT.md)、[数据核查](../outputs/predecessor_bert_audit_20261104_v1/executor/training_data_audit.json)和[实物清单](../outputs/predecessor_bert_audit_20261104_v1/executor/inventory.before.json)。原件、旧冻结及前人成果保持只读；本次未新增真人答案或教师语义裁定。
+
+## 2026-11-04旧BERT擂台的复用输入与覆盖
+
+[#23](https://github.com/normaltank/TagProject/issues/23)复用论文原国家级1000 CSV／DS参照和#21原完整120教师／cal24-held96，不读取新教师行或新S。论文输入严格按旧纯函数构造题名、关键词、首个清洗中图号，以literal `[SEP]`连接；1000条输入hash由root独立重构逐条相同。旧139标签原序与当前L2逐项一致；该论文checkpoint与当前教师S、教师人工优化版之间的来源链仍未补齐，已暴露论文集的3个train key及gate开发使用限制不变。
+
+教师直接简介经旧fast tokenizer得到128252个非额外特殊token。B-prefix的128token上限含2个特殊token，119／120例发生前缀截断；B-overflow同128／stride32生成1382窗，完整原序token ID及原文offset逐值连续覆盖，root独立核验通过。128token不是128汉字；空白或规范化未成token不当作漏窗。prefix可见token数／末字符位置、完整窗口offset与非穷尽初判引文裁切诊断保留在本地[token覆盖](../outputs/bert_duel_20261104_v1/executor/token_coverage.frozen.json)和[结果](../outputs/bert_duel_20261104_v1/executor/RESULTS.md)，不把窗口max与前缀差值全部归因于截断。
+
+root核实旧同输入／词库／释义的1139项唯一case-L2全文AI意见。两B配置top3合并为525个唯一case-L2，其中314项精确复用，另211项由98例、每包最多20例匿名材料另审；旧context意见不接到B的新窗口。匿名包隐藏route／score／rank，但root早已知道A和旧输入／意见，因此不是新的盲测或未暴露留出。原初判、旧后审、首次新预测和新意见分版本保存；未列旧初判不自动判N，原生top3以外未审标签／B窗口证据保留null。源hash、原件保护及审核来源入口见[绑定清单](../outputs/bert_duel_20261104_v1/executor/bindings.frozen.json)、[root旧意见绑定](../outputs/bert_duel_20261104_v1/commander/reused_fulltext_opinions.frozen.json)和[审核导出清单](../outputs/bert_duel_20261104_v1/executor/review_export.frozen.json)。

@@ -4,7 +4,9 @@
 
 ## 当前阶段
 
-[#22前人BERT成果与指标审计](https://github.com/normaltank/TagProject/issues/22)已形成只读实物审计、离线指标重算及拟议公平教师擂台；独立审查、验收、归档与关闭的阶段统一以该票记录为准。下一步优先补教师人工标注／历史教师checkpoint来源链，再按拟议擂台明确新票范围；不能把论文DS参照或高置信子集一致率称教师真人准确率。本票不训练、评分新模型或恢复稿件支线；报告与操作入口见[实验记录](EXPERIMENTS.md#t-predecessor-audit-01前人bert实物与指标只读审计)。
+[#23旧BERT实跑擂台](https://github.com/normaltank/TagProject/issues/23)已形成论文1000真实forward复现、同#21教师120三配置对照及固定统计：当前保留A旧四top1并集→Qwen逐窗为待审默认；论文高margin的85%—88%可复现，但不是教师真人准确率。独立审查、验收、归档和关闭阶段统一以该票记录为准；结果及运行入口见[实验记录](EXPERIMENTS.md#t-bert-duel-01旧论文bert实跑复现与教师迁移擂台)。下一步优先补可信本人角色／范围纠错监督与教师人工模型来源链，独立新答案验证另定；不依本轮held调参、扩大训练或正式赋标。
+
+[#22前人BERT成果与指标审计](https://github.com/normaltank/TagProject/issues/22)已形成只读实物审计、离线指标重算及拟议公平教师擂台；本票未训练、评分新模型或恢复稿件支线，后续实际复现与教师迁移由#23分票执行。审查、验收、归档与关闭阶段统一以#22记录为准；报告与操作入口见[实验记录](EXPERIMENTS.md#t-predecessor-audit-01前人bert实物与指标只读审计)。
 
 [#21准确性优先的GLiNER2.5与GLiClass多语补测](https://github.com/normaltank/TagProject/issues/21)已验收关闭。当前待审默认仍为四top1并集→Qwen逐窗，阈值未改，暂不扩大训练或正式自动赋标。冻结七配置结果、候选队列与限制见[实验记录](EXPERIMENTS.md#t-priority-01准确性优先的多语原生分类与整篇对照)，默认／替代及部署方向见[选型记录](RESEARCH_AND_DECISIONS.md#21当前方案与后训练决定2026-11-03)。
 

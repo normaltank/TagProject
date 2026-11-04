@@ -374,6 +374,18 @@ held冻结初判参照@1覆盖为1／39／64／56／71／72／73，@3为5／84�
 
 本次模型评分／训练／新依赖／下载／API／数据库／教师资料外发／正式赋标均0。已完成与未知、源码/run版本差异、指标macro口径及重算入口见本地[审计报告](../outputs/predecessor_bert_audit_20261104_v1/executor/AUDIT_REPORT.md)、[数值核查](../outputs/predecessor_bert_audit_20261104_v1/executor/metrics_recomputed.json)、[默认dry-run指南](../outputs/predecessor_bert_audit_20261104_v1/executor/RUN_GUIDE.md)和[逐AC交付](../outputs/predecessor_bert_audit_20261104_v1/executor/DELIVERY.md)。输入及来源事实集中[DATA_AUDIT](DATA_AUDIT.md#2026-11-04前人bert实物与来源链)，评价和未运行的公平擂台集中[选型记录](RESEARCH_AND_DECISIONS.md#22前人bert评价与公平擂台决定2026-11-04)；没有产生新的真人比较结果。
 
+## T-BERT-DUEL-01：旧论文BERT实跑复现与教师迁移擂台
+
+[#23](https://github.com/normaltank/TagProject/issues/23)实际运行旧`full_v2_lr5e5/best`，分开复现原论文1000和复用#21教师120。三配置固定为A旧四top1并集→Qwen逐窗（原预测／工作点精确复用）、B-prefix直接完整简介输入但按旧128token截前缀（主对手）、同权重128／stride32完整覆盖的B-overflow辅助；B统一FP32／eval／batch32、原139顺序、SDPA／TF32关闭，不训练或搜索新组合。输入／覆盖事实见[数据审计](DATA_AUDIT.md#2026-11-04旧bert擂台的复用输入与覆盖)。root先核技术及合成探针放行真实评分，首预测冻后精确复用314项B top3意见、另审211项，全部新意见冻后才放行统计。已有数据／A意见暴露限制保留，均为AI开发支持意见。
+
+论文实际139维概率按.97／top5解码，1000行标签集合与top1全部同旧概率重建；TP1075／FP425／FN284、micro-F1=.752011、集合506／1000，精确复现旧全量报告。最大概率差5.17368e-5，top3 rank997／1000相同，0.97阈值bit差0；全139 rank受四位舍入并列影响，不能用其不一致宣称分类退化。固定margin≥.20仍保留189／1000、exact161／189=85.185%；≥.30保留136／1000、exact120／136=88.235%。两高数确可复现，但参照为DS、覆盖低，且该集3个key进过train并用于gate分析，不能称教师真人准确率。.05原生解码312／418、F1=.851249，与已清空deferred的保存tags311／418、F1=.85分版保留；六margin及宏／微口径齐全，不为匹配改参数。
+
+教师held96 forced top1全文S／N／U：A74／14／8、B-prefix53／38／5、B-overflow64／25／7，分别77.083%／55.208%／66.667%，技术失败均0。主A−B-prefix为+21.875个百分点，95%配对描述区间[+11.458,+32.292]；辅助A−B-overflow为+10.417[+1.042,+19.792]，B-overflow−B-prefix为+11.458[+2.083,+20.833]。固定seed20261104、10000次同96case／连通组配对重采样，S=1、N／U／失败=0；不是独立真人准确率区间。cal24全文S分别20／17／18，不依held调阈值或改选。
+
+原阈值下A held保留67／96、56／67全文S=83.582%，原生窗口及标签联合36／96=37.5%；B-prefix .97／top5保留87／96、52／87=59.770%，B-overflow95／96、64／95=67.368%。三者forced全文、条件支持、覆盖和证据联合不是同一指标。B-prefix无定位not_provided，B-overflow输入窗未新审，证据为null，不机械扣全文标签分；B-overflow held54／cal12个原生标签未审为null，不把top1意见称整套标签准确率。六margin原点全部报告，空分母null；held非穷尽253方向@3覆盖为A111、prefix113、overflow123，A池上限111，B139池名义上限253，不能当完整召回。英语正文held28例的全文S为21／14／15；原语种／角色细分、脚本层、裁切及池机会差别均单列。
+
+固定前20旧A末级Qwen实跑900对，按case／label／chunk对齐的raw logits／scores、排名和获胜窗全同。该183.172秒为缓存池末级回放，未包含候选提名，不称新输入端到端成本。BERT论文1000＋教师双配置耗135.172秒、合成探针1.625秒，GPU预算计时合计319.969秒；CPU固定统计.266秒。任务量／精度不同，不按两总时长判教师单例速度。无新下载／依赖／训练／付费API／数据库／教师外发／正式赋标；图使用已有bundled matplotlib，不安装。完整[结果与限制](../outputs/bert_duel_20261104_v1/executor/RESULTS.md)、[默认dry-run与实际入口](../outputs/bert_duel_20261104_v1/executor/RUN_GUIDE.md)、[360条待审队列](../outputs/bert_duel_20261104_v1/executor/all120_three_routes_review_queue.frozen.jsonl)、[逐AC交付](../outputs/bert_duel_20261104_v1/executor/DELIVERY.md)及root独立数值核证均留在本地版本目录。当前选择理由见[研究记录](RESEARCH_AND_DECISIONS.md#23旧论文bert实跑后的当前选择2026-11-04)；独立审查、验收、归档及关闭以#23为准。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。
