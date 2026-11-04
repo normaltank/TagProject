@@ -217,3 +217,9 @@ CSO Classifier官方[v4.0.1](https://github.com/angelosalatino/cso-classifier/re
 目前不扩大后训练。#17小规模AI意见LoRA未证明稳定超过原NLI；#19中文BERT／mmBERT的冻结主干弱监督头也未证明应替代旧BGE，本票训练0。优先积累可信本人角色、范围纠错、遗漏与失败监督，按连通组隔离训练／验证和未暴露评价，再决定有界适配。万级旧S只是有来源弱监督，不作真值；不因长耗时获准就推定更大训练有效。
 
 个人电脑GPU适合有界离线批量候选生成、逐例落盘与恢复，CPU服务器可接收版本化结果用于查询／审核；这是部署方向，尚未上线服务器。无GPU也可保留原精度模型做容许长时延的离线CPU推理，原精度两例可运行不等于必须降级；实际RAM／指令集／精度运行时须在目标服务器另测。GLiClass bf16在本机CPU很慢是成本事实，不作为质量淘汰标准。默认链CPU端到端未测，已有单例缓存池加最终forward回放不能作新输入服务吞吐；8GB显存共享、连续进程失败及恢复边界见实验记录，不保证所有同容量卡稳定驻留。
+
+## #22前人BERT评价与公平擂台决定（2026-11-04）
+
+前人已交付论文DS标签蒸馏、全参数任务微调、验证选点和可恢复批处理，具有可借鉴的工程价值；教师人工优化是否完成、是否产生当前教师旧S仍无来源链。最接近85%—88%的实物是高置信论文子集对DS的集合一致率，不能据此改选当前教师默认。数据与重算分母分别见[数据审计](DATA_AUDIT.md#2026-11-04前人bert实物与来源链)、[运行登记](EXPERIMENTS.md#t-predecessor-audit-01前人bert实物与指标只读审计)。[HFL官方模型卡](https://huggingface.co/hfl/chinese-roberta-wwm-ext)、[F1定义](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)及[多标签集合accuracy定义](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html)由root于2026-11-04查阅；纯预训练底座不等于已有139标签任务头，官方能力不作本项目效果证明。
+
+保持#21锁定候选／证据架构作为当前参赛者；旧论文checkpoint只作跨任务基线，历史教师人工优化模型待补实物，纯预训练加共享监督的基线另命名。拟议新票先核已有教师人工导出及版本，固定全新隔离教师输入／词库／人工答案，集合、首标签、证据、拒判覆盖分别评价；完整多标签解码须在新dev冻结，不能把#21 top1意见当集合冠军。边际成本计人工标注／纠错／复核、训练、推理与回退，并预定最小有用提升和停止门槛。完整[擂台与边际投入规格](../outputs/predecessor_bert_audit_20261104_v1/executor/DUEL_PROTOCOL.md)仅为下一票建议，本票不执行训练／新模型评分或恢复稿件支线。

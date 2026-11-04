@@ -368,6 +368,12 @@ held冻结初判参照@1覆盖为1／39／64／56／71／72／73，@3为5／84�
 
 [最终资源账](../outputs/priority_accuracy_20261102_v1/executor/resource_ledger_seven.frozen.json)于2026-11-03冻结：含失败／探针／同配置恢复及既有live的GPU共11126.593348秒，CPU探针6247.907秒另计；模型payload精确4602727911字节，加新venv双倍物理大小的依赖保守上界为4947840823字节（不是依赖网络精确计量）。账本时新根4964070894字节、盘余79658639360字节，均在8小时GPU／10GiB新下载／12GiB新根／至少5GiB余盘内。最终保护hash、固定分析源、公开隐私、相对链接与成果读回检查记录在本地`executor/delivery_checks.frozen.json`，其范围不代替root逐AC验收及两个全新独立轴。
 
+## T-PREDECESSOR-AUDIT-01：前人BERT实物与指标只读审计
+
+[#22](https://github.com/normaltank/TagProject/issues/22)于2026-11-04形成实物清点及保存数据纯离线重算成果；独立审查、验收、归档与关闭阶段统一以该票记录为准。旧论文run的test14346报告micro-F1=0.786833、集合exact=0.592709，原逐行test预测缺失，不能称已独立重算该测试。国家级1000保存139维概率按0.97／top5解码则精确重现旧全量报告TP1075／FP425／FN284、micro-F1=0.752011、exact506/1000；现存tags已清空deferred行，须与全概率重建分版解释。原接受子集418行exact311/418、F1=0.85；margin≥0.20保留189/1000且exact161/189=85.19%，≥0.30保留136/1000且exact120/136=88.24%。后两项是最接近用户转述的线索，确切转述来源未确认；全部参照为DS，均非教师真人准确率，不能与#21 root AI意见直接排名。
+
+本次模型评分／训练／新依赖／下载／API／数据库／教师资料外发／正式赋标均0。已完成与未知、源码/run版本差异、指标macro口径及重算入口见本地[审计报告](../outputs/predecessor_bert_audit_20261104_v1/executor/AUDIT_REPORT.md)、[数值核查](../outputs/predecessor_bert_audit_20261104_v1/executor/metrics_recomputed.json)、[默认dry-run指南](../outputs/predecessor_bert_audit_20261104_v1/executor/RUN_GUIDE.md)和[逐AC交付](../outputs/predecessor_bert_audit_20261104_v1/executor/DELIVERY.md)。输入及来源事实集中[DATA_AUDIT](DATA_AUDIT.md#2026-11-04前人bert实物与来源链)，评价和未运行的公平擂台集中[选型记录](RESEARCH_AND_DECISIONS.md#22前人bert评价与公平擂台决定2026-11-04)；没有产生新的真人比较结果。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。
