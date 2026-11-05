@@ -434,3 +434,13 @@ cal锁后，root逐核diag／语言／合成全部74包无start／raw／profile�
 [#30](https://github.com/normaltank/TagProject/issues/30)阶段A已实际生成masked监督、组隔离划分、完整token窗口与共用训练入口；阶段B经root显式放行已完成两初始化真实更新。模型身份/数据/代码/协议已冻结，采用相同新单标量头的完整简介＋路径条件支持判别，旧论文encoder与本地同HFL通用encoder仅初始化不同。数据分母见[数据审计](DATA_AUDIT.md#2026-11-05教师适配监督组装30)，设计及稀疏限制见[选型记录](RESEARCH_AND_DECISIONS.md#30从实际监督覆盖确定最小教师适配任务2026-11-05)。
 
 离线检查通过：U/未审零梯度与target扰动不变、冲突排除、组/源行隔离、0/1/2路径与新头维度、1140pair全token覆盖、692来源context精确绑定、旧源hash保持、默认dry-run禁权重/网络与非法release早拒绝。首检查子进程argv包装失败已留账并修复，未触模型。实际包与运行入口见[RESULTS](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RESULTS.md)、[RUN](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RUN.md)。阶段B按root绑定原manifest的显式release串行完成两初始化各8更新，paper/base预算账33.391/19.954秒，累计53.345秒；每路实际11组/17unique pair（8S/8N/1U），只用1固定dev query核重载。初始新头hash相同，所有8步encoder/head梯度有限非零、U logit梯度0，197 encoder及2 head张量变化，保存后新建模型重载输出逐值相等。两路首次成功、失败/重试0，final_checks复核发前critical不变及1320保护missing/changed0。只证明训练/重载工程可行性，不报告准确率或赢家。0新API/模型或依赖下载/教师行/S/外发/正式赋标，#28未知预留不释放；已授权GitLab源码文档下载的来源事实见[数据审计](DATA_AUDIT.md#2026-11-05教师适配监督组装30)。
+
+## T-PRIMARY-REVIEW-01：新20一级AI开发审核
+
+[#32](https://github.com/normaltank/TagProject/issues/32)，2026-11-05。有界来源核查未取得可用人工结果后，按预冻seed／12概率＋8proxy准备20完整脱敏连通组，旧暴露14691组排除，19996码点／长度20–4881，S业务值0。stageA先冻1570目录及无预测全文；用户在root读全文后、标签映射前将论文／教师统一为一级，原包不改，另冻139目标视图。来源未知和取值边界见[数据审计](DATA_AUDIT.md#2026-11-05人工来源差异核查与新一级开发池32)。
+
+root实际逐条AI审核并冻结35方向、67项直接一级意见：33S／11N／23U；53处逐字quote／Unicode偏移、source/input/group、path／来源、S只连S方向、mask及排旧机械校验通过。17例有S／3例无S、27个一级有S仅为当前AI意见覆盖，不是准确率。英语Research Interests栏目语用未决、跨学科参与项目及资料不足保留U，异常不删／不换样；未审标签和U均target=null／mask0，N不作现实无专长判断。
+
+新20 documents／pairs与139目标masked矩阵另存development_pool，不调用旧训练入口、不赋旧split；#30旧160真实＋13合成及所有训练文件只读保持。旧160直接一级全文覆盖与新20分别／并集只读统计，排除0／2及细层自动投影。字段级兼容不等于可直接运行旧#30硬编码loader，后续训练／开发／独立评价用途须另冻，不能以同20既训练又证明独立效果。[RESULTS](../outputs/teacher_review_batch_20261105_v1/executor/RESULTS.md)、[RUN](../outputs/teacher_review_batch_20261105_v1/executor/RUN.md)、[DELIVERY](../outputs/teacher_review_batch_20261105_v1/executor/DELIVERY.md)和[覆盖账](../outputs/teacher_review_batch_20261105_v1/executor/coverage.frozen.json)提供实际入口。
+
+本票项目模型推理／训练／付费API／下载／新依赖／DB连接／GitLab写入／教师外发／正式赋标均0；root对当前会话材料作AI审核不算项目API运行。准备实测68.5秒、自查0.203秒，后续组装／验证资源账另存本地；交互阅读、编辑和验收命令不冒充CPU实测总耗时，准备统计另按1小时上限守卫，#28未知费用保留。root验收、同head独立双轴、归档同步及最终关闭状态以Issue及凭据为准。

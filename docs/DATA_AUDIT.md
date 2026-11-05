@@ -172,4 +172,14 @@ root核实旧同输入／词库／释义的1139项唯一case-L2全文AI意见。
 
 用户另授权只读核查外部教师标注GitLab develop，root已固定提交`ec0e79e63c7ee85c4fcb5cd7d3c9ebae54537f7d`的必要源码快照及Git blob/SHA256；未取得实际标注数据。导出源码默认不筛reviewed（可选`--reviewed-only`），故可含草稿；导出字段不含intro、词表版本或revision，未来复用还需配套items/tags/config与身份/输入绑定。reviewed标志也不等于独立审定。当前只追加来源事实，不改变上述160材料/训练任务；私有源码留本机ignored，见[只读阅读账](../outputs/teacher_adaptation_pilot_20261105_v1/executor/gitlab_reading_ledger.frozen.json)。
 
+## 2026-11-05人工来源差异核查与新一级开发池（#32）
+
+复用原表100000唯一正ID、A–U表头及旧S为BERT方案结果的来源说明，以及#30已取得的标注平台源码／导出合同；没有重扫TagPrevious正文、Git对象或秘密配置。有界清点本项目5741个文件名（排除Git／旧工程／运行栈／权重等明示目录）和父目录一级名称／安全元数据，未读外目录内容；候选仅见已知导出源码、旧AI annotation记录及Windows运行缓存DB文件名，未打开DB或候选配置。未取得同版本review_results＋items／tags／config实际人工结果，已保存／完成review数、是否独立审定仍未知。十万表可能含历史人工修订，当前没有来源／完成量绑定；本次未查范围不能据此称不存在人工结果。[限定搜索账](../outputs/teacher_review_batch_20261105_v1/executor/source_investigation.frozen.json)保留路径、大小及排除范围。
+
+选样前冻结seed20261105、12个20–3000码点hash概率组＋8个脚本／长文／教学词／作品词proxy诊断组（每类2）；代理不作语种／研究角色答案。沿#16原文／规范化输入／主页连通索引排除已知14691组，覆盖旧16及#16–30已知暴露／训练／吞吐组。排除源行15031；其后deleted非0／未知1104、非文本／公式／错误／空O5945、长度资源范围外14370，余63550行／61955组为20–8000码点资源池；主概率可选54634组。全部20选中结果保留，未因异常／不足换样；完整19996码点，实际长度20–4881。[隔离账](../outputs/teacher_review_batch_20261105_v1/executor/historical_isolation.frozen.json)保留逐旧partition的组／hash交集0与缺失字段，未知历史训练、语义近重复与真实同人仍不能保证穷尽。
+
+新表业务取值仅A／B／C／L／N／O，S及其余尾列业务值0；底层XML结构解析仍解码字节／节点，只解析白名单所需共享字符串，不能称尾列物理未解码。完整等长遮盖和URL追加遮盖保持Unicode偏移映射；姓名／联系方式列不作研究特征，间接身份残留及遮盖损失仍可能存在，仅本地处理。阶段A全1570路径／原规则／全文包保持原hash，用户目标变更后另冻139个一级视图，不重写旧包。[准备与原件保护](../outputs/teacher_review_batch_20261105_v1/executor/preparation_checks.frozen.json)及[机械回读](../outputs/teacher_review_batch_20261105_v1/executor/stage_a_checks.frozen.json)可回查。
+
+root对同20全文先判方向再直接审一级：35方向、67项一级意见＝33S／11N／23U，53处逐字引文及偏移机械通过。17例有至少一个S，27个一级有S；这只是AI开发意见覆盖，不是质量指标。未审pair与U均mask0、target=null，N仅指固定文本不支持，无0／2本批标签及细层投影。新20均development_pool，与旧160真实组／输入hash交集0，旧160＋13及split保持原样。只读筛选旧160的直接一级全文意见625项＝261S／270N／94U、84个一级有S；新旧并集仅作覆盖汇总，共180组692项、90个一级有S，不能作为独立评价答案。[来源／适配／覆盖包](../outputs/teacher_review_batch_20261105_v1/executor/RESULTS.md)明确字段层兼容与后续划分未定。
+
 #30阶段B只从上述冻结划分内固定选取11训练组/17unique pair作两初始化各8步工程验证，原160/13数据和mask不变；未因训练结果增补标签/负例或读取新教师/S。最终发前critical与1320旧保护hash保持，训练实测统一见[实验记录](EXPERIMENTS.md#t-adapt-01教师监督与双初始化适配原型)。

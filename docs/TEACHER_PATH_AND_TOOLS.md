@@ -4,6 +4,8 @@
 
 运行前读取任务 Issue 的输入版本、调用上限和验收条件。参数以 scripts/deepseek_classify.py --help 与配置为准；下文为当前入口用法。
 
+当前新批目标为论文／教师统一用户1级primary_tag，按[PROJECT](PROJECT.md#当前用户要求)及[审核规则](TEACHER_REVIEW_PROTOCOL.md)执行。下文旧多粒度CLI／profile与既有运行保留各自历史合同，不能据此启动新的二级运行或改变当前默认目标。
+
 ## DeepSeek配置与命令
 
 默认endpoint为`https://api.deepseek.com/chat/completions`、模型`deepseek-flash`；显式禁用thinking，启用`json_object`，temperature=0、stream=false。官方JSON模式仍可能空内容，长度不足会截断；本地另做拒绝校验。来源：[接口首页](https://api-docs.deepseek.com/)、[Chat Completion](https://api-docs.deepseek.com/api/create-chat-completion/)、[JSON模式](https://api-docs.deepseek.com/guides/json_mode/)（查阅2026-10-23）。
@@ -142,3 +144,9 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 本机[RUN](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RUN.md)给出既有解释器、默认dry-run、离线检查和root release后两初始化串行入口。`train.py`默认只读协议，不导入ML栈、加载权重、触网或创建训练目录；live先核release绑定manifest及源/模型hash，再用严格本地模型。旧论文safetensors与通用底座.bin安全weights_only读取后只提取encoder，不执行前任模块。
 
 完整标签路径＋原文所有token窗，256总token/32重叠、窗microbatch1，mean后文档级masked BCE；不截前缀、不把每窗标S，输入窗不是预测证据。相同新头、seed和8步预算；目录只创建一次，失败保留且不自动重跑。预定累计GPU45分钟/准备CPU1小时/新根3GiB/盘余5GiB，失败计入。阶段B已按root显式release完成两初始化各8更新与fresh-model重载，原运行目录/发前manifest只读，不再次live；最终检查用独立final_checks.py，不重写阶段A frozen账。启动running/逐步更新/finally finished的资源账遇未知前路fail closed；实际状态和限制见[实验记录](EXPERIMENTS.md#t-adapt-01教师监督与双初始化适配原型)。
+
+## #32新20一级监督包
+
+本地[RUN](../outputs/teacher_review_batch_20261105_v1/executor/RUN.md)提供只读验证入口；[documents](../outputs/teacher_review_batch_20261105_v1/executor/documents.frozen.json)／[pairs](../outputs/teacher_review_batch_20261105_v1/executor/pairs.frozen.json)及[139目标masked矩阵](../outputs/teacher_review_batch_20261105_v1/executor/masked_primary_matrix.frozen.json)仅为AI development_pool。S/N进入mask1，U和未审target=null／mask0，不对未审139补负例，不把细层投影当直接一级。方向／逐字证据留在文档包和root冻结意见，无0／2本批直接标签；全部requires_review。
+
+这里只兼容#30数据字段，未连接其硬编码loader、token窗口或train/dev划分；不能直接把新20替换旧160／13、重复使用旧release训练或同时充独立测试。重跑准备／组装脚本会因frozen文件已存在拒绝覆写；需要修订时另版并保留旧来源。当前只执行回读／hash／quote／path／mask／组隔离和覆盖统计，不运行模型、训练、API或正式赋标；下一张有限一级比较需另冻输入／用途与资源，旧#28未知额度不释放。
