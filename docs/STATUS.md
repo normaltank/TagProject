@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-[#30教师监督与双初始化微调入口](https://github.com/normaltank/TagProject/issues/30)已生成可追溯masked监督，并经root显式放行完成旧论文/同HFL通用encoder各8次真实更新、mask与fresh-model保存重载验证；实际细类稀疏覆盖决定采用路径条件支持判别新头。当前到执行交付待审，下一步由root独立核验、同head双轴及归档；[实际包与限制](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RESULTS.md)。仅训练工程可行性，不是独立效果擂台或正式赋标，最终关闭以#30为准。
+[#30教师监督与双初始化微调入口](https://github.com/normaltank/TagProject/issues/30)已生成可追溯masked监督，并经root显式放行完成旧论文/同HFL通用encoder各8次真实更新、mask与fresh-model保存重载验证；实际细类稀疏覆盖决定采用路径条件支持判别新头。训练与重载结果已保存；[实际包与限制](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RESULTS.md)。仅训练工程可行性，不是独立效果擂台或正式赋标；root验收、同head双轴、同步归档及最终状态以#30为准。
 
 [#29前人方法理解、批判与教师适配建议](https://github.com/normaltank/TagProject/issues/29)已形成[研究报告与阅读账](../outputs/predecessor_method_review_20261105_v1/executor/REVIEW.md)：前人论文微调／批处理有实物，教师证据／充分度／三态及retrain有设计，人工完成量和教师运行绑定仍缺。下一笔建议对称比较旧论文初始化与相同通用底座的教师微调，以及当前简洁候选方案；精确对照尚未实测，现有默认仅为阶段性参赛者。只读研究无新训练／推理或正式赋标，#28未知费用不释放；主Agent核验、同head双轴、同步归档及关闭以#29为准。
 
