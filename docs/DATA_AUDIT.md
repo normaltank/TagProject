@@ -154,3 +154,11 @@ root对完整120的实际语种／证据角色AI核查为：34英语正文、4�
 教师直接简介经旧fast tokenizer得到128252个非额外特殊token。B-prefix的128token上限含2个特殊token，119／120例发生前缀截断；B-overflow同128／stride32生成1382窗，完整原序token ID及原文offset逐值连续覆盖，root独立核验通过。128token不是128汉字；空白或规范化未成token不当作漏窗。prefix可见token数／末字符位置、完整窗口offset与非穷尽初判引文裁切诊断保留在本地[token覆盖](../outputs/bert_duel_20261104_v1/executor/token_coverage.frozen.json)和[结果](../outputs/bert_duel_20261104_v1/executor/RESULTS.md)，不把窗口max与前缀差值全部归因于截断。
 
 root核实旧同输入／词库／释义的1139项唯一case-L2全文AI意见。两B配置top3合并为525个唯一case-L2，其中314项精确复用，另211项由98例、每包最多20例匿名材料另审；旧context意见不接到B的新窗口。匿名包隐藏route／score／rank，但root早已知道A和旧输入／意见，因此不是新的盲测或未暴露留出。原初判、旧后审、首次新预测和新意见分版本保存；未列旧初判不自动判N，原生top3以外未审标签／B窗口证据保留null。源hash、原件保护及审核来源入口见[绑定清单](../outputs/bert_duel_20261104_v1/executor/bindings.frozen.json)、[root旧意见绑定](../outputs/bert_duel_20261104_v1/commander/reused_fulltext_opinions.frozen.json)和[审核导出清单](../outputs/bert_duel_20261104_v1/executor/review_export.frozen.json)。
+
+## 2026-11-05完整赋标补测的复用视图与清洗来源
+
+[#28](https://github.com/normaltank/TagProject/issues/28)只复用#26已暴露40真实（cal16／diag16／语言8）和原13合成，未读取新教师行／S。旧教师交接确有去模板、分节、充分度与三态输出设计，并指向未交付的教师专属规范；当前安全源码／文档未建立教师清洗函数、调用、输入版本、run及现S的绑定。论文题名／关键词／中图号清洗另属论文链，不能用于重建教师条件。“已检查交付源未定位”不等于从未存在；本轮仅源条件，不新增清洗对照。逐层证据和未查范围见[清洗报告](../outputs/complete_decision_pilot_20261105_v1/executor/CLEANING_REPORT.md)。
+
+原#26来源输入hash保持不变；API副本另版对链接／联系方式及root核定的9例目标别名／短联系号追加等长遮盖。root先完整读53视图，再逐字符核最终差分，研究句／题名／时序保留；单元覆盖完整Unicode码点，局部unit_id不含真实教师ID，引文由固定adapter唯一定位至确切API视图。共同作者、单位、项目、题名及履历仍可能间接识别，副本不声称完全匿名。原文、遮盖前后及全部106精确HTTP body仅本机保存；入口为[完整输入索引](../outputs/complete_decision_pilot_20261105_v1/executor/input_review_index.frozen.json)和[root差分](../outputs/complete_decision_pilot_20261105_v1/executor/root_privacy_diff.frozen.json)。
+
+旧598条case／source input hash／label ref全文AI意见仅按同hash和完整路径身份复用原始来源全文支持；新API可见支持、新方向summary、所有新quote的角色／充分性／细宽关系由root另审。实际14个parseable输出的24标签／35方向／42引文全部审核，含2份合同失败raw；source／view／quote区分，U/null不作S。空final、发送／计费用量未知和未尝试没有虚构语义意见。旧40仍是开发材料，非穷尽known方向不当全标签答案。首预测、失败raw、validated结果及原始响应分开保留；[106待审索引](../outputs/complete_decision_pilot_20261105_v1/executor/all106_pending_index.frozen.json)保留完整未尝试分母，不把未尝试记abstain或negative。实际分母与费用见[实验记录](EXPERIMENTS.md#t-complete-01完整赋标有限试跑)。

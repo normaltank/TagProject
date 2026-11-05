@@ -125,3 +125,13 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 五个`--route`值是`bert_linear_head`、`mmbert_linear_head`、`bge_linear_head_v2_hierarchy_aux`、`bge5_qwen_reranker`、`bge5_bge_reranker`。运行栈/权重只读复用，官方新版本见本地`models_v2.frozen.json`，FP32/512表示与BGE重排、原Qwen FP16/8192及无截断检查不变；新BERT固定非特殊有效token均值，零普通token窗口按评分前附录置0并保留。窗口为公共200码点/40重叠；全139头的层级辅助语境不作头原生归因，native-only为null。
 
 输出`predictions.json`保留排名/分数、最多3候选、原文与输入引文及Unicode[start,end)；`run.json`或`failure.json`计入本票累计GPU。所有结果仍待审、正式赋标0，复跑本身不新增语义意见。初判/匿名后审/锁点/结果及成本边界统一见[实验记录](EXPERIMENTS.md)；A:O业务取值与库内部解析的限定见[数据审计](DATA_AUDIT.md#19新100组2026-11-01)，不把`max_col=15`说成尾列字节或值物理不可见。
+
+## #28完整赋标有界试跑
+
+本机入口[RUN_GUIDE](../outputs/complete_decision_pilot_20261105_v1/executor/RUN_GUIDE.md)及[阶段A材料](../outputs/complete_decision_pilot_20261105_v1/executor/READINESS.md)冻结全部106 HTTP body／候选／提示／输出schema与最小#25 adapter。默认`python outputs/complete_decision_pilot_20261105_v1/executor/run.py`只核hash和预算预览，0HTTP、不读凭据。显式live须root commander release绑定manifest、完整隐私／视图／输出及旧意见复用验收、精确request_ids和US$5／至少1.50预留；凭据仅从既有Windows User环境注入进程，不读.env或回显。当前批次已触预算守卫并冻结，不能借旧release重试unknown或扩大额度，实际分母与费用统一见[实验记录](EXPERIMENTS.md#t-complete-01完整赋标有限试跑)。
+
+每请求先记start再唯一发送，raw response／first_output／validated adapted／receipt分别保存；KeyboardInterrupt立即停止，start无receipt保留unknown及预留。根字节含全部superseded准备包／commander／runtime，发前预留128MiB，每次写前核2GiB与余盘5GiB；本地process_time与远程等待墙钟分账。局部unit_id＋单元内唯一逐字quote由adapter定位Unicode[start,end)，重复／越池／遮盖／弱角色supported／冗余祖先严格保留失败，不修补不重发。声明角色、结构及位置通过不证明语义。
+
+首snapshot冻结后`export_reviews.py --snapshot <精确snapshot> --split calibration`导出cal32完整原文／API视图、raw first_output、validated结果和逐标签／方向／quote待填意见，adapter失败的parseable声明仍原样另审。`statistics.py --snapshot <同snapshot> --reviews <commander root意见> --split calibration`核覆盖及意见联结；joint S须标签聚合与链接方向／每条证据均root-S，U／null保留，不因技术失败删分母。其余split须root calibration_lock，不从diag反选。派生祖先、直接宽标签、scope_review、no-label／失败／未运行及非穷尽known池外方向分开。全raw forensic补充只作完整性核查，不恢复或修补失败输出。
+
+本批root cal审核／独立复算／锁定后，已将其余74份全部未尝试记录按同入口导出／统计，完整成果见[106待审索引](../outputs/complete_decision_pilot_20261105_v1/executor/all106_pending_index.frozen.json)。最终[RUN](../outputs/complete_decision_pilot_20261105_v1/executor/RUN.md)分清forward前推理／统计代码与forward后意见转录／索引／forensic整理；现有冻结输出均拒绝覆写，不能借整理重新评分或补推理。

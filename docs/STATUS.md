@@ -4,7 +4,9 @@
 
 ## 当前阶段
 
-[#27选型边界与遗漏核验](https://github.com/normaltank/TagProject/issues/27)已形成只读调查待审交付：四配置不是最终系统，无需先淘汰至一条才比旧BERT；共同1级擂台已在#23完成。下一步先固定独立答案及目标2级完整输出的可比条件，再做有限补测；事实、短名单与代价见[选型入口](RESEARCH_AND_DECISIONS.md#27最终候选边界与下一笔投入2026-11-05)。本票无新教师行／模型评分／训练／付费项目API或正式赋标；root核验、同head双轴、归档关闭以Issue为准。
+[#28旧教师清洗追溯与完整赋标补测](https://github.com/normaltank/TagProject/issues/28)的首结果／未知账本、root逐项cal审核与取舍锁、全分层未尝试统计及106待审成果已形成，本轮实验已按预算预留守卫停止。教师清洗未建立可重现运行绑定；校准未跑满、其余组未运行，依预冻incomplete/U规则保留目标2级后续开发C1优先＋RR补充，旧A粗层默认不改，无完整系统优越结论。实际分母、费用估算／未知预留和证据入口见[实验记录](EXPERIMENTS.md#t-complete-01完整赋标有限试跑)；下一步有限验证的输入／完整输出／独立答案边界见[研究入口](RESEARCH_AND_DECISIONS.md#28完整语义判别补测的冻结边界2026-11-05)。不再推理或重试，正式赋标0；最终验收、同head双轴、同步与关闭以#28及其凭据为准。
+
+[#27选型边界与遗漏核验](https://github.com/normaltank/TagProject/issues/27)已验收、双轴审查及归档关闭。共同1级擂台、有限短名单和完整输出补测依据见[选型入口](RESEARCH_AND_DECISIONS.md#27最终候选边界与下一笔投入2026-11-05)；当前接续任务为#28，旧STATUS中的“待审交付”快照已同步。
 
 [#26目标2级细标签开发对照](https://github.com/normaltank/TagProject/issues/26)已验收、双轴审查及归档关闭。cal锁Qwen为后续细候选优先；重排诊断／语言数值更好，尚不能最终定型。原预测及宽池校正分别保留，候选全pending、正式赋标0，旧A粗层默认不改；[结果与证据](EXPERIMENTS.md#t-fine-01目标2级细标签开发对照)。
 

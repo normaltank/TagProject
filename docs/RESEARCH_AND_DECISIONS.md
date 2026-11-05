@@ -273,3 +273,9 @@ CSO Classifier官方[v4.0.1](https://github.com/angelosalatino/cso-classifier/re
 **一手依据（实际查阅2026-11-05，共4唯一页）：** [QwenLM官方README](https://github.com/QwenLM/Qwen3-Embedding/blob/main/README.md)的Embedding／Reranker Transformers用法区分向量相似度与yes/no成对评分；[BERT官方分类接口](https://huggingface.co/docs/transformers/en/model_doc/bert#transformers.BertForSequenceClassification)给出`num_labels`维输出与多标签示例；[scikit-learn交叉验证导言／组隔离](https://scikit-learn.org/stable/modules/cross_validation.html)及[Dwork等原论文v2摘要](https://arxiv.org/abs/1506.02629)说明调参／自适应复用test的风险。这些只支持方法边界，不充当教师效果或最优架构证据；读取段落及不支持事项见上述报告页面账。
 
 **经验：** 选型先核业务层级／完整输出、候选与输入覆盖、答案来源／隔离，再定位关键错误和最小补测；先查最可能推翻比较的假设。声称未试过某路线前查实际冻结运行，公开能力只形成待验证假设，深度以能改变下一步为止。
+
+## #28完整语义判别补测的冻结边界（2026-11-05）
+
+#28把两套#26固定候选交同一Pro high／8192 JSON语义判别，补本人方向、多标签、细／宽保留、scope_review、无标签、逐字quote及派生祖先合同。池只给选择机会，有限top10／top3及祖先不等全词库召回；旧40＋13已暴露，不能改称独立测试。教师旧清洗只核到设计线索，未建立函数／调用／输入版本／run／S绑定，不能把论文预处理或另写清洗冒充历史，也没有源／清洗因果对照。
+
+比较规则在新预测前固定：root只在全部首响应／失败冻结后先审cal16，技术失败／unknown、错误supported、joint S细／宽及非穷尽known覆盖各自计量；仅一致Pareto优势可给临时后续优先，否则保留原Qwen优先＋RR补充的取舍解释，更多拒判不是自动优势。linked方向／逐引文未核或U不作joint S，不依diag／语言／合成改池、提示、模型或比较规则。实际因未知预留触预算停止，root已审全部101 raw声明、独立复算并锁incomplete/U取舍：保留C1后续优先＋RR补充，dominance=None。cal未完整、其他组全未尝试，不据部分宽层增益宣告完整系统优越。下一步先补独立监督、教师清洗源链、请求状态可追溯及完整输出可用性，再另定有界验证；本票不追加推理／训练。用量、错误类型及限制见[实验记录](EXPERIMENTS.md#t-complete-01完整赋标有限试跑)与[本地结果](../outputs/complete_decision_pilot_20261105_v1/executor/RESULTS.md)。

@@ -408,6 +408,20 @@ root全598标签／663窗后审及独立重算通过；177个全文S pair另有2
 
 [资源账](../outputs/fine_grained_benchmark_20261104_v1/executor/resource_ledger.frozen.json)：GPU完整2545.983秒（补宽105.641），已计量执行／准备分析CPU墙钟152.647秒；root交互阅读、其他验收／文档命令不等于此receipt账的完整计量，不是会话总耗时。账时新根130.8MiB、盘余76.9GiB。两次准备失败已留证计时，无GPU失败／重跑；下载／安装／训练／付费项目API／数据库／教师资料外发／正式赋标／稿件生产匹配0。原件及旧冻结hash不变。[逐AC交付](../outputs/fine_grained_benchmark_20261104_v1/executor/DELIVERY.md)／[运行入口](TEACHER_PATH_AND_TOOLS.md#26目标2级细标签本地开发对照)齐全；最终head双轴、归档同步与关闭由root按Issue完成。
 
+## T-COMPLETE-01：完整赋标有限试跑
+
+任务[#28](https://github.com/normaltank/TagProject/issues/28)，2026-11-05。阶段A冻结原40真实＋13合成、两套候选（原Qwen fine top10／coarse top3，与原RR fine top10／校正coarse top3，均加必要祖先且按词库序）及完整输出合同。教师旧清洗没有可核运行绑定，故仅源条件106逻辑预测。API不接收原分数／路线／旧S／root意见；模型固定deepseek-v4-pro、thinking enabled／high、max_tokens8192、JSON object、无工具／自动重试。root完整核APIcopy、协议、预算及固定cal Pareto取舍后显式release；新源、旧原件和首结果分别冻结。
+
+唯一实跑记录20次start／请求尝试，17次返回有可信usage（prompt39555、completion90215），按冻结峰值cache-miss上界估算US$0.409464；3项URLError的发送／计费用量未知，各US$1.50保留，共US$4.50。累计估算加未知预留占用US$4.909464，剩US$0.090536不足下一次至少US$1.50预留，因此自动停在budget_reservation_limit；86逻辑预测未尝试。没有重试、换环境重发或补额度，不把未知当0；US$4.909464不是实际账单，也不能断言3项unknown已实际发送／付费。全部尝试属于cal前10例的两配置，cal剩12项、diag32／语言16／合成26均未尝试，未运行不能算模型拒判或质量0。
+
+首snapshot前root未看新输出质量；[首结果snapshot](../outputs/complete_decision_pilot_20261105_v1/runtime/first_predictions_snapshot_1793847741171075900.frozen.json)绑定83个request文件，20start／20receipt、无在途／锁。技术形式状态12份validated、8份失败或未知，含3个finish_reason=length且message.content空、2份合法JSON但合同失败、3项传输未知。失败raw声明与有效输出分开；[全raw覆盖](../outputs/complete_decision_pilot_20261105_v1/executor/forensic_failed_raw/coverage.frozen.json)核17响应、14非空content，未有first_output遗漏的非空content或精确可parse声明，无修补／重发。
+
+root完整审14份parseable输出的24标签／35方向／42引文共101 raw声明，含21项合同失败声明；原source／新view／quote分层，U/null不作S。[cal统计](../outputs/complete_decision_pilot_20261105_v1/executor/statistics/calibration/statistics.frozen.json)及root独立复算一致：C1／C2各6/16有效输出，各5个joint-S直接2级标签，直接宽joint S为0／3，未决字段5／6，unknown1／2。scope标签为2／1、派生祖先13／15分别计量；向量N各1来自quote不足而标签source/view仍S，不作“各1误标”。cal未跑满且其他组全未运行，按新预测前固定incomplete/U规则锁目标2级后续开发C1优先＋RR补充、dominance=None，旧A粗层默认不改，不称完整系统优越、真人准确率、全标签recall或清洗收益。
+
+cal锁后，root逐核diag／语言／合成全部74包无start／raw／profile，并给技术元数据envelopes；冻结统计全部not_attempted，不编造拒判／负标签。完整[106待审索引](../outputs/complete_decision_pilot_20261105_v1/executor/all106_pending_index.frozen.json)含12有效profile、2失败raw、3空final、3发送／计费用量未知、86未尝试，全部requires_review／正式0。错误类型、各层分母与下一步限制见[RESULTS](../outputs/complete_decision_pilot_20261105_v1/executor/RESULTS.md)，原推理／统计代码在forward前冻结，root意见转录／最终索引／forensic整理发生在forward后且不改首预测。
+
+本次远程含等待墙钟1744.531秒、本地CPU23.984375秒；阶段A另保守收取300秒（不是CPU实测，三次准备墙钟合计23.64秒）。没有新权重／依赖下载、训练、新检索评分、数据库、正式赋标或稿件生产匹配。当前有界只读DNS／TCP／校验证书TLS和唯一官方GET模型元数据均成功，但不能据此认定旧URLError未发／未收费，未知预算不释放。协议、默认dry-run、12组离线guard／失败raw合成fixture及实际运行入口见[操作指南](TEACHER_PATH_AND_TOOLS.md#28完整赋标有界试跑)；同版本独立双轴、最终归档关闭仍待root按Issue完成。
+
 ## 新运行的记录要求
 
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。
