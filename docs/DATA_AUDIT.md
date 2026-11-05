@@ -162,3 +162,14 @@ root核实旧同输入／词库／释义的1139项唯一case-L2全文AI意见。
 原#26来源输入hash保持不变；API副本另版对链接／联系方式及root核定的9例目标别名／短联系号追加等长遮盖。root先完整读53视图，再逐字符核最终差分，研究句／题名／时序保留；单元覆盖完整Unicode码点，局部unit_id不含真实教师ID，引文由固定adapter唯一定位至确切API视图。共同作者、单位、项目、题名及履历仍可能间接识别，副本不声称完全匿名。原文、遮盖前后及全部106精确HTTP body仅本机保存；入口为[完整输入索引](../outputs/complete_decision_pilot_20261105_v1/executor/input_review_index.frozen.json)和[root差分](../outputs/complete_decision_pilot_20261105_v1/executor/root_privacy_diff.frozen.json)。
 
 旧598条case／source input hash／label ref全文AI意见仅按同hash和完整路径身份复用原始来源全文支持；新API可见支持、新方向summary、所有新quote的角色／充分性／细宽关系由root另审。实际14个parseable输出的24标签／35方向／42引文全部审核，含2份合同失败raw；source／view／quote区分，U/null不作S。空final、发送／计费用量未知和未尝试没有虚构语义意见。旧40仍是开发材料，非穷尽known方向不当全标签答案。首预测、失败raw、validated结果及原始响应分开保留；[106待审索引](../outputs/complete_decision_pilot_20261105_v1/executor/all106_pending_index.frozen.json)保留完整未尝试分母，不把未尝试记abstain或negative。实际分母与费用见[实验记录](EXPERIMENTS.md#t-complete-01完整赋标有限试跑)。
+
+
+## 2026-11-05教师适配监督组装（#30）
+
+[#30](https://github.com/normaltank/TagProject/issues/30)只读复用#16/#17原来源化全文意见、#26完整路径全文label_opinions及#28精确原全文标签意见；未重读原XLSX、新教师行或S。实际160真实全文/160可核连通组与13合成诊断全文分开，1157观察去重为1140全文pair，冲突/绑定排除0。原观察、修订/原文版本、层级/路径/源hash与重复来源均保留在本地[数据与来源账](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RESULTS.md)。未知历史同人/主页关系不能保证穷尽；旧暴露材料全部只作开发。
+
+固定train96/dev32/diagnostic32真实组，合成独立诊断；U/未审pair mask0，N只表固定输入不支持。train的0/1/2级S分别9/161/49，2级只有49个标签各1正例，1396中1347无训练正例；完整正负/U、无正例标签和组连接见[coverage](../outputs/teacher_adaptation_pilot_20261105_v1/executor/coverage.frozen.json)。未用旧S或派生祖先补答案，quote充分性和视图意见未冒充原全文标签支持。用户暂未提供人工导出，已指示先用现有审核材料；这些仍是AI开发监督。
+
+用户另授权只读核查外部教师标注GitLab develop，root已固定提交`ec0e79e63c7ee85c4fcb5cd7d3c9ebae54537f7d`的必要源码快照及Git blob/SHA256；未取得实际标注数据。导出源码默认不筛reviewed（可选`--reviewed-only`），故可含草稿；导出字段不含intro、词表版本或revision，未来复用还需配套items/tags/config与身份/输入绑定。reviewed标志也不等于独立审定。当前只追加来源事实，不改变上述160材料/训练任务；私有源码留本机ignored，见[只读阅读账](../outputs/teacher_adaptation_pilot_20261105_v1/executor/gitlab_reading_ledger.frozen.json)。
+
+#30阶段B只从上述冻结划分内固定选取11训练组/17unique pair作两初始化各8步工程验证，原160/13数据和mask不变；未因训练结果增补标签/负例或读取新教师/S。最终发前critical与1320旧保护hash保持，训练实测统一见[实验记录](EXPERIMENTS.md#t-adapt-01教师监督与双初始化适配原型)。

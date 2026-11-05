@@ -4,6 +4,8 @@
 
 ## 当前阶段
 
+[#30教师监督与双初始化微调入口](https://github.com/normaltank/TagProject/issues/30)已生成可追溯masked监督，并经root显式放行完成旧论文/同HFL通用encoder各8次真实更新、mask与fresh-model保存重载验证；实际细类稀疏覆盖决定采用路径条件支持判别新头。当前到执行交付待审，下一步由root独立核验、同head双轴及归档；[实际包与限制](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RESULTS.md)。仅训练工程可行性，不是独立效果擂台或正式赋标，最终关闭以#30为准。
+
 [#29前人方法理解、批判与教师适配建议](https://github.com/normaltank/TagProject/issues/29)已形成[研究报告与阅读账](../outputs/predecessor_method_review_20261105_v1/executor/REVIEW.md)：前人论文微调／批处理有实物，教师证据／充分度／三态及retrain有设计，人工完成量和教师运行绑定仍缺。下一笔建议对称比较旧论文初始化与相同通用底座的教师微调，以及当前简洁候选方案；精确对照尚未实测，现有默认仅为阶段性参赛者。只读研究无新训练／推理或正式赋标，#28未知费用不释放；主Agent核验、同head双轴、同步归档及关闭以#29为准。
 
 [#28旧教师清洗追溯与完整赋标补测](https://github.com/normaltank/TagProject/issues/28)的首结果／未知账本、root逐项cal审核与取舍锁、全分层未尝试统计及106待审成果已形成，本轮实验已按预算预留守卫停止。教师清洗未建立可重现运行绑定；校准未跑满、其余组未运行，依预冻incomplete/U规则保留目标2级后续开发C1优先＋RR补充，旧A粗层默认不改，无完整系统优越结论。实际分母、费用估算／未知预留和证据入口见[实验记录](EXPERIMENTS.md#t-complete-01完整赋标有限试跑)；下一步有限验证的输入／完整输出／独立答案边界见[研究入口](RESEARCH_AND_DECISIONS.md#28完整语义判别补测的冻结边界2026-11-05)。不再推理或重试，正式赋标0；最终验收、同head双轴、同步与关闭以#28及其凭据为准。

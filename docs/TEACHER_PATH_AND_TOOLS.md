@@ -135,3 +135,10 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 首snapshot冻结后`export_reviews.py --snapshot <精确snapshot> --split calibration`导出cal32完整原文／API视图、raw first_output、validated结果和逐标签／方向／quote待填意见，adapter失败的parseable声明仍原样另审。`statistics.py --snapshot <同snapshot> --reviews <commander root意见> --split calibration`核覆盖及意见联结；joint S须标签聚合与链接方向／每条证据均root-S，U／null保留，不因技术失败删分母。其余split须root calibration_lock，不从diag反选。派生祖先、直接宽标签、scope_review、no-label／失败／未运行及非穷尽known池外方向分开。全raw forensic补充只作完整性核查，不恢复或修补失败输出。
 
 本批root cal审核／独立复算／锁定后，已将其余74份全部未尝试记录按同入口导出／统计，完整成果见[106待审索引](../outputs/complete_decision_pilot_20261105_v1/executor/all106_pending_index.frozen.json)。最终[RUN](../outputs/complete_decision_pilot_20261105_v1/executor/RUN.md)分清forward前推理／统计代码与forward后意见转录／索引／forensic整理；现有冻结输出均拒绝覆写，不能借整理重新评分或补推理。
+
+
+## #30教师支持判别适配原型
+
+本机[RUN](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RUN.md)给出既有解释器、默认dry-run、离线检查和root release后两初始化串行入口。`train.py`默认只读协议，不导入ML栈、加载权重、触网或创建训练目录；live先核release绑定manifest及源/模型hash，再用严格本地模型。旧论文safetensors与通用底座.bin安全weights_only读取后只提取encoder，不执行前任模块。
+
+完整标签路径＋原文所有token窗，256总token/32重叠、窗microbatch1，mean后文档级masked BCE；不截前缀、不把每窗标S，输入窗不是预测证据。相同新头、seed和8步预算；目录只创建一次，失败保留且不自动重跑。预定累计GPU45分钟/准备CPU1小时/新根3GiB/盘余5GiB，失败计入。阶段B已按root显式release完成两初始化各8更新与fresh-model重载，原运行目录/发前manifest只读，不再次live；最终检查用独立final_checks.py，不重写阶段A frozen账。启动running/逐步更新/finally finished的资源账遇未知前路fail closed；实际状态和限制见[实验记录](EXPERIMENTS.md#t-adapt-01教师监督与双初始化适配原型)。

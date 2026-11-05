@@ -287,3 +287,10 @@ CSO Classifier官方[v4.0.1](https://github.com/angelosalatino/cso-classifier/re
 下一笔建议保留“旧论文encoder→教师继续微调”与“相同通用底座→教师微调”的对称对照，和Qwen直接候选／有限union重排完整方案比较；#16／19冻结头、#17 NLI LoRA、#23直接迁移都未回答该精确问题。当前0／1／2级、完整输入、同可用train-dev、未审pair mask、身份／近重组隔离与未暴露test共同冻结，标签和证据能力分评，并计拒判覆盖、失败、语言／长尾、全流程及复核成本。先检验单模型是否足够，额外组件、困难例分流及后续蒸馏只在有增值时保留；同质量下按组件、标注、算力、复核和维护衡量简洁，不预定检索或BERT胜出。样本数与资源仅待后续定界，当前训练／新推理／正式赋标均0，#28未知费用预留不释放，稿件支线仍暂停。
 
 2026-11-05执行者实际读取[BERT官方分类接口](https://huggingface.co/docs/transformers/en/model_doc/bert)、[Qwen官方用法](https://github.com/QwenLM/Qwen3-Embedding/blob/main/README.md)、[SelectiveNet摘要](https://proceedings.mlr.press/v97/geifman19a.html)、[蒸馏原文摘要](https://arxiv.org/abs/1503.02531)及[组隔离／开发测试官方说明](https://scikit-learn.org/stable/modules/cross_validation.html)；root独立核查STILTs、校准及OpenAlex等一手方法。它们支持候选原理与评价边界，不证明本项目最佳；实际段落、未读全文／失败页和支持范围集中在报告及阅读账。OpenAlex训练复杂链可压成运行时student的启发也只作为后续简化假设。
+
+
+## #30：从实际监督覆盖确定最小教师适配任务（2026-11-05）
+
+[#30](https://github.com/normaltank/TagProject/issues/30)已把#29建议落实为监督数据和可执行入口。实际训练划分只有49个2级标签各1正例，1396细类中1347无训练正例；固定细类头缺少可解释训练信号。root据此审定先做“完整简介＋完整路径标签条件支持判别”的增强BERT原型，以单标量新头共同训练旧论文encoder和同HFL通用encoder。仅改变encoder起点，保持新头seed、完整输入、文档masked BCE、窗口mean、optimizer及预算一致；不继承旧139头、不退回139 top1，也不借随机细头制造比赛。
+
+此最小任务可以按0/1/2来源路径提出支持查询；尚未验证全目录候选生成、多标签完整性、自动证据定位、拒判或完整赋标。全部旧材料仍为AI开发监督，N仅为固定输入不支持，U/未审不进入loss，文档正例不强压每窗。阶段A未训练；阶段B按显式release完成两起点各8步，证实encoder/头真实更新与fresh-model重载可行性。没有完整dev质量评估，任何几步loss/诊断输出不能选冠军。完整效果比较仍需更多多级正负/本人角色/范围纠错监督、独立新答案和完整输出/成本合同。实际覆盖及协议见[结果包](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RESULTS.md)。

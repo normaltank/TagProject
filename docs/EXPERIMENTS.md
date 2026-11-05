@@ -427,3 +427,10 @@ cal锁后，root逐核diag／语言／合成全部74包无start／raw／profile�
 运行前冻结输入／选择范围、词库、初判／审核规则、代码／提示／配置和调用上限。保存不可变版本或哈希；改动上述条件则另开版本并说明可比性。
 
 每次写入新的输出目录，记录成功／拒判／失败／未运行、原始预测、证据、审核差异、实际 token／耗时／费用来源。缺失值记 null，假设算术与实测分开。结束后更新本页对应运行及任务 Issue 的完成证据；STATUS 只保留当前入口。
+
+
+## T-ADAPT-01：教师监督与双初始化适配原型
+
+[#30](https://github.com/normaltank/TagProject/issues/30)阶段A已实际生成masked监督、组隔离划分、完整token窗口与共用训练入口；阶段B经root显式放行已完成两初始化真实更新。模型身份/数据/代码/协议已冻结，采用相同新单标量头的完整简介＋路径条件支持判别，旧论文encoder与本地同HFL通用encoder仅初始化不同。数据分母见[数据审计](DATA_AUDIT.md#2026-11-05教师适配监督组装30)，设计及稀疏限制见[选型记录](RESEARCH_AND_DECISIONS.md#30从实际监督覆盖确定最小教师适配任务2026-11-05)。
+
+离线检查通过：U/未审零梯度与target扰动不变、冲突排除、组/源行隔离、0/1/2路径与新头维度、1140pair全token覆盖、692来源context精确绑定、旧源hash保持、默认dry-run禁权重/网络与非法release早拒绝。首检查子进程argv包装失败已留账并修复，未触模型。实际包与运行入口见[RESULTS](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RESULTS.md)、[RUN](../outputs/teacher_adaptation_pilot_20261105_v1/executor/RUN.md)。阶段B按root绑定原manifest的显式release串行完成两初始化各8更新，paper/base预算账33.391/19.954秒，累计53.345秒；每路实际11组/17unique pair（8S/8N/1U），只用1固定dev query核重载。初始新头hash相同，所有8步encoder/head梯度有限非零、U logit梯度0，197 encoder及2 head张量变化，保存后新建模型重载输出逐值相等。两路首次成功、失败/重试0，final_checks复核发前critical不变及1320保护missing/changed0。只证明训练/重载工程可行性，不报告准确率或赢家。0新API/下载/教师行/S/外发/正式赋标，#28未知预留不释放。
