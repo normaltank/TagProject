@@ -441,6 +441,6 @@ cal锁后，root逐核diag／语言／合成全部74包无start／raw／profile�
 
 root实际逐条AI审核并冻结35方向、67项直接一级意见：33S／11N／23U；53处逐字quote／Unicode偏移、source/input/group、path／来源、S只连S方向、mask及排旧机械校验通过。17例有S／3例无S、27个一级有S仅为当前AI意见覆盖，不是准确率。英语Research Interests栏目语用未决、跨学科参与项目及资料不足保留U，异常不删／不换样；未审标签和U均target=null／mask0，N不作现实无专长判断。
 
-新20 documents／pairs与139目标masked矩阵另存development_pool，不调用旧训练入口、不赋旧split；#30旧160真实＋13合成及所有训练文件只读保持。旧160直接一级全文覆盖与新20分别／并集只读统计，排除0／2及细层自动投影。字段级兼容不等于可直接运行旧#30硬编码loader，后续训练／开发／独立评价用途须另冻，不能以同20既训练又证明独立效果。[RESULTS](../outputs/teacher_review_batch_20261105_v1/executor/RESULTS.md)、[RUN](../outputs/teacher_review_batch_20261105_v1/executor/RUN.md)、[DELIVERY](../outputs/teacher_review_batch_20261105_v1/executor/DELIVERY.md)和[覆盖账](../outputs/teacher_review_batch_20261105_v1/executor/coverage.frozen.json)提供实际入口。
+新20 documents／pairs与139目标masked矩阵另存development_pool，不调用旧训练入口、不赋旧split；#30旧160真实＋13合成及所有训练文件只读保持。旧160直接一级全文覆盖与新20分别／并集只读统计，排除0／2及细层自动投影。字段级兼容不等于可直接运行旧#30硬编码loader，后续训练／开发／独立评价用途须另冻，不能以同20既训练又证明独立效果。[RESULTS](../outputs/teacher_review_batch_20261105_v1/executor/RESULTS.md)、[当前验证入口v3](../outputs/teacher_review_batch_20261105_v1/executor/CURRENT.v3.md)、[DELIVERY](../outputs/teacher_review_batch_20261105_v1/executor/DELIVERY.md)和[覆盖账](../outputs/teacher_review_batch_20261105_v1/executor/coverage.frozen.json)提供实际入口。
 
 本票项目模型推理／训练／付费API／下载／新依赖／DB连接／GitLab写入／教师外发／正式赋标均0；root对当前会话材料作AI审核不算项目API运行。准备实测68.5秒、自查0.203秒，后续组装／验证资源账另存本地；交互阅读、编辑和验收命令不冒充CPU实测总耗时，准备统计另按1小时上限守卫，#28未知费用保留。root验收、同head独立双轴、归档同步及最终关闭状态以Issue及凭据为准。

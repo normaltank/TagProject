@@ -147,6 +147,6 @@ $tagPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 
 ## #32新20一级监督包
 
-本地[RUN](../outputs/teacher_review_batch_20261105_v1/executor/RUN.md)提供只读验证入口；[documents](../outputs/teacher_review_batch_20261105_v1/executor/documents.frozen.json)／[pairs](../outputs/teacher_review_batch_20261105_v1/executor/pairs.frozen.json)及[139目标masked矩阵](../outputs/teacher_review_batch_20261105_v1/executor/masked_primary_matrix.frozen.json)仅为AI development_pool。S/N进入mask1，U和未审target=null／mask0，不对未审139补负例，不把细层投影当直接一级。方向／逐字证据留在文档包和root冻结意见，无0／2本批直接标签；全部requires_review。
+本地[当前验证入口v3](../outputs/teacher_review_batch_20261105_v1/executor/CURRENT.v3.md)提供只读验证入口；[documents](../outputs/teacher_review_batch_20261105_v1/executor/documents.frozen.json)／[pairs](../outputs/teacher_review_batch_20261105_v1/executor/pairs.frozen.json)及[139目标masked矩阵](../outputs/teacher_review_batch_20261105_v1/executor/masked_primary_matrix.frozen.json)仅为AI development_pool。S/N进入mask1，U和未审target=null／mask0，不对未审139补负例，不把细层投影当直接一级。方向／逐字证据留在文档包和root冻结意见，无0／2本批直接标签；全部requires_review。
 
 这里只兼容#30数据字段，未连接其硬编码loader、token窗口或train/dev划分；不能直接把新20替换旧160／13、重复使用旧release训练或同时充独立测试。重跑准备／组装脚本会因frozen文件已存在拒绝覆写；需要修订时另版并保留旧来源。当前只执行回读／hash／quote／path／mask／组隔离和覆盖统计，不运行模型、训练、API或正式赋标；下一张有限一级比较需另冻输入／用途与资源，旧#28未知额度不释放。
