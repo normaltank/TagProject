@@ -279,3 +279,11 @@ CSO Classifier官方[v4.0.1](https://github.com/angelosalatino/cso-classifier/re
 #28把两套#26固定候选交同一Pro high／8192 JSON语义判别，补本人方向、多标签、细／宽保留、scope_review、无标签、逐字quote及派生祖先合同。池只给选择机会，有限top10／top3及祖先不等全词库召回；旧40＋13已暴露，不能改称独立测试。教师旧清洗只核到设计线索，未建立函数／调用／输入版本／run／S绑定，不能把论文预处理或另写清洗冒充历史，也没有源／清洗因果对照。
 
 比较规则在新预测前固定：root只在全部首响应／失败冻结后先审cal16，技术失败／unknown、错误supported、joint S细／宽及非穷尽known覆盖各自计量；仅一致Pareto优势可给临时后续优先，否则保留原Qwen优先＋RR补充的取舍解释，更多拒判不是自动优势。linked方向／逐引文未核或U不作joint S，不依diag／语言／合成改池、提示、模型或比较规则。实际因未知预留触预算停止，root已审全部101 raw声明、独立复算并锁incomplete/U取舍：保留C1后续优先＋RR补充，dominance=None。cal未完整、其他组全未尝试，不据部分宽层增益宣告完整系统优越。下一步先补独立监督、教师清洗源链、请求状态可追溯及完整输出可用性，再另定有界验证；本票不追加推理／训练。用量、错误类型及限制见[实验记录](EXPERIMENTS.md#t-complete-01完整赋标有限试跑)与[本地结果](../outputs/complete_decision_pilot_20261105_v1/executor/RESULTS.md)。
+
+## #29前人方法继承与教师公平适配（2026-11-05）
+
+前人论文线有真实DS监督全模型微调和可恢复批处理；教师交接也已提出证据、充分度、prior_only／unknown及论文模型继续retrain。当前源码对k=2已有第二标签概率支路，并认识到低margin可能是真多标签；批判应落在具体gate、标签数先验、不可逆信息筛选、同源监督评价和教师适配验证，不能概括为前人没意识到这些问题。教师4000是条目数，人工完成量、清洗／S绑定及教师retrain实物仍缺；论文高置信成绩和#23直接迁移不代替它们。完整阅读范围、实物／设计／未知及当前已有能力见[方法评议](../outputs/predecessor_method_review_20261105_v1/executor/REVIEW.md)。
+
+下一笔建议保留“旧论文encoder→教师继续微调”与“相同通用底座→教师微调”的对称对照，和Qwen直接候选／有限union重排完整方案比较；#16／19冻结头、#17 NLI LoRA、#23直接迁移都未回答该精确问题。当前0／1／2级、完整输入、同可用train-dev、未审pair mask、身份／近重组隔离与未暴露test共同冻结，标签和证据能力分评，并计拒判覆盖、失败、语言／长尾、全流程及复核成本。先检验单模型是否足够，额外组件、困难例分流及后续蒸馏只在有增值时保留；同质量下按组件、标注、算力、复核和维护衡量简洁，不预定检索或BERT胜出。样本数与资源仅待后续定界，当前训练／新推理／正式赋标均0，#28未知费用预留不释放，稿件支线仍暂停。
+
+2026-11-05执行者实际读取[BERT官方分类接口](https://huggingface.co/docs/transformers/en/model_doc/bert)、[Qwen官方用法](https://github.com/QwenLM/Qwen3-Embedding/blob/main/README.md)、[SelectiveNet摘要](https://proceedings.mlr.press/v97/geifman19a.html)、[蒸馏原文摘要](https://arxiv.org/abs/1503.02531)及[组隔离／开发测试官方说明](https://scikit-learn.org/stable/modules/cross_validation.html)；root独立核查STILTs、校准及OpenAlex等一手方法。它们支持候选原理与评价边界，不证明本项目最佳；实际段落、未读全文／失败页和支持范围集中在报告及阅读账。OpenAlex训练复杂链可压成运行时student的启发也只作为后续简化假设。
